@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jxszj.mapper.sap.HsXsmlfxTbMapper" >
+  <resultMap id="BaseResultMap" type="com.jxszj.pojo.sap.HsXsmlfxTb" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pp" property="pp" jdbcType="VARCHAR" />
+    <result column="cpxl" property="cpxl" jdbcType="VARCHAR" />
+    <result column="ckjh" property="ckjh" jdbcType="VARCHAR" />
+    <result column="wxjhxm" property="wxjhxm" jdbcType="VARCHAR" />
+    <result column="jhlx" property="jhlx" jdbcType="VARCHAR" />
+    <result column="sjhwydrq" property="sjhwydrq" jdbcType="VARCHAR" />
+    <result column="hwydzt" property="hwydzt" jdbcType="VARCHAR" />
+    <result column="wl" property="wl" jdbcType="VARCHAR" />
+    <result column="xmms" property="xmms" jdbcType="VARCHAR" />
+    <result column="wlz" property="wlz" jdbcType="VARCHAR" />
+    <result column="wlzms" property="wlzms" jdbcType="VARCHAR" />
+    <result column="jhsl" property="jhsl" jdbcType="DOUBLE" />
+    <result column="xsdw" property="xsdw" jdbcType="VARCHAR" />
+    <result column="hwydlx" property="hwydlx" jdbcType="VARCHAR" />
+    <result column="ckpz" property="ckpz" jdbcType="VARCHAR" />
+    <result column="ckxm" property="ckxm" jdbcType="VARCHAR" />
+    <result column="xszz" property="xszz" jdbcType="VARCHAR" />
+    <result column="fxqd" property="fxqd" jdbcType="VARCHAR" />
+    <result column="jxskhbm" property="jxskhbm" jdbcType="VARCHAR" />
+    <result column="jxskhmc" property="jxskhmc" jdbcType="VARCHAR" />
+    <result column="dhdh" property="dhdh" jdbcType="VARCHAR" />
+    <result column="dhlx" property="dhlx" jdbcType="VARCHAR" />
+    <result column="cjptcdgd" property="cjptcdgd" jdbcType="VARCHAR" />
+    <result column="cjptcj" property="cjptcj" jdbcType="VARCHAR" />
+    <result column="qt" property="qt" jdbcType="VARCHAR" />
+    <result column="gcgd" property="gcgd" jdbcType="VARCHAR" />
+    <result column="xspzlx" property="xspzlx" jdbcType="VARCHAR" />
+    <result column="jj" property="jj" jdbcType="DOUBLE" />
+    <result column="jz" property="jz" jdbcType="DOUBLE" />
+    <result column="bzjgtjjz" property="bzjgtjjz" jdbcType="DOUBLE" />
+    <result column="bzjgje" property="bzjgje" jdbcType="DOUBLE" />
+    <result column="khzktjjz" property="khzktjjz" jdbcType="DOUBLE" />
+    <result column="khzkje" property="khzkje" jdbcType="DOUBLE" />
+    <result column="syfltjjz" property="syfltjjz" jdbcType="DOUBLE" />
+    <result column="syflje" property="syflje" jdbcType="DOUBLE" />
+    <result column="cdbltjjz" property="cdbltjjz" jdbcType="DOUBLE" />
+    <result column="cdblje" property="cdblje" jdbcType="DOUBLE" />
+    <result column="xxstjjz" property="xxstjjz" jdbcType="DOUBLE" />
+    <result column="xxsje" property="xxsje" jdbcType="DOUBLE" />
+    <result column="bzcbgjtjjz" property="bzcbgjtjjz" jdbcType="DOUBLE" />
+    <result column="bzcbgjje" property="bzcbgjje" jdbcType="DOUBLE" />
+    <result column="jsjtjjz" property="jsjtjjz" jdbcType="DOUBLE" />
+    <result column="jsjje" property="jsjje" jdbcType="DOUBLE" />
+    <result column="ggrq" property="ggrq" jdbcType="VARCHAR" />
+    <result column="pzhb" property="pzhb" jdbcType="VARCHAR" />
+    <result column="ddsl" property="ddsl" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pp, cpxl, ckjh, wxjhxm, jhlx, sjhwydrq, hwydzt, wl, xmms, wlz, wlzms, jhsl, xsdw, 
+    hwydlx, ckpz, ckxm, xszz, fxqd, jxskhbm, jxskhmc, dhdh, dhlx, cjptcdgd, cjptcj, qt, 
+    gcgd, xspzlx, jj, jz, bzjgtjjz, bzjgje, khzktjjz, khzkje, syfltjjz, syflje, cdbltjjz, 
+    cdblje, xxstjjz, xxsje, bzcbgjtjjz, bzcbgjje, jsjtjjz, jsjje, ggrq, pzhb, ddsl
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jxszj.pojo.sap.HsXsmlfxTbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hs_xsmlfx_tb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.jxszj.pojo.sap.HsXsmlfxTb" >
+    insert into hs_xsmlfx_tb (id, pp, cpxl, 
+      ckjh, wxjhxm, jhlx, 
+      sjhwydrq, hwydzt, wl, 
+      xmms, wlz, wlzms, jhsl, 
+      xsdw, hwydlx, ckpz, 
+      ckxm, xszz, fxqd, jxskhbm, 
+      jxskhmc, dhdh, dhlx, 
+      cjptcdgd, cjptcj, qt, 
+      gcgd, xspzlx, jj, jz, 
+      bzjgtjjz, bzjgje, khzktjjz, 
+      khzkje, syfltjjz, syflje, 
+      cdbltjjz, cdblje, xxstjjz, 
+      xxsje, bzcbgjtjjz, bzcbgjje, 
+      jsjtjjz, jsjje, ggrq, 
+      pzhb, ddsl)
+    values (#{id,jdbcType=VARCHAR}, #{pp,jdbcType=VARCHAR}, #{cpxl,jdbcType=VARCHAR}, 
+      #{ckjh,jdbcType=VARCHAR}, #{wxjhxm,jdbcType=VARCHAR}, #{jhlx,jdbcType=VARCHAR}, 
+      #{sjhwydrq,jdbcType=VARCHAR}, #{hwydzt,jdbcType=VARCHAR}, #{wl,jdbcType=VARCHAR}, 
+      #{xmms,jdbcType=VARCHAR}, #{wlz,jdbcType=VARCHAR}, #{wlzms,jdbcType=VARCHAR}, #{jhsl,jdbcType=DOUBLE}, 
+      #{xsdw,jdbcType=VARCHAR}, #{hwydlx,jdbcType=VARCHAR}, #{ckpz,jdbcType=VARCHAR}, 
+      #{ckxm,jdbcType=VARCHAR}, #{xszz,jdbcType=VARCHAR}, #{fxqd,jdbcType=VARCHAR}, #{jxskhbm,jdbcType=VARCHAR}, 
+      #{jxskhmc,jdbcType=VARCHAR}, #{dhdh,jdbcType=VARCHAR}, #{dhlx,jdbcType=VARCHAR}, 
+      #{cjptcdgd,jdbcType=VARCHAR}, #{cjptcj,jdbcType=VARCHAR}, #{qt,jdbcType=VARCHAR}, 
+      #{gcgd,jdbcType=VARCHAR}, #{xspzlx,jdbcType=VARCHAR}, #{jj,jdbcType=DOUBLE}, #{jz,jdbcType=DOUBLE}, 
+      #{bzjgtjjz,jdbcType=DOUBLE}, #{bzjgje,jdbcType=DOUBLE}, #{khzktjjz,jdbcType=DOUBLE}, 
+      #{khzkje,jdbcType=DOUBLE}, #{syfltjjz,jdbcType=DOUBLE}, #{syflje,jdbcType=DOUBLE}, 
+      #{cdbltjjz,jdbcType=DOUBLE}, #{cdblje,jdbcType=DOUBLE}, #{xxstjjz,jdbcType=DOUBLE}, 
+      #{xxsje,jdbcType=DOUBLE}, #{bzcbgjtjjz,jdbcType=DOUBLE}, #{bzcbgjje,jdbcType=DOUBLE}, 
+      #{jsjtjjz,jdbcType=DOUBLE}, #{jsjje,jdbcType=DOUBLE}, #{ggrq,jdbcType=VARCHAR}, 
+      #{pzhb,jdbcType=VARCHAR}, #{ddsl,jdbcType=DOUBLE})
+  </insert>
+  
+<!--批量添加  -->
+  <insert id="insertOrUpdateByBatch" parameterType="java.util.List">
+	insert into hs_xsmlfx_tb (id, pp, cpxl, 
+      ckjh, wxjhxm, jhlx, 
+      sjhwydrq, hwydzt, wl, 
+      xmms, wlz, wlzms, jhsl, 
+      xsdw, hwydlx, ckpz, 
+      ckxm, xszz, fxqd, jxskhbm, 
+      jxskhmc, dhdh, dhlx, 
+      cjptcdgd, cjptcj, qt, 
+      gcgd, xspzlx, jj, jz, 
+      bzjgtjjz, bzjgje, khzktjjz, 
+      khzkje, syfltjjz, syflje, 
+      cdbltjjz, cdblje, xxstjjz, 
+      xxsje, bzcbgjtjjz, bzcbgjje, 
+      jsjtjjz, jsjje, ggrq, 
+      pzhb, ddsl)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    	(#{item.id,jdbcType=VARCHAR}, #{item.pp,jdbcType=VARCHAR}, #{item.cpxl,jdbcType=VARCHAR}, 
+      #{item.ckjh,jdbcType=VARCHAR}, #{item.wxjhxm,jdbcType=VARCHAR}, #{item.jhlx,jdbcType=VARCHAR}, 
+      #{item.sjhwydrq,jdbcType=VARCHAR}, #{item.hwydzt,jdbcType=VARCHAR}, #{item.wl,jdbcType=VARCHAR}, 
+      #{item.xmms,jdbcType=VARCHAR}, #{item.wlz,jdbcType=VARCHAR}, #{item.wlzms,jdbcType=VARCHAR}, #{item.jhsl,jdbcType=DOUBLE}, 
+      #{item.xsdw,jdbcType=VARCHAR}, #{item.hwydlx,jdbcType=VARCHAR}, #{item.ckpz,jdbcType=VARCHAR}, 
+      #{item.ckxm,jdbcType=VARCHAR}, #{item.xszz,jdbcType=VARCHAR}, #{item.fxqd,jdbcType=VARCHAR}, #{item.jxskhbm,jdbcType=VARCHAR}, 
+      #{item.jxskhmc,jdbcType=VARCHAR}, #{item.dhdh,jdbcType=VARCHAR}, #{item.dhlx,jdbcType=VARCHAR}, 
+      #{item.cjptcdgd,jdbcType=VARCHAR}, #{item.cjptcj,jdbcType=VARCHAR}, #{item.qt,jdbcType=VARCHAR}, 
+      #{item.gcgd,jdbcType=VARCHAR}, #{item.xspzlx,jdbcType=VARCHAR}, #{item.jj,jdbcType=DOUBLE}, #{item.jz,jdbcType=DOUBLE}, 
+      #{item.bzjgtjjz,jdbcType=DOUBLE}, #{item.bzjgje,jdbcType=DOUBLE}, #{item.khzktjjz,jdbcType=DOUBLE}, 
+      #{item.khzkje,jdbcType=DOUBLE}, #{item.syfltjjz,jdbcType=DOUBLE}, #{item.syflje,jdbcType=DOUBLE}, 
+      #{item.cdbltjjz,jdbcType=DOUBLE}, #{item.cdblje,jdbcType=DOUBLE}, #{item.xxstjjz,jdbcType=DOUBLE}, 
+      #{item.xxsje,jdbcType=DOUBLE}, #{item.bzcbgjtjjz,jdbcType=DOUBLE}, #{item.bzcbgjje,jdbcType=DOUBLE}, 
+      #{item.jsjtjjz,jdbcType=DOUBLE}, #{item.jsjje,jdbcType=DOUBLE}, #{item.ggrq,jdbcType=VARCHAR}, 
+      #{item.pzhb,jdbcType=VARCHAR}, #{item.ddsl,jdbcType=DOUBLE}
+      )
+    </foreach>
+    ON DUPLICATE KEY UPDATE 
+    id=values(id),pp=values(pp),cpxl=values(cpxl),ckjh=values(ckjh),wxjhxm=values(wxjhxm),jhlx=values(jhlx),sjhwydrq=values(sjhwydrq),
+    hwydzt=values(hwydzt),wl=values(wl),xmms=values(xmms),wlz=values(wlz),wlzms=values(wlzms),jhsl=values(jhsl),xsdw=values(xsdw),hwydlx=values(hwydlx),ckpz=values(ckpz),
+    ckxm=values(ckxm),xszz=values(xszz),fxqd=values(fxqd),jxskhbm=values(jxskhbm),jxskhmc=values(jxskhmc),dhdh=values(dhdh),dhlx=values(dhlx),cjptcdgd=values(cjptcdgd),
+    cjptcj=values(cjptcj),qt=values(qt),gcgd=values(gcgd),xspzlx=values(xspzlx),jj=values(jj),jz=values(jz),bzjgtjjz=values(bzjgtjjz),bzjgje=values(bzjgje),khzktjjz=values(khzktjjz),
+    khzkje=values(khzkje),syfltjjz=values(syfltjjz),syflje=values(syflje),cdbltjjz=values(cdbltjjz),cdblje=values(cdblje),xxstjjz=values(xxstjjz),xxsje=values(xxsje),bzcbgjtjjz=values(bzcbgjtjjz),
+    bzcbgjje=values(bzcbgjje),jsjtjjz=values(jsjtjjz),jsjje=values(jsjje),ggrq=values(ggrq),pzhb=values(pzhb),ddsl=values(ddsl)
+  </insert>
+</mapper>

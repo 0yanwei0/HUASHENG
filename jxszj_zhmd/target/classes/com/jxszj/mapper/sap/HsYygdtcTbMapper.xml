@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jxszj.mapper.sap.HsYygdtcTbMapper" >
+  <resultMap id="BaseResultMap" type="com.jxszj.pojo.sap.HsYygdtcTb" >
+    <result column="jxs" property="jxs" jdbcType="VARCHAR" />
+    <result column="ny" property="ny" jdbcType="VARCHAR" />
+    <result column="mds" property="mds" jdbcType="INTEGER" />
+    <result column="p01" property="p01" jdbcType="VARCHAR" />
+    <result column="p02" property="p02" jdbcType="VARCHAR" />
+    <result column="p03" property="p03" jdbcType="VARCHAR" />
+    <result column="xdje" property="xdje" jdbcType="DOUBLE" />
+    <result column="yskje" property="yskje" jdbcType="DOUBLE" />
+    <result column="xsskje" property="xsskje" jdbcType="DOUBLE" />
+    <result column="xsje" property="xsje" jdbcType="DOUBLE" />
+    <result column="djjxs" property="djjxs" jdbcType="DOUBLE" />
+    <result column="djqyjl" property="djqyjl" jdbcType="DOUBLE" />
+    <result column="ddtcxs" property="ddtcxs" jdbcType="DOUBLE" />
+    <result column="ddxstc" property="ddxstc" jdbcType="DOUBLE" />
+    <result column="ddewtcxs" property="ddewtcxs" jdbcType="DOUBLE" />
+    <result column="ddewxstc" property="ddewxstc" jdbcType="DOUBLE" />
+    <result column="yyjl" property="yyjl" jdbcType="VARCHAR" />
+    <result column="yxj" property="yxj" jdbcType="DOUBLE" />
+    <result column="jyysk" property="jyysk" jdbcType="DOUBLE" />
+    <result column="pp" property="pp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    jxs, ny, mds, p01, p02, p03, xdje, yskje, xsskje, xsje, djjxs, djqyjl, ddtcxs, ddxstc, 
+    ddewtcxs, ddewxstc, yyjl, yxj, jyysk, pp
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jxszj.pojo.sap.HsYygdtcTbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hs_yygdtc_tb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.jxszj.pojo.sap.HsYygdtcTbExample" >
+    delete from hs_yygdtc_tb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jxszj.pojo.sap.HsYygdtcTb" >
+    insert into hs_yygdtc_tb (jxs, ny, mds, 
+      p01, p02, p03, xdje, 
+      yskje, xsskje, xsje, djjxs, 
+      djqyjl, ddtcxs, ddxstc, 
+      ddewtcxs, ddewxstc, yyjl, yxj, jyysk, pp)
+    values (#{jxs,jdbcType=VARCHAR}, #{ny,jdbcType=VARCHAR}, #{mds,jdbcType=INTEGER}, 
+      #{p01,jdbcType=VARCHAR}, #{p02,jdbcType=VARCHAR}, #{p03,jdbcType=VARCHAR}, #{xdje,jdbcType=DOUBLE}, 
+      #{yskje,jdbcType=DOUBLE}, #{xsskje,jdbcType=DOUBLE}, #{xsje,jdbcType=DOUBLE}, #{djjxs,jdbcType=DOUBLE}, 
+      #{djqyjl,jdbcType=DOUBLE}, #{ddtcxs,jdbcType=DOUBLE}, #{ddxstc,jdbcType=DOUBLE}, 
+      #{ddewtcxs,jdbcType=DOUBLE}, #{ddewxstc,jdbcType=DOUBLE}, #{yyjl,jdbcType=VARCHAR}, #{yxj,jdbcType=DOUBLE}, #{jyysk,jdbcType=DOUBLE}, #{pp,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertByBatch" parameterType="java.util.List">
+    insert into hs_yygdtc_tb (jxs, ny, mds, 
+      p01, p02, p03, xdje, 
+      yskje, xsskje, xsje, djjxs, 
+      djqyjl, ddtcxs, ddxstc, 
+      ddewtcxs, ddewxstc, yyjl, yxj, jyysk, pp)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    	(#{item.jxs,jdbcType=VARCHAR}, #{item.ny,jdbcType=VARCHAR}, #{item.mds,jdbcType=INTEGER}, 
+      #{item.p01,jdbcType=VARCHAR}, #{item.p02,jdbcType=VARCHAR}, #{item.p03,jdbcType=VARCHAR}, #{item.xdje,jdbcType=DOUBLE}, 
+      #{item.yskje,jdbcType=DOUBLE}, #{item.xsskje,jdbcType=DOUBLE}, #{item.xsje,jdbcType=DOUBLE}, #{item.djjxs,jdbcType=DOUBLE}, 
+      #{item.djqyjl,jdbcType=DOUBLE}, #{item.ddtcxs,jdbcType=DOUBLE}, #{item.ddxstc,jdbcType=DOUBLE}, 
+      #{item.ddewtcxs,jdbcType=DOUBLE}, #{item.ddewxstc,jdbcType=DOUBLE}, #{item.yyjl,jdbcType=VARCHAR}, #{item.yxj,jdbcType=DOUBLE}, #{item.jyysk,jdbcType=DOUBLE}, #{item.pp,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>

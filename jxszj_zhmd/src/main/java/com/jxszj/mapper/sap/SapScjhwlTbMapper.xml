@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jxszj.mapper.sap.SapScjhwlTbMapper" >
+  <resultMap id="BaseResultMap" type="com.jxszj.pojo.sap.SapScjhwlTb" >
+  	<id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="gzrq" property="gzrq" jdbcType="VARCHAR" />
+    <result column="wlzbm" property="wlzbm" jdbcType="VARCHAR" />
+    <result column="wlzmc" property="wlzmc" jdbcType="VARCHAR" />
+    <result column="drjh" property="drjh" jdbcType="INTEGER" />
+    <result column="dylj" property="dylj" jdbcType="INTEGER" />
+    <result column="dyrj" property="dyrj" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+   id, gzrq, wlzbm, wlzmc, drjh, dylj, dyrj
+  </sql>
+  
+  <insert id="insertOrUpdateByBatch" parameterType="java.util.List">
+    insert into sap_scjhwl_tb (id, gzrq, wlzbm, 
+      wlzmc, drjh, dylj, 
+      dyrj)
+	  values
+    <foreach collection="list" item="items" index="index" separator=",">
+		(#{items.id,jdbcType=VARCHAR}, #{items.gzrq,jdbcType=VARCHAR}, #{items.wlzbm,jdbcType=VARCHAR}, 
+      #{items.wlzmc,jdbcType=VARCHAR}, #{items.drjh,jdbcType=INTEGER}, #{items.dylj,jdbcType=INTEGER}, 
+      #{items.dyrj,jdbcType=INTEGER})
+    </foreach>
+     ON DUPLICATE KEY UPDATE 
+    gzrq=values(gzrq),wlzbm=values(wlzbm),wlzmc=values(wlzmc),drjh=values(drjh),dylj=values(dylj),dyrj=values(dyrj)
+  </insert>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jxszj.pojo.sap.SapScjhwlTbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sap_scjhwl_tb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <update id="update" >
+    update sap_scjhwl_tb
+    set dylj = #{dylj,jdbcType=INTEGER},
+      dyrj = #{dyrj,jdbcType=INTEGER}
+    where wlzbm = #{wlzbm,jdbcType=VARCHAR} and gzrq like #{gzrq,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sap_scjhwl_tb
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+</mapper>
