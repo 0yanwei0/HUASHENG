@@ -89,7 +89,7 @@ public class XsmlfxQuartz {
 					hsXsmlfxTb.setDhlx(array.getJSONObject(i).getString("YY1_DHLX_SDI"));
 					hsXsmlfxTb.setCjptcdgd(array.getJSONObject(i).getString("YY1_CJPTCDGD_SDI"));
 					hsXsmlfxTb.setCjptcj(array.getJSONObject(i).getString("YY1_CJPTCJ_SDI"));
-					hsXsmlfxTb.setQt(array.getJSONObject(i).getString("YY1_DHQTBZ_SDI"));
+					hsXsmlfxTb.setQt(array.getJSONObject(i).getString("YY1_DHQTBZ_SDI").getBytes());
 					hsXsmlfxTb.setGcgd(array.getJSONObject(i).getString("YY1_SalesPerson_SDI"));
 					hsXsmlfxTb.setXspzlx(array.getJSONObject(i).getString("SalesDocumentType"));
 					hsXsmlfxTb.setJj(array.getJSONObject(i).getDouble("NetPriceAmount"));

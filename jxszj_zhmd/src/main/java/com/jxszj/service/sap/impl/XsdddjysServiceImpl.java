@@ -97,7 +97,7 @@ public class XsdddjysServiceImpl implements IXsdddjysService {
 					hsXsdddjysTb.setDhlx(array.getJSONObject(i).getString("YY1_DHLX_SDI"));
 					hsXsdddjysTb.setCjptcdgd(array.getJSONObject(i).getString("YY1_CJPTCDGD_SDI"));
 					hsXsdddjysTb.setCjptcj(array.getJSONObject(i).getString("YY1_CJPTCJ_SDI"));
-					hsXsdddjysTb.setQt(array.getJSONObject(i).getString("YY1_DHQTBZ_SDI"));
+					hsXsdddjysTb.setQt(array.getJSONObject(i).getString("YY1_DHQTBZ_SDI").getBytes());
 					hsXsdddjysTb.setGcgd(array.getJSONObject(i).getString("YY1_SalesPerson_SDI"));
 					hsXsdddjysTb.setCpbm(array.getJSONObject(i).getString("Product"));
 					hsXsdddjysTb.setJj(array.getJSONObject(i).getDouble("NetPriceAmount"));

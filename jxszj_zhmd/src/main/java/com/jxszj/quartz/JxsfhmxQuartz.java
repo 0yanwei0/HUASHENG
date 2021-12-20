@@ -25,12 +25,12 @@ public class JxsfhmxQuartz {
 	public void execute() {
 
 		//获取当天新增的数据
-		List<HsJxsfhmxTb> list=getHsJxsfhmxTbs("https://my300201-api.saps4hanacloud.cn/sap/opu/odata/sap/YY1_DEALEROUTDETAIL1API_CDS/YY1_DealerOutDetail1API?$filterActualGoodsMovementDate%20eq%20datetime'"+DateUtils.getNowDateToString()+"T00:00:00'");
+		List<HsJxsfhmxTb> list=getHsJxsfhmxTbs("https://my300201-api.saps4hanacloud.cn/sap/opu/odata/sap/YY1_DEALEROUTDETAIL1API_CDS/YY1_DealerOutDetail1API?$filter=ActualGoodsMovementDate%20eq%20datetime'"+DateUtils.getNowDateToString()+"T00:00:00'");
 				if(list.size()!=0){
 					hsJxsfhmxTbMapper.insertOrUpdateByBatch(list);
 				}
 		//获取当天修改的数据
-		list=getHsJxsfhmxTbs("https://my300201-api.saps4hanacloud.cn/sap/opu/odata/sap/YY1_DEALEROUTDETAIL1API_CDS/YY1_DealerOutDetail1API?$filterLastChangeDate%20eq%20datetime'"+DateUtils.getNowDateToString()+"T00:00:00'");
+		list=getHsJxsfhmxTbs("https://my300201-api.saps4hanacloud.cn/sap/opu/odata/sap/YY1_DEALEROUTDETAIL1API_CDS/YY1_DealerOutDetail1API?$filter=LastChangeDate%20eq%20datetime'"+DateUtils.getNowDateToString()+"T00:00:00'");
 				if(list.size()!=0){
 					hsJxsfhmxTbMapper.insertOrUpdateByBatch(list);
 				}
@@ -74,7 +74,7 @@ public class JxsfhmxQuartz {
 					hsJxsfhmxTb.setDhlx(array.getJSONObject(i).getString("YY1_DHLX_SDI"));
 					hsJxsfhmxTb.setCjptcdgd(array.getJSONObject(i).getString("YY1_CJPTCDGD_SDI"));
 					hsJxsfhmxTb.setCjptcj(array.getJSONObject(i).getString("YY1_CJPTCJ_SDI"));
-					hsJxsfhmxTb.setQt(array.getJSONObject(i).getString("YY1_DHQTBZ_SDI"));
+					hsJxsfhmxTb.setQt(array.getJSONObject(i).getString("YY1_DHQTBZ_SDI").getBytes());
 					hsJxsfhmxTb.setGcgd(array.getJSONObject(i).getString("YY1_SalesPerson_SDI"));
 					hsJxsfhmxTb.setJjzt(array.getJSONObject(i).getString("SDDocumentRejectionStatus"));
 					hsJxsfhmxTb.setQxyy(array.getJSONObject(i).getString("SalesContractCanclnReason"));

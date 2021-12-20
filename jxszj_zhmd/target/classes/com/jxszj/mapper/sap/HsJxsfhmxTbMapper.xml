@@ -20,7 +20,6 @@
     <result column="dhlx" property="dhlx" jdbcType="VARCHAR" />
     <result column="cjptcdgd" property="cjptcdgd" jdbcType="VARCHAR" />
     <result column="cjptcj" property="cjptcj" jdbcType="VARCHAR" />
-    <result column="qt" property="qt" jdbcType="VARCHAR" />
     <result column="gcgd" property="gcgd" jdbcType="VARCHAR" />
     <result column="jjzt" property="jjzt" jdbcType="VARCHAR" />
     <result column="qxyy" property="qxyy" jdbcType="VARCHAR" />
@@ -34,6 +33,9 @@
     <result column="hwydzt" property="hwydzt" jdbcType="VARCHAR" />
     <result column="jhsl" property="jhsl" jdbcType="DOUBLE" />
     <result column="hwydlx" property="hwydlx" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jxszj.pojo.sap.HsJxsfhmxTb" extends="BaseResultMap" >
+    <result column="qt" property="qt" jdbcType="LONGVARBINARY" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -95,8 +97,11 @@
   </sql>
   <sql id="Base_Column_List" >
     id, ckjh, wxjhxm, xspz, xspzxm, xszz, jxskhbm, jxskhmc, dhdh, cpbm, cpms, wlz, cpzms, 
-    ddsl, xsdw, dhlx, cjptcdgd, cjptcj, qt, gcgd, jjzt, qxyy, thyy, jjyy, th, ggrq, xspzlx, 
+    ddsl, xsdw, dhlx, cjptcdgd, cjptcj, gcgd, jjzt, qxyy, thyy, jjyy, th, ggrq, xspzlx, 
     jhlx, sjhwydrq, hwydzt, jhsl, hwydlx
+  </sql>
+  <sql id="Blob_Column_List" >
+    qt
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jxszj.pojo.sap.HsJxsfhmxTbExample" >
     select
@@ -118,21 +123,21 @@
       jxskhbm, jxskhmc, dhdh, 
       cpbm, cpms, wlz, cpzms, 
       ddsl, xsdw, dhlx, cjptcdgd, 
-      cjptcj, qt, gcgd, jjzt, 
+      cjptcj, gcgd, jjzt, 
       qxyy, thyy, jjyy, th, 
       ggrq, xspzlx, jhlx, 
       sjhwydrq, hwydzt, jhsl, 
-      hwydlx)
+      hwydlx, qt)
     values (#{id,jdbcType=VARCHAR}, #{ckjh,jdbcType=VARCHAR}, #{wxjhxm,jdbcType=VARCHAR}, 
       #{xspz,jdbcType=VARCHAR}, #{xspzxm,jdbcType=VARCHAR}, #{xszz,jdbcType=VARCHAR}, 
       #{jxskhbm,jdbcType=VARCHAR}, #{jxskhmc,jdbcType=VARCHAR}, #{dhdh,jdbcType=VARCHAR}, 
       #{cpbm,jdbcType=VARCHAR}, #{cpms,jdbcType=VARCHAR}, #{wlz,jdbcType=VARCHAR}, #{cpzms,jdbcType=VARCHAR}, 
       #{ddsl,jdbcType=DOUBLE}, #{xsdw,jdbcType=VARCHAR}, #{dhlx,jdbcType=VARCHAR}, #{cjptcdgd,jdbcType=VARCHAR}, 
-      #{cjptcj,jdbcType=VARCHAR}, #{qt,jdbcType=VARCHAR}, #{gcgd,jdbcType=VARCHAR}, #{jjzt,jdbcType=VARCHAR}, 
+      #{cjptcj,jdbcType=VARCHAR}, #{gcgd,jdbcType=VARCHAR}, #{jjzt,jdbcType=VARCHAR}, 
       #{qxyy,jdbcType=VARCHAR}, #{thyy,jdbcType=VARCHAR}, #{jjyy,jdbcType=VARCHAR}, #{th,jdbcType=VARCHAR}, 
       #{ggrq,jdbcType=VARCHAR}, #{xspzlx,jdbcType=VARCHAR}, #{jhlx,jdbcType=VARCHAR}, 
       #{sjhwydrq,jdbcType=VARCHAR}, #{hwydzt,jdbcType=VARCHAR}, #{jhsl,jdbcType=DOUBLE}, 
-      #{hwydlx,jdbcType=VARCHAR})
+      #{hwydlx,jdbcType=VARCHAR}, #{qt,jdbcType=LONGVARBINARY})
   </insert>
   
 <!--批量添加  -->
@@ -153,7 +158,7 @@
       #{item.xspzxm,jdbcType=VARCHAR}, #{item.xszz,jdbcType=VARCHAR}, #{item.jxskhbm,jdbcType=VARCHAR}, #{item.jxskhmc,jdbcType=VARCHAR}, 
       #{item.dhdh,jdbcType=VARCHAR}, #{item.cpbm,jdbcType=VARCHAR}, #{item.cpms,jdbcType=VARCHAR}, #{item.wlz,jdbcType=VARCHAR}, 
       #{item.cpzms,jdbcType=VARCHAR}, #{item.ddsl,jdbcType=DOUBLE}, #{item.xsdw,jdbcType=VARCHAR}, #{item.dhlx,jdbcType=VARCHAR}, 
-      #{item.cjptcdgd,jdbcType=VARCHAR}, #{item.cjptcj,jdbcType=VARCHAR}, #{item.qt,jdbcType=VARCHAR}, 
+      #{item.cjptcdgd,jdbcType=VARCHAR}, #{item.cjptcj,jdbcType=VARCHAR}, #{item.qt,jdbcType=LONGVARBINARY}, 
       #{item.gcgd,jdbcType=VARCHAR}, #{item.jjzt,jdbcType=VARCHAR}, #{item.qxyy,jdbcType=VARCHAR}, 
       #{item.thyy,jdbcType=VARCHAR}, #{item.jjyy,jdbcType=VARCHAR}, #{item.th,jdbcType=VARCHAR}, #{item.ggrq,jdbcType=VARCHAR}, 
       #{item.xspzlx,jdbcType=VARCHAR}, #{item.jhlx,jdbcType=VARCHAR}, #{item.sjhwydrq,jdbcType=VARCHAR}, #{item.hwydzt,jdbcType=VARCHAR}, 

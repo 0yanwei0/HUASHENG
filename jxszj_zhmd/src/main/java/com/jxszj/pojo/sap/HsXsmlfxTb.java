@@ -51,8 +51,6 @@ public class HsXsmlfxTb {
 
     private String cjptcj;
 
-    private String qt;
-
     private String gcgd;
 
     private String xspzlx;
@@ -94,6 +92,8 @@ public class HsXsmlfxTb {
     private String pzhb;
 
     private Double ddsl;
+
+    private byte[] qt;
 
     public String getId() {
         return id;
@@ -295,14 +295,6 @@ public class HsXsmlfxTb {
         this.cjptcj = cjptcj == null ? null : cjptcj.trim();
     }
 
-    public String getQt() {
-        return qt;
-    }
-
-    public void setQt(String qt) {
-        this.qt = qt == null ? null : qt.trim();
-    }
-
     public String getGcgd() {
         return gcgd;
     }
@@ -469,5 +461,13 @@ public class HsXsmlfxTb {
 
     public void setDdsl(Double ddsl) {
         this.ddsl = ddsl;
+    }
+
+    public byte[] getQt() {
+        return qt;
+    }
+
+    public void setQt(byte[] qt) {
+        this.qt = qt;
     }
 }

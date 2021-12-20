@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jxszj.mapper.sap.HsXsdddjysTbMapper" >
   <resultMap id="BaseResultMap" type="com.jxszj.pojo.sap.HsXsdddjysTb" >
-  	<id column="id" property="id" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="xspz" property="xspz" jdbcType="VARCHAR" />
     <result column="xspzxm" property="xspzxm" jdbcType="VARCHAR" />
     <result column="wlz" property="wlz" jdbcType="VARCHAR" />
@@ -11,7 +11,6 @@
     <result column="dhlx" property="dhlx" jdbcType="VARCHAR" />
     <result column="cjptcdgd" property="cjptcdgd" jdbcType="VARCHAR" />
     <result column="cjptcj" property="cjptcj" jdbcType="VARCHAR" />
-    <result column="qt" property="qt" jdbcType="VARCHAR" />
     <result column="gcgd" property="gcgd" jdbcType="VARCHAR" />
     <result column="cpbm" property="cpbm" jdbcType="VARCHAR" />
     <result column="jj" property="jj" jdbcType="DOUBLE" />
@@ -51,6 +50,9 @@
     <result column="ggrq" property="ggrq" jdbcType="VARCHAR" />
     <result column="xspzlx" property="xspzlx" jdbcType="VARCHAR" />
     <result column="cjny" property="cjny" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jxszj.pojo.sap.HsXsdddjysTb" extends="BaseResultMap" >
+    <result column="qt" property="qt" jdbcType="LONGVARBINARY" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -111,10 +113,13 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, xspz, xspzxm, wlz, ddsl, xsdw, dhlx, cjptcdgd, cjptcj, qt, gcgd, cpbm, jj, jz, pzhb, 
+    id, xspz, xspzxm, wlz, ddsl, xsdw, dhlx, cjptcdgd, cjptcj, gcgd, cpbm, jj, jz, pzhb, 
     cjrq, xszz, fxqd, jxskhbm, dhdh, th, jjzt, qxyy, thyy, jjyy, cpms, wlzms, jxskhmc, 
     bzjgtjjz, bzjgje, khzktjjz, khzkje, syfltjjz, syflje, cdbltjjz, cdblje, xxstjjz, 
     xsje, bzcbgjtjjz, bzcbgjje, jsjtjjz, jsjje, pp, cpmc, psph, ggxh, ggrq, xspzlx, cjny
+  </sql>
+  <sql id="Blob_Column_List" >
+    qt
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jxszj.pojo.sap.HsXsdddjysTbExample" >
     select
@@ -131,11 +136,11 @@
     </if>
   </select>
   <insert id="insert" parameterType="com.jxszj.pojo.sap.HsXsdddjysTb" >
-    insert into hs_xsdddjys_tb (id, xspz, xspzxm, wlz, 
-      ddsl, xsdw, dhlx, cjptcdgd, 
-      cjptcj, qt, gcgd, cpbm, 
-      jj, jz, pzhb, cjrq, 
-      xszz, fxqd, jxskhbm, 
+    insert into hs_xsdddjys_tb (id, xspz, xspzxm, 
+      wlz, ddsl, xsdw, dhlx, 
+      cjptcdgd, cjptcj, gcgd, 
+      cpbm, jj, jz, pzhb, 
+      cjrq, xszz, fxqd, jxskhbm, 
       dhdh, th, jjzt, qxyy, 
       thyy, jjyy, cpms, wlzms, 
       jxskhmc, bzjgtjjz, bzjgje, 
@@ -143,13 +148,14 @@
       syflje, cdbltjjz, cdblje, 
       xxstjjz, xsje, bzcbgjtjjz, 
       bzcbgjje, jsjtjjz, jsjje, 
-      pp, cpmc, psph, ggxh, ggrq, xspzlx, cjny
-      )
-    values (#{id,jdbcType=VARCHAR}, #{xspz,jdbcType=VARCHAR}, #{xspzxm,jdbcType=VARCHAR}, #{wlz,jdbcType=VARCHAR}, 
-      #{ddsl,jdbcType=DOUBLE}, #{xsdw,jdbcType=VARCHAR}, #{dhlx,jdbcType=VARCHAR}, #{cjptcdgd,jdbcType=VARCHAR}, 
-      #{cjptcj,jdbcType=VARCHAR}, #{qt,jdbcType=VARCHAR}, #{gcgd,jdbcType=VARCHAR}, #{cpbm,jdbcType=VARCHAR}, 
-      #{jj,jdbcType=DOUBLE}, #{jz,jdbcType=DOUBLE}, #{pzhb,jdbcType=VARCHAR}, #{cjrq,jdbcType=VARCHAR}, 
-      #{xszz,jdbcType=VARCHAR}, #{fxqd,jdbcType=VARCHAR}, #{jxskhbm,jdbcType=VARCHAR}, 
+      pp, cpmc, psph, ggxh, 
+      ggrq, xspzlx, cjny, 
+      qt)
+    values (#{id,jdbcType=VARCHAR}, #{xspz,jdbcType=VARCHAR}, #{xspzxm,jdbcType=VARCHAR}, 
+      #{wlz,jdbcType=VARCHAR}, #{ddsl,jdbcType=DOUBLE}, #{xsdw,jdbcType=VARCHAR}, #{dhlx,jdbcType=VARCHAR}, 
+      #{cjptcdgd,jdbcType=VARCHAR}, #{cjptcj,jdbcType=VARCHAR}, #{gcgd,jdbcType=VARCHAR}, 
+      #{cpbm,jdbcType=VARCHAR}, #{jj,jdbcType=DOUBLE}, #{jz,jdbcType=DOUBLE}, #{pzhb,jdbcType=VARCHAR}, 
+      #{cjrq,jdbcType=VARCHAR}, #{xszz,jdbcType=VARCHAR}, #{fxqd,jdbcType=VARCHAR}, #{jxskhbm,jdbcType=VARCHAR}, 
       #{dhdh,jdbcType=VARCHAR}, #{th,jdbcType=VARCHAR}, #{jjzt,jdbcType=VARCHAR}, #{qxyy,jdbcType=VARCHAR}, 
       #{thyy,jdbcType=VARCHAR}, #{jjyy,jdbcType=VARCHAR}, #{cpms,jdbcType=VARCHAR}, #{wlzms,jdbcType=VARCHAR}, 
       #{jxskhmc,jdbcType=VARCHAR}, #{bzjgtjjz,jdbcType=DOUBLE}, #{bzjgje,jdbcType=DOUBLE}, 
@@ -157,8 +163,9 @@
       #{syflje,jdbcType=DOUBLE}, #{cdbltjjz,jdbcType=DOUBLE}, #{cdblje,jdbcType=DOUBLE}, 
       #{xxstjjz,jdbcType=DOUBLE}, #{xsje,jdbcType=DOUBLE}, #{bzcbgjtjjz,jdbcType=DOUBLE}, 
       #{bzcbgjje,jdbcType=DOUBLE}, #{jsjtjjz,jdbcType=DOUBLE}, #{jsjje,jdbcType=DOUBLE}, 
-      #{pp,jdbcType=VARCHAR}, #{cpmc,jdbcType=VARCHAR}, #{psph,jdbcType=VARCHAR}, #{ggxh,jdbcType=VARCHAR}, #{ggrq,jdbcType=VARCHAR}, #{xspzlx,jdbcType=VARCHAR}, #{cjny,jdbcType=VARCHAR}
-      )
+      #{pp,jdbcType=VARCHAR}, #{cpmc,jdbcType=VARCHAR}, #{psph,jdbcType=VARCHAR}, #{ggxh,jdbcType=VARCHAR}, 
+      #{ggrq,jdbcType=VARCHAR}, #{xspzlx,jdbcType=VARCHAR}, #{cjny,jdbcType=VARCHAR}, 
+      #{qt,jdbcType=LONGVARBINARY})
   </insert>
   
 <!--批量添加  -->
@@ -181,7 +188,7 @@
     <foreach collection="list" item="item" index="index" separator=",">
     	(#{item.id,jdbcType=VARCHAR}, #{item.xspz,jdbcType=VARCHAR}, #{item.xspzxm,jdbcType=VARCHAR}, #{item.wlz,jdbcType=VARCHAR}, 
       #{item.ddsl,jdbcType=INTEGER}, #{item.xsdw,jdbcType=VARCHAR}, #{item.dhlx,jdbcType=VARCHAR}, #{item.cjptcdgd,jdbcType=VARCHAR}, 
-      #{item.cjptcj,jdbcType=VARCHAR}, #{item.qt,jdbcType=VARCHAR}, #{item.gcgd,jdbcType=VARCHAR}, #{item.cpbm,jdbcType=VARCHAR}, 
+      #{item.cjptcj,jdbcType=VARCHAR}, #{item.qt,jdbcType=LONGVARBINARY}, #{item.gcgd,jdbcType=VARCHAR}, #{item.cpbm,jdbcType=VARCHAR}, 
       #{item.jj,jdbcType=DOUBLE}, #{item.jz,jdbcType=DOUBLE}, #{item.pzhb,jdbcType=VARCHAR}, #{item.cjrq,jdbcType=VARCHAR}, 
       #{item.xszz,jdbcType=VARCHAR}, #{item.fxqd,jdbcType=VARCHAR}, #{item.jxskhbm,jdbcType=VARCHAR}, 
       #{item.dhdh,jdbcType=VARCHAR}, #{item.th,jdbcType=VARCHAR}, #{item.jjzt,jdbcType=VARCHAR}, #{item.qxyy,jdbcType=VARCHAR}, 

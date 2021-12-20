@@ -19,8 +19,6 @@ public class HsXsdddjysTb {
 
     private String cjptcj;
 
-    private String qt;
-
     private String gcgd;
 
     private String cpbm;
@@ -99,6 +97,8 @@ public class HsXsdddjysTb {
 
     private String cjny;
 
+    private byte[] qt;
+
     public String getId() {
         return id;
     }
@@ -169,14 +169,6 @@ public class HsXsdddjysTb {
 
     public void setCjptcj(String cjptcj) {
         this.cjptcj = cjptcj == null ? null : cjptcj.trim();
-    }
-
-    public String getQt() {
-        return qt;
-    }
-
-    public void setQt(String qt) {
-        this.qt = qt == null ? null : qt.trim();
     }
 
     public String getGcgd() {
@@ -489,5 +481,13 @@ public class HsXsdddjysTb {
 
     public void setCjny(String cjny) {
         this.cjny = cjny == null ? null : cjny.trim();
+    }
+
+    public byte[] getQt() {
+        return qt;
+    }
+
+    public void setQt(byte[] qt) {
+        this.qt = qt;
     }
 }
