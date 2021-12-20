@@ -26,6 +26,7 @@
 <input  type="hidden" type="text" id="tid" value="${tid }" />
 <input  type="hidden" type="text" id="code" value="" />
 <input  type="hidden" type="text" id="userid1" value="" />
+<input  type="hidden" type="text" id="userName1" value="" />
   <!----------Andrew_Ratyli---------->
   <div class="module list press mt_5">
     <ul class="list_h_36em">
@@ -143,19 +144,22 @@ $(function(){
     	var code=$("#code").val();
     	var tid=$("#tid").val();
     	var userid1=$("#userid1").val();
+    	var userName1=$("#userName1").val();
     	$.ajax({  
    		 contentType:"application/json;charset=utf-8",
    		 type: 'GET',  
    		 url: "${pageContext.request.contextPath}/dianzan", 
-   	     data: {code:code,tid:tid,userid1:userid1},
+   	     data: {code:code,tid:tid,userid1:userid1,userName1:userName1},
    	     success: function(data){  
    	    	 if(data.status ==200){
    	    		 $("#userid1").val(data.data.userid);
+   	    		 $("#userName1").val(data.data.userName);
    	    		 $('#dzlb').html(data.data.dzlb);
    	    		 $('#dzjf').html(data.data.dzjf);
    	    		 alert(data.msg);
    	    	 }else {
    	    		 $("#userid1").val(data.data.userid);
+   	    		 $("#userName1").val(data.data.userName);
    	    		 alert(data.msg);
    	    	 }
    	     }  
@@ -168,19 +172,22 @@ $(function(){
     	var code=$("#code").val();
     	var tid=$("#tid").val();
     	var userid1=$("#userid1").val();
+    	var userName1=$("#userName1").val();
     	$.ajax({  
    		 contentType:"application/json;charset=utf-8",
    		 type: 'GET',  
    		 url: "${pageContext.request.contextPath}/dianzan1", 
-   	     data: {code:code,tid:tid,userid1:userid1},
+   	     data: {code:code,tid:tid,userid1:userid1,userName1:userName1},
    	     success: function(data){  
    	    	 if(data.status ==200){
    	    		 $("#userid1").val(data.data.userid);
+   	    		 $("#userName1").val(data.data.userName);
    	    		 $('#fbdz').html(data.data.fbdz);
    	    		 $('#fbjf').html(data.data.fbjf);
    	    		 alert(data.msg);
    	    	 }else {
    	    		 $("#userid1").val(data.data.userid);
+   	    		 $("#userName1").val(data.data.userName);
    	    		 alert(data.msg);
    	    	 }
    	     }  
@@ -206,15 +213,17 @@ $(function(){
     	var code=$("#code").val();
     	var tid=$("#tid").val();
     	var userid1=$("#userid1").val();
+    	var userName1=$("#userName1").val();
     	toast({time: 1000, content: '评论已发表！'});
     	$.ajax({  
    		 contentType:"application/json;charset=utf-8",
    		 type: 'GET',  
    		 url: "${pageContext.request.contextPath}/pinglun", 
-   	     data: {code:code,tid:tid,userid1:userid1,pl:pl},
+   	     data: {code:code,tid:tid,userid1:userid1,pl:pl,userName1:userName1},
    	     success: function(data){  
    	    	 if(data.status ==200 || data.status ==201){
-   	    		 $("#userid1").val(data.data.userid);
+   	    		 $("#userid1").val(data.data.userid);s
+   	    		 $("#userName1").val(data.data.userName);
    	    		 $("#pl").val("");
 	    	
    	    		setTimeout(

@@ -182,7 +182,7 @@ public class HbcpfxQuartz {
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build(); 
 		HttpGet httpGet = new HttpGet(url);
 		CloseableHttpResponse response = null;
-		JSONArray  array = null;
+		JSONArray  array = new JSONArray();
 		try {
 			httpGet.setHeader("Content-Type","application/json");
 			httpGet.setHeader("Accept","application/json");

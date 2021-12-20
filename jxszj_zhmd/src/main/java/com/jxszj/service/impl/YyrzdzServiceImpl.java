@@ -1,4 +1,7 @@
 package com.jxszj.service.impl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -12,11 +15,10 @@ import com.jxszj.service.IYyrzdzService;
 
 @Service
 public class YyrzdzServiceImpl implements IYyrzdzService {
-
     
 	@Override
-	public String dianzan(String code) {
-		String userId ="";
+	public JSONObject dianzan(String code) {
+		JSONObject json =null;
 		try {
 			DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/gettoken");
 			OapiGettokenRequest req = new OapiGettokenRequest();
@@ -36,15 +38,15 @@ public class YyrzdzServiceImpl implements IYyrzdzService {
 			  // 查询得到当前用户的userId    
 			  // 获得到userId之后应用应该处理应用自身的登录会话管理（session）,避免后续的业务交互（前端到应用服务端）每次都要重新获取用户身份，提升用户体验
 //			  userId = response.getUserid();
-			  JSONObject json=JSONObject.parseObject(response.getBody());
+			  json=JSONObject.parseObject(response.getBody());
+			  
 			  if("ok".equals(json.getString("errmsg"))){
-				  userId=json.getString("userid");
+				  return json;
 			  }
-				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return userId;
+		return json;
 	}
 	
 }

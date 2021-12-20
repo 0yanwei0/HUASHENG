@@ -1,9 +1,10 @@
 package com.jxszj.service;
 
+import com.alibaba.fastjson.JSONObject;
 
 public interface IYyrzdzService {
 
 	
-	public String dianzan(String code);
+	public JSONObject dianzan(String code);
 	
 }

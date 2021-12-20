@@ -3,12 +3,15 @@ package com.jxszj.quartz;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import com.jxszj.utils.DateUtils;
 import com.jxszj.utils.JDYAPIUtils;
@@ -33,7 +36,6 @@ public class YyjlzjhrzQuartz {
     
     //C6门店实时销售提报
     private static final String C6_ENTRYID = "5d2d229eee266915714e9e1e";
-    
     
 	public void execute() {
 		
@@ -185,48 +187,66 @@ public class YyjlzjhrzQuartz {
 		 Map<String,String> maps=new HashMap<>();
 		try {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, C1_1_ENTRYID, APIKEY);
-            List<Map<String, Object>> formData = api.getAllFormData(null,null);
-            
-            Set<String> set1=new HashSet<>();
-            Set<String> set2=new HashSet<>();
-            Set<String> set3=new HashSet<>();
-            for (int i = 0; i < formData.size(); i++) {
-            	set1.add(formData.get(i).get("_widget_1627886456443").toString());
-            	set2.add(formData.get(i).get("_widget_1628169392779").toString());
-            	set3.add(formData.get(i).get("_widget_1628169392851").toString());
+           List<Map<String, Object>> formData = api.getAllFormData(null,null);
+           
+           Set<String> set1=new HashSet<>();
+           Set<String> set2=new HashSet<>();
+           Set<String> set3=new HashSet<>();
+           for (int i = 0; i < formData.size(); i++) {
+           	set1.add(formData.get(i).get("_widget_1627886456443").toString());
+           	set2.add(formData.get(i).get("_widget_1628169392779").toString());
+           	set3.add(formData.get(i).get("_widget_1628169392851").toString());
 			}
-            //判断当前的运营员工是否是p01
-            for(String yy:set1){
-            	StringBuilder sb=new StringBuilder();
-            	for (int i = 0; i < formData.size(); i++) {
+           //判断当前的运营员工是否是p01
+           for(String yy:set1){
+           	StringBuilder sb=new StringBuilder();
+           	Map<String,Integer> map=new HashMap<String,Integer>();
+           	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1627886456443").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
-						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
+//						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
 					}
 				}
-            	maps.put(yy, sb.toString());
-            }
-          //判断当前的运营员工是否是p02
-            for(String yy:set2){
-            	StringBuilder sb=new StringBuilder();
-            	for (int i = 0; i < formData.size(); i++) {
+           	List<Entry<String, Integer>> list=mapSort(map);
+           	for (int i = 0; i < list.size(); i++) {
+           		sb.append(list.get(i).getKey()+"("+list.get(i).getValue()+")\n");
+				}
+           	maps.put(yy, sb.toString());
+           }
+         //判断当前的运营员工是否是p02
+           for(String yy:set2){
+           	StringBuilder sb=new StringBuilder();
+           	Map<String,Integer> map=new HashMap<String,Integer>();
+           	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628169392779").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
-						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
+//						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
 					}
 				}
-            	maps.put(yy, sb.toString());
-            }
-            
-          //判断当前的运营员工是否是p03
-            for(String yy:set3){
-            	StringBuilder sb=new StringBuilder();
-            	for (int i = 0; i < formData.size(); i++) {
+           	List<Entry<String, Integer>> list=mapSort(map);
+           	for (int i = 0; i < list.size(); i++) {
+           		sb.append(list.get(i).getKey()+"("+list.get(i).getValue()+")\n");
+				}
+           	maps.put(yy, sb.toString());
+           }
+           
+         //判断当前的运营员工是否是p03
+           for(String yy:set3){
+           	StringBuilder sb=new StringBuilder();
+           	Map<String,Integer> map=new HashMap<String,Integer>();
+           	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628169392851").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
-						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+//						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
 					}
 				}
-            	maps.put(yy, sb.toString());
-            }
-    		
+           	List<Entry<String, Integer>> list=mapSort(map);
+           	for (int i = 0; i < list.size(); i++) {
+           		sb.append(list.get(i).getKey()+"("+list.get(i).getValue()+")\n");
+				}
+           	maps.put(yy, sb.toString());
+           }
+   		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -255,21 +275,27 @@ public class YyjlzjhrzQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1563246848890").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje<number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p02
@@ -279,21 +305,27 @@ public class YyjlzjhrzQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770663").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje<number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p03
@@ -303,21 +335,27 @@ public class YyjlzjhrzQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770916").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje<number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
     		
@@ -348,21 +386,27 @@ public class YyjlzjhrzQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1563246848890").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje>=number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p02
@@ -372,21 +416,27 @@ public class YyjlzjhrzQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770663").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje>=number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p03
@@ -396,21 +446,27 @@ public class YyjlzjhrzQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770916").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje>=number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
     		
@@ -518,5 +574,19 @@ public class YyjlzjhrzQuartz {
         }
         
         return yymds;
+	}
+	
+	public static List<Map.Entry<String,Integer>> mapSort(Map<String,Integer> map){
+		//将map.entrySet()转换成list
+        List<Map.Entry<String,Integer>> list = new ArrayList<Map.Entry<String,Integer>>(map.entrySet());
+        //然后通过比较器来实现排序
+        Collections.sort(list,new Comparator<Map.Entry<String,Integer>>() {
+            //升序排序
+            public int compare(Entry<String, Integer> o1,
+                    Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+		return list;
 	}
 }

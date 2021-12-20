@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiRobotSendRequest;
@@ -38,16 +39,9 @@ public class YyrzdzController {
     //Y2工作日志积分
     private static final String Y2_ENTRYID="611a09c5e12ca00007ac7a01";
     
-    
-    //运营经理钉钉编码对照表
-    private static final String ENTRYID_DD="616135f81908e700083afa91";
-    
       //Y2.1工作日志提报
     private static final String ENTRYID = "61528f58d8111b0008415b1f";
     
-    //Y2.1工作日志提报_拷贝
-//    private static final String ENTRYID = "6184c424f4eff50007c414dd";
-	
 	
 	@RequestMapping("/welcome")
 	public String  welcome(Model model,String tid){
@@ -103,7 +97,7 @@ public class YyrzdzController {
 	
 	@RequestMapping(value = "/dianzan", method = RequestMethod.GET)
 	@ResponseBody
-	 public MessageResult dianzan (String code,String tid,String userid1) {
+	 public MessageResult dianzan (String code,String tid,String userid1,String userName1) {
 		//配置哪些人可以点赞
 		Map<String,String> map=new HashMap<>();
 		map.put("0308432232679085", "刘毅");
@@ -115,8 +109,11 @@ public class YyrzdzController {
 			Map<String,Object> data=new HashMap<>();
 			String name="";
 			String userId=userid1;
+			String userName=userName1;
 			if("".equals(userid1)){
-				userId=yyrzdzService.dianzan(code);
+				JSONObject json=yyrzdzService.dianzan(code);
+				userId=json.getString("userid");
+				userName=json.getString("name");
 			}
 			data.put("userid", userId);
 			if(map.get(userId)==null){
@@ -209,6 +206,7 @@ public class YyrzdzController {
 			}
 			
 			data.put("userid", userId);
+			data.put("userName", userName);
 			data.put("dzlb", dzlb);
 			data.put("dzjf", dzjf);
 			
@@ -253,7 +251,7 @@ public class YyrzdzController {
 	//范本点赞
 	@RequestMapping(value = "/dianzan1", method = RequestMethod.GET)
 	@ResponseBody
-	 public MessageResult dianzan1 (String code,String tid,String userid1) {
+	 public MessageResult dianzan1 (String code,String tid,String userid1,String userName1) {
 		//配置哪些人可以点赞
 		Map<String,String> map=new HashMap<>();
 		map.put("0308432232679085", "刘毅");
@@ -262,8 +260,11 @@ public class YyrzdzController {
 			Map<String,Object> data=new HashMap<>();
 			String name="";
 			String userId=userid1;
+			String userName=userName1;
 			if("".equals(userid1)){
-				userId=yyrzdzService.dianzan(code);
+				JSONObject json=yyrzdzService.dianzan(code);
+				userId=json.getString("userid");
+				userName=json.getString("name");
 			}
 			data.put("userid", userId);
 			if(map.get(userId)==null){
@@ -332,6 +333,7 @@ public class YyrzdzController {
 			data.put("userid", userId);
 			data.put("fbdz", dzlb);
 			data.put("fbjf", fbjf);
+			data.put("userName", userName);
 			//判断是否已经点过赞
 			if(ObjectUtils.getString(formData0.get(0).get("_widget_1635947953857")).contains(name)){
 				return MessageResult.build(201,"已点过赞，不要重复点赞！",data);
@@ -372,39 +374,23 @@ public class YyrzdzController {
 	
 	@RequestMapping(value = "/pinglun", method = RequestMethod.GET)
 	@ResponseBody
-	 public MessageResult pinglun (String code,String tid,String userid1,String pl) {
+	 public MessageResult pinglun (String code,String tid,String userid1,String pl,String userName1) {
 		try {
 			Map<String,Object> data=new HashMap<>();
 			String userId=userid1;
+			String userName=userName1;
 			if("".equals(userid1)){
-				userId=yyrzdzService.dianzan(code);
+				JSONObject json=yyrzdzService.dianzan(code);
+				userId=json.getString("userid");
+				userName=json.getString("name");
 			}
-//			JDYAPIUtils dd = new JDYAPIUtils(APPID, ENTRYID_DD, APIKEY);
-//			final List<Map<String, Object>> condList0 = new ArrayList<Map<String, Object>>();
-//			Map<String, Object> map0 = new HashMap<String, Object>();
-//			map0.put("field", "_widget_1634107736212");
-//			map0.put("type", "text");
-//			map0.put("method", "eq");
-//			map0.put("value", userId);
-//			condList0.add(map0);
-//			Map<String, Object> filter0 = new HashMap<String, Object>() {
-//				{
-//					put("rel", "and");
-//					put("cond", condList0);
-//				}
-//			};
-//			List<Map<String, Object>> dddzb = dd.getAllFormData(null,filter0);
-//			if(dddzb.size()!=1){
-//				return MessageResult.build(500,"评论失败,联系IT！");
-//			}
-//			Object name= dddzb.get(0).get("_widget_1633760760758");
 			//配置哪些人可以评论
-			Map<String,String> maps=new HashMap<>();
-			maps.put("0308432232679085", "刘毅");
-			maps.put("1617770508396949", "吴峰松");
-			maps.put("H0001", "吴为");
-			maps.put("H0004", "林媚");
-			maps.put("H0008", "凌雅琼");
+//			Map<String,String> maps=new HashMap<>();
+//			maps.put("0308432232679085", "刘毅");
+//			maps.put("1617770508396949", "吴峰松");
+//			maps.put("H0001", "吴为");
+//			maps.put("H0004", "林媚");
+//			maps.put("H0008", "凌雅琼");
 			
 			
 			//查询当前的运营员工
@@ -425,21 +411,17 @@ public class YyrzdzController {
 			List<Map<String, Object>> formData0 = api.getAllFormData(null,filter);
 			String pljl=ObjectUtils.getString(formData0.get(0).get("_widget_1635947953993"));//评论
 			
-			String name=maps.get(userId);
-			if("".equals(name)){
-				name=ObjectUtils.getString(formData0.get(0).get("_widget_1632800603215"));
-			}
-			
 			data.put("userid", userId);
+			data.put("userName", userName);
 			Map<String, Object>rawData = new HashMap<String, Object>();
 			String str="";
 			if("".equals(pljl)){
-				str="##"+name+"#"+DateUtils.getNowDateToString(DateUtils.FORMAT_1_LONG)+"#"+pl;
+				str="##"+userName+"#"+DateUtils.getNowDateToString(DateUtils.FORMAT_1_LONG)+"#"+pl;
 				Map<String, Object> m1 = new HashMap<String, Object>();
 				m1.put("value", str);
 				rawData.put("_widget_1635947953993", m1);
 			}else{
-				str="##"+name+"#"+DateUtils.getNowDateToString(DateUtils.FORMAT_1_LONG)+"#"+pl+pljl;
+				str="##"+userName+"#"+DateUtils.getNowDateToString(DateUtils.FORMAT_1_LONG)+"#"+pl+pljl;
 				Map<String, Object> m1 = new HashMap<String, Object>();
 				m1.put("value", str);
 				rawData.put("_widget_1635947953993", m1);
@@ -460,9 +442,9 @@ public class YyrzdzController {
 				listMaps.add(maps1);
 			}
 			data.put("pljl", listMaps);
-			if(maps.get(userId)!=null){
+			if(!userName.equals(ObjectUtils.getString(formData0.get(0).get("_widget_1632800603215")))){
 				jqrPush(tid,ObjectUtils.getString(formData0.get(0).get("_widget_1632800603215")),"日志评论[气泡]");
-			}else if(maps.get(userId)==null && pl.contains("@")){
+			}else if(pl.contains("@")){
 				jqrPush(tid,Arrays.asList(pl.split("@")).get(1),"日志回复[气泡]");
 			}
 			return MessageResult.build(200,"评论成功！",data);

@@ -3,11 +3,14 @@ package com.jxszj.quartz;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.jxszj.utils.DateUtils;
@@ -94,7 +97,7 @@ public class YyzjhrzTemplateQuartz {
 		List<Map<String, Object>> list =dd.getAllFormData(null, filter2);
 		Map<String,String> ddbm=new HashMap<>();
 		for (int i = 0; i < list.size(); i++) {
-			ddbm.put(list.get(i).get("_widget_1633760760830").toString(), list.get(i).get("_widget_1633760760777")+"/"+list.get(i).get("_widget_1633760760758"));
+			ddbm.put(list.get(i).get("_widget_1633760760830").toString(), list.get(i).get("_widget_1633760760777")+"/"+list.get(i).get("_widget_1633760760758")+"/"+list.get(i).get("_widget_1639470641692"));
 		}
 		
 		JDYAPIUtils rz = new JDYAPIUtils(APPID, ENTRYID, APIKEY);
@@ -199,6 +202,9 @@ public class YyzjhrzTemplateQuartz {
 			Map<String, Object> m17 = new HashMap<String, Object>();
 			m17.put("value", "否");
 			rawData.put("_widget_1639205132548", m17);
+			Map<String, Object> m18 = new HashMap<String, Object>();
+			m18.put("value", yy.getValue().split("/")[2]);
+			rawData.put("_widget_1639470836285", m18);
 			rz.createDataByworkflow(rawData);
 		}
 
@@ -222,20 +228,32 @@ public class YyzjhrzTemplateQuartz {
             //判断当前的运营员工是否是p01
             for(String yy:set1){
             	StringBuilder sb=new StringBuilder();
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1627886456443").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
-						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
+//						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
 					}
+				}
+            	List<Entry<String, Integer>> list=mapSort(map);
+            	for (int i = 0; i < list.size(); i++) {
+            		sb.append(list.get(i).getKey()+"("+list.get(i).getValue()+")\n");
 				}
             	maps.put(yy, sb.toString());
             }
           //判断当前的运营员工是否是p02
             for(String yy:set2){
             	StringBuilder sb=new StringBuilder();
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628169392779").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
-						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
+//						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
 					}
+				}
+            	List<Entry<String, Integer>> list=mapSort(map);
+            	for (int i = 0; i < list.size(); i++) {
+            		sb.append(list.get(i).getKey()+"("+list.get(i).getValue()+")\n");
 				}
             	maps.put(yy, sb.toString());
             }
@@ -243,10 +261,16 @@ public class YyzjhrzTemplateQuartz {
           //判断当前的运营员工是否是p03
             for(String yy:set3){
             	StringBuilder sb=new StringBuilder();
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628169392851").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
-						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+//						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
+						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
 					}
+				}
+            	List<Entry<String, Integer>> list=mapSort(map);
+            	for (int i = 0; i < list.size(); i++) {
+            		sb.append(list.get(i).getKey()+"("+list.get(i).getValue()+")\n");
 				}
             	maps.put(yy, sb.toString());
             }
@@ -279,21 +303,27 @@ public class YyzjhrzTemplateQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1563246848890").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje<number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p02
@@ -303,21 +333,27 @@ public class YyzjhrzTemplateQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770663").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje<number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p03
@@ -327,21 +363,27 @@ public class YyzjhrzTemplateQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770916").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje<number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
     		
@@ -372,21 +414,27 @@ public class YyzjhrzTemplateQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1563246848890").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje>=number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p02
@@ -396,21 +444,27 @@ public class YyzjhrzTemplateQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770663").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje>=number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
             //计算p03
@@ -420,21 +474,27 @@ public class YyzjhrzTemplateQuartz {
             	Set<String> set=new HashSet<>();
             	for (int i = 0; i < formData.size(); i++) {
 					if(yy.equals(formData.get(i).get("_widget_1628170770916").toString())){
-						list.add(formData.get(i).get("_widget_1563246847900")+"/"+formData.get(i).get("_widget_1563246851087"));
+						list.add(formData.get(i).get("_widget_1563246847900")+"/"+ObjectUtils.getObjectToDouble(formData.get(i).get("_widget_1563246851087")).intValue());
 						set.add(formData.get(i).get("_widget_1563246847900").toString());
 					}
 				}
+            	Map<String,Integer> map=new HashMap<String,Integer>();
             	for(String md:set){
-            		double ddje=0;
+            		int ddje=0;
             		for (int i = 0; i < list.size(); i++) {
 						if(md.equals(list.get(i).split("/")[0])){
-							ddje+=Double.valueOf(list.get(i).split("/")[1]);
+							ddje+=Integer.valueOf(list.get(i).split("/")[1]);
 						}
 					}
             		if(ddje>=number){
-            			lists.add(md+"/"+df.format(ddje));
+//            			lists.add(md+"/"+df.format(ddje));
+            			map.put(md, ddje);
             		}
             	}
+            	List<Entry<String, Integer>> list1=mapSort(map);
+            	for (int i = 0; i < list1.size(); i++) {
+            		lists.add(list1.get(i).getKey()+"/"+df.format(list1.get(i).getValue()));
+				}
             	maps.put(yy, lists);
             }
     		
@@ -542,5 +602,20 @@ public class YyzjhrzTemplateQuartz {
         }
         
         return yymds;
+	}
+	
+	
+	public static List<Map.Entry<String,Integer>> mapSort(Map<String,Integer> map){
+		//将map.entrySet()转换成list
+        List<Map.Entry<String,Integer>> list = new ArrayList<Map.Entry<String,Integer>>(map.entrySet());
+        //然后通过比较器来实现排序
+        Collections.sort(list,new Comparator<Map.Entry<String,Integer>>() {
+            //升序排序
+            public int compare(Entry<String, Integer> o1,
+                    Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+		return list;
 	}
 }
