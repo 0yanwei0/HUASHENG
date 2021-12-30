@@ -18,7 +18,7 @@ import com.jxszj.utils.JDYAPIUtils;
 import com.jxszj.utils.ObjectUtils;
 
 /*
- * Y2.2工作周计划提报
+ * Y2.2工作周计划提报（每天下午6点半执行）
  */
 public class YyjlzjhrzQuartz {
 

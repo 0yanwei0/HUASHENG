@@ -52,11 +52,7 @@ public class YyjlrzQuartz {
     //周计划
     private static final String ZJH_ENTRYID = "61724ea4e11d57000706ea12";
     
-    
-    
-    public static void main(String[] args) {
-		new YyjlrzQuartz().execute();
-	}
+
 	public void execute() {
 //		GregorianCalendar g = new GregorianCalendar();
 //    	g.setTime(new Date());
@@ -206,12 +202,12 @@ public class YyjlrzQuartz {
 //				Map<String, Object> m4 = new HashMap<String, Object>();
 //				m4.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_YEAR));
 //				rawData.put("_widget_1633664138148", m4);// 提报日期-年
-//				Map<String, Object> m5 = new HashMap<String, Object>();
-//				m5.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE));
-//				rawData.put("_widget_1633664138196", m5);// 提报日期-年-月
-//				Map<String, Object> m6 = new HashMap<String, Object>();
-//				m6.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_1_STRING));
-//				rawData.put("_widget_1633664138216", m6);// 提报日期-年-月-日
+				Map<String, Object> m5 = new HashMap<String, Object>();
+				m5.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE));
+				rawData.put("_widget_1633664138196", m5);// 提报日期-年-月
+				Map<String, Object> m6 = new HashMap<String, Object>();
+				m6.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_1_STRING));
+				rawData.put("_widget_1633664138216", m6);// 提报日期-年-月-日
 				Map<String, Object> m7 = new HashMap<String, Object>();
 				m7.put("value", DateUtils.getAfterDay()+"T02:00:00.000Z");
 				rawData.put("_widget_1633936286769", m7);// 运营审批截止时间

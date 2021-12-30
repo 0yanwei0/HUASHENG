@@ -1,11 +1,14 @@
 package com.jxszj.quartz;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +21,7 @@ import com.jxszj.utils.JDYAPIUtils;
 import com.jxszj.utils.ObjectUtils;
 
 /*
- * Y2.2工作周计划提报模板
+ * Y2.2工作周计划提报模板(每周一9点执行)
  */
 public class YyzjhrzTemplateQuartz {
 
@@ -38,10 +41,6 @@ public class YyzjhrzTemplateQuartz {
     
     //C6门店实时销售提报
     private static final String C6_ENTRYID = "5d2d229eee266915714e9e1e";
-    
-    public static void main(String[] args) {
-		new YyzjhrzTemplateQuartz().execute();
-	}
     
 	public void execute() {
 		

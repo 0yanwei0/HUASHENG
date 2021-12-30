@@ -294,7 +294,7 @@ public class YynlydpfbQuartz {
 				Map<String,Integer> maps2=getMap2(pp.get(j), formData,mdMaps);
 				Map<String,Integer> maps3=getMap3(pp.get(j), formData);
 				Map<String,Integer> maps4=getMap4(pp.get(j), formDataC4, set);
-				Map<String,Integer> maps5=getMap5(pp.get(j), formDataY1, set);
+				Map<String,Double> maps5=getMap5(pp.get(j), formDataY1, set);
 				Map<String,Integer> maps6=getMap6(pp.get(j), formDataY2, set);
 				Map<String,Integer> maps7=getMap7(pp.get(j), formDataY3, set);
 				Map<String,Integer> maps8=getMap8(pp.get(j), formDataY4, set);
@@ -311,7 +311,7 @@ public class YynlydpfbQuartz {
 					int rspzjf=maps2.get(ygbm);
 					int yjbjf=maps3.get(ygbm);
 					int hdjf=maps4.get(ygbm);
-					int khrzjf=maps5.get(ygbm);
+					double khrzjf=maps5.get(ygbm);
 					int rzjf=maps6.get(ygbm);
 					int gxjf=maps7.get(ygbm);
 					int cfjf=maps8.get(ygbm);
@@ -440,7 +440,7 @@ public class YynlydpfbQuartz {
 		}
 	}
 
-	public Map<String, Object> addDate(String year,String yearMonth,String ygbm,String ybmc,String dj,String hkjf,String dsjf,int rspzjf,int yjbjf,int hdjf,int khrzjf,int rzjf,int gxjf,int cfjf,String hk,String mds,String mb,String pp){
+	public Map<String, Object> addDate(String year,String yearMonth,String ygbm,String ybmc,String dj,String hkjf,String dsjf,int rspzjf,int yjbjf,int hdjf,double khrzjf,int rzjf,int gxjf,int cfjf,String hk,String mds,String mb,String pp){
 		Map<String, Object> rawData = new HashMap<String, Object>();
 		Map<String, Object> m1 = new HashMap<String, Object>();
 		m1.put("value",year);
@@ -484,7 +484,7 @@ public class YynlydpfbQuartz {
 		Map<String, Object> m14 = new HashMap<String, Object>();
 		m14.put("value",cfjf);
 		rawData.put("_widget_1629109414587", m14);// 【行动力积分】-处罚
-		int zjf=Integer.valueOf(hkjf)+Integer.valueOf(dsjf)+rspzjf+yjbjf+hdjf+khrzjf+rzjf+gxjf+cfjf;
+		double zjf=Integer.valueOf(hkjf)+Integer.valueOf(dsjf)+rspzjf+yjbjf+hdjf+khrzjf+rzjf+gxjf+cfjf;
 		Map<String, Object> m15 = new HashMap<String, Object>();
 		m15.put("value",zjf);
 		rawData.put("_widget_1628477304461", m15);// 总积分
@@ -813,14 +813,14 @@ public class YynlydpfbQuartz {
 	}
 	
 	//【行动力积分】-专业知识考核认证
-	public Map<String , Integer > getMap5(String pp,List<Map<String, Object>> formDataY1,Set<String> set){
-		Map<String,Integer> map=new HashMap<>(); 
+	public Map<String , Double > getMap5(String pp,List<Map<String, Object>> formDataY1,Set<String> set){
+		Map<String,Double> map=new HashMap<>(); 
 		try {
 			for(String str:set){
-				int df=0;
+				double df=0;
 				for (int i = 0; i < formDataY1.size(); i++) {
 					if(str.equals(formDataY1.get(i).get("_widget_1629095822365").toString())){
-						df+=ObjectUtils.getObjectToInteger(formDataY1.get(i).get("_widget_1629095822862"));
+						df+=ObjectUtils.getObjectToDouble(formDataY1.get(i).get("_widget_1629095822862"));
 					}
 				}
 				map.put(str, df);
