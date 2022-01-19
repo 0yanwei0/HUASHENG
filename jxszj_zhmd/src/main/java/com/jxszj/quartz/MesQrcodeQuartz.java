@@ -95,6 +95,25 @@ public class MesQrcodeQuartz {
 			e.printStackTrace();
 		}
 		
+		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("field", "_widget_1597219257966");//实际下达日期
+		map.put("type", "text");
+		map.put("method", "eq");
+		map.put("value",DateUtils.getNowDateToString());
+        condList.add(map);
+        Map<String, Object> filter = new HashMap<String, Object>(){
+            {
+                put("rel", "and");
+                put("cond", condList);
+            }
+        };
+        List<Map<String, Object>> list= api.getAllFormData(null, filter);
+        Map<String,String> mapCode=new HashMap<>();
+        for (int i = 0; i < list.size(); i++) {
+			mapCode.put(list.get(i).get("_widget_1597219749750").toString(), list.get(i).get("_widget_1597219749750").toString());
+		}
+		
 		List<SapScpgTb> listSapScpgTb=new ArrayList<SapScpgTb>();
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();   
 		HttpGet httpGet = new HttpGet("https://my300201-api.saps4hanacloud.cn/sap/opu/odata/sap/YY1_MANUFACORDERAPI_CDS/YY1_ManufacOrderAPI?$filter=MfgOrderActualReleaseDate%20eq%20datetime'"+DateUtils.getNowDateToString()+"T00:00:00'");
@@ -126,45 +145,30 @@ public class MesQrcodeQuartz {
 						}
 						
 						String qrCode=array.getJSONObject(i).getString("SalesOrder")+array.getJSONObject(i).getString("SalesOrderItem")+array.getJSONObject(i).getString("ManufacturingOrder")+str;
-						final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
-						Map<String, Object> map=new HashMap<String, Object>();
-						map.put("field", "_widget_1597219749750");//以二维码数据作为唯一值
-						map.put("type", "text");
-						map.put("method", "eq");
-						map.put("value",qrCode);
-				        condList.add(map);
-				        Map<String, Object> filter = new HashMap<String, Object>(){
-				            {
-				                put("rel", "and");
-				                put("cond", condList);
-				            }
-				        };
-				        String barcode="";
-				        Integer dyzs=1;
-				        String tempname="";
-				        String status="0";
-				        List<SapScpgTb> sapScpgTbs=sapScpgService.getSapScpgTb(qrCode);
-				        if(sapScpgTbs!=null && sapScpgTbs.size()!=0){
-				        	barcode=sapScpgTbs.get(0).getBarcode();
-				        	dyzs=sapScpgTbs.get(0).getDyzs();
-				        	tempname=sapScpgTbs.get(0).getTempname();
-				        	status=sapScpgTbs.get(0).getStatus();
-				        }else{
-				        	barcode=getStr();
-				        }
-				        List<Map<String, Object>> list= api.getAllFormData(null, filter);
-				        listSapScpgTb.add(getSapScpgTb(array.getJSONObject(i),qrCode,str,dyzs,tempname,status,barcode));
-				        if(list.size()==0){
+						String barcode=getStr();
+						
+//						String barcode="";
+//				        Integer dyzs=1;
+//				        String tempname="";
+//				        String status="0";
+//				        List<SapScpgTb> sapScpgTbs=sapScpgService.getSapScpgTb(qrCode);
+//				        if(sapScpgTbs!=null && sapScpgTbs.size()!=0){
+//				        	barcode=sapScpgTbs.get(0).getBarcode();
+//				        	dyzs=sapScpgTbs.get(0).getDyzs();
+//				        	tempname=sapScpgTbs.get(0).getTempname();
+//				        	status=sapScpgTbs.get(0).getStatus();
+//				        }else{
+//				        	barcode=getStr();
+//				        }
+//				        listSapScpgTb.add(getSapScpgTb(array.getJSONObject(i),qrCode,str,dyzs,tempname,status,barcode));
+				        if(mapCode.get(qrCode)==null){
 				        	Map<String, Object> rawData=getData(array.getJSONObject(i),qrCode,str,wlzmap,barcode,jhzqs,ctg_list,dydzmap);
 							api.createForData(rawData);
-				        }else if(list.size()==1){
-				        	Map<String, Object> rawData=getUpdateData(array.getJSONObject(i),qrCode,str,wlzmap,jhzqs,dydzmap);
-							api.updateForData(list.get(0).get("_id").toString(), rawData);
 				        }
 					}
 					
 				}
-				sapScpgService.saveOrUpdate(listSapScpgTb);
+//				sapScpgService.saveOrUpdate(listSapScpgTb);
 			}
 			
 		} catch (Exception e) {

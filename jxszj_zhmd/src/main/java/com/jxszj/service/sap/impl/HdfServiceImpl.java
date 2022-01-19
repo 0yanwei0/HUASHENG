@@ -607,6 +607,31 @@ public class HdfServiceImpl implements IHdfService {
 		Map<String, Object> m36 = new HashMap<String, Object>();
 		m36.put("value","正常");
 		rawData.put("_widget_1630029105685", m36);// 单据状态
+		Map<String, Object> m37 = new HashMap<String, Object>();
+		m37.put("value",dj1.get(0).get("_widget_1642063718404"));
+		rawData.put("_widget_1548319045972", m37);// P01运营员工名称
+		Map<String, Object> m38 = new HashMap<String, Object>();
+		m38.put("value",dj1.get(0).get("_widget_1642063718628"));
+		rawData.put("_widget_1628220748244", m38);// P01运营员工编码
+		Map<String, Object> m39 = new HashMap<String, Object>();
+		m39.put("value",dj1.get(0).get("_widget_1628164974565"));
+		rawData.put("_widget_1628220748580", m39);// P02运营员工名称
+		Map<String, Object> m40 = new HashMap<String, Object>();
+		m40.put("value",dj1.get(0).get("_widget_1642063719899"));
+		rawData.put("_widget_1628220748710", m40);// P02运营员工编码
+		Map<String, Object> m41 = new HashMap<String, Object>();
+		m41.put("value",dj1.get(0).get("_widget_1642063719304"));
+		rawData.put("_widget_1628220749081", m41);//P03运营员工名称
+		Map<String, Object> m42 = new HashMap<String, Object>();
+		m42.put("value",dj1.get(0).get("_widget_1642063719064"));
+		rawData.put("_widget_1628220749062", m42);// P03运营员工编码
+		Map<String, Object> m43 = new HashMap<String, Object>();
+		m43.put("value",dj1.get(0).get("_widget_1642063719442"));
+		rawData.put("_widget_1628220749043", m43);// P04运营员工名称
+		Map<String, Object> m44 = new HashMap<String, Object>();
+		m44.put("value",dj1.get(0).get("_widget_1642063719189"));
+		rawData.put("_widget_1628220749024", m44);// P04运营员工编码
+		
 		Map<String, Object> resmap=df1_api.createData(rawData);
 		return resmap;
 	}
@@ -701,7 +726,7 @@ public class HdfServiceImpl implements IHdfService {
 	 			rawData.put("_widget_1567042226458", m12);// 业务
 	 			Map<String, Object> m13 = new HashMap<String, Object>();
 	 			m13.put("value",resmap.get("_widget_1548319045972"));
-	 			rawData.put("_widget_1564996674896", m13);// 督导
+	 			rawData.put("_widget_1564996674896", m13);// P01运营员工名称
 	 			Map<String, Object> m14 = new HashMap<String, Object>();
 	 			m14.put("value",resmap.get("_widget_1564272870818"));
 	 			rawData.put("_widget_1565054281513", m14);// 跟单

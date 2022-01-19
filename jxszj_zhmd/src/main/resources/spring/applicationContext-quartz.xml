@@ -473,6 +473,23 @@
 	    <property name="cronExpression" value=" 0 59 11,15,18,20,22,23 * * ?"></property>  
 	</bean>
 	
+	
+	<!-- 红包产品分析  -->  
+    <bean id="YwpmQuartz" class="com.jxszj.quartz.YwpmQuartz"/>  
+    <bean id="SpringQtzJobMethodYwpmQuartz" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+    <property name="targetObject">  
+        <ref bean="YwpmQuartz"/>  
+    </property>  
+    <property name="targetMethod">  <!-- 要执行的方法名称 -->  
+        <value>execute</value>  
+    </property>  
+	</bean> 
+	<!-- ======================== 调度触发器 ======================== -->  
+	<bean id="CronTriggerBeanYwpmQuartz" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+	    <property name="jobDetail" ref="SpringQtzJobMethodYwpmQuartz"></property>  
+	    <property name="cronExpression" value=" 0 30 23 * * ?"></property>  
+	</bean>
+	
 	<!-- ======================== 调度工厂 ======================== -->  
 	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
 	    <property name="triggers">  
@@ -506,6 +523,7 @@
 <!-- 				<ref bean="CronTriggerBeanJxsfhmxQuartz"/> -->
 <!-- 				<ref bean="CronTriggerBeanXsmlfxQuartz"/> -->
 <!-- 				<ref bean="CronTriggerBeanHbcpfxQuartz"/> -->
+<!-- 				<ref bean="CronTriggerBeanYwpmQuartz"/> -->
 	        </list>  
 	    </property>  
 	</bean>  

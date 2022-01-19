@@ -13,7 +13,7 @@
 <%-- 				panelHeight:'auto' "> --%>
 <!-- 			<label>督导：</label><input id="ydmb_dd" class="easyui-textbox" style="width: 120px"> -->
 <!--             <a href="#" class="easyui-linkbutton"  plain="false" data-options="iconCls:'icon-arrow-down'" onclick="wyfee.exportExcelYdmbTemp()">下载模板数据</a> -->
-			<a href="#" class="easyui-linkbutton"  plain="false" data-options="iconCls:'icon-arrow-up'" onclick="uploadYdmbData()">上传模板数据</a>
+<!-- 			<a href="#" class="easyui-linkbutton"  plain="false" data-options="iconCls:'icon-arrow-up'" onclick="uploadYdmbData()">上传模板数据</a> -->
 			<a href="#" class="easyui-linkbutton"  plain="false" data-options="iconCls:'icon-add'" onclick="addYdmbData()">获取本月目标</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton" id="linkbutton" plain="false" data-options="iconCls:'icon-arrow-refresh'" onclick="addKdsqToXstc()">1.同步目标</a><!-- DJ4-开店申请（门店信息）同步到 DM1-销售提成_(自动) -->
 			<a href="javascript:void(0)" class="easyui-linkbutton" plain="false" data-options="iconCls:'icon-arrow-refresh'" onclick="addSkdToXstc()">2.同步回款</a><!-- DF1-销售收款 同步到 DM1-销售提成_(自动) -->

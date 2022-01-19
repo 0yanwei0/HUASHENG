@@ -29,8 +29,8 @@ public class YyddtcServiceImpl implements IYyddtcService {
 	private static final String APPID = "5cc110c3b3c41744aaa12b2e";
 	private static final String APIKEY = "uWEAujuxvzv5fMVifOvMRzlIJcPLgYkv";
 
-	//3-开店申请
-    private static final String ENTRYID_KDSQ = "5d102d3f2144352834656205";
+	//门店数据
+	private static final String ENTRYID_MDSJ = "61d67ee8ffdf9d00080a0946";
 	
 	//DF1-销售收款单
     private static final String ENTRYID_DF1 = "5d3bc22704614439fd55e71d";
@@ -86,53 +86,34 @@ public class YyddtcServiceImpl implements IYyddtcService {
 		try {
 			for(String pp:pps) {
 				
-//				List<Map<String, Object>> yyjlsLists=getDateYyjl(pp); //获取当前品牌下的运营经理
-				
 				List<Map<String, Object>> formData0=getDate(pp,ny);
 				
 				//经销商名称所对应的运营经理
 	    		Map<String, String> map0=new HashMap<String, String>();
 	    		Set<String> set1=new HashSet<String>();
 	    		for (int i = 0; i < formData0.size(); i++) {
-					set1.add(formData0.get(i).get("_widget_1620615201243").toString());//获取所有的经销商
-					String str=formData0.get(i).get("_widget_1545358841001").toString()+"/"+formData0.get(i).get("_widget_1628167934919").toString()+"/"+formData0.get(i).get("_widget_1628167935237").toString();
-					map0.put(formData0.get(i).get("_widget_1620615201243").toString(), str);
+					set1.add(formData0.get(i).get("_widget_1641447145997").toString());//获取所有的经销商
+					String str=formData0.get(i).get("_widget_1641447146009").toString()+"/"+formData0.get(i).get("_widget_1641447146013").toString()+"/"+formData0.get(i).get("_widget_1641447146013").toString();
+					map0.put(formData0.get(i).get("_widget_1641447145997").toString(), str);
 				}
 	    		
 	    		Set<String> p01=new HashSet<String>();
 	    		Set<String> p02=new HashSet<String>();
-	    		Set<String> p03=new HashSet<String>();
-//	    		Map<String, Set<String>> maps=new HashMap<String, Set<String>>();//p03运营经理下属的P01
 	    		Map<String, String> yyjls=new HashMap<String, String>();//运营经理对应的名称
 	    		for (int i = 0; i < formData0.size(); i++) {
-//	    			List<Map<String, Object>> yyjlsList=(List<Map<String, Object>>)yyjlsLists.get(i).get("_widget_1630130540529");
-					if(pp.equals("PD") ||pp.equals("HMW") || ObjectUtils.getString(formData0.get(i).get("_widget_1628167935327")).equals("H0362")){
-						p03.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628167935327")));//p03运营经理
-		    			yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1628167935327")), ObjectUtils.getString(formData0.get(i).get("_widget_1628167935237")));
-		    			p02.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628167934994")));//p02运营经理
-						yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1628167934994")), ObjectUtils.getString(formData0.get(i).get("_widget_1628167934919")));
-					}
-					p01.add(ObjectUtils.getString(formData0.get(i).get("_widget_1560906554863")));//p01运营经理
-					yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1560906554863")), ObjectUtils.getString(formData0.get(i).get("_widget_1545358841001")));
-//	    			if("MS".equals(pp) && !"H0362".equals(ObjectUtils.getString(yyjlsLists.get(i).get("_widget_1630130540874"))) && !"".equals(ObjectUtils.getString(yyjlsLists.get(i).get("_widget_1630130540874")))) {
-//	    				Set<String> set=new HashSet<String>();
-//	    				for (int j = 0; j < yyjlsList.size(); j++) {
-//							set.add(ObjectUtils.getString(yyjlsList.get(j).get("_widget_1630130541003")));//p01运营经理
-//						}
-//	    				set.remove("");
-//	    				maps.put(ObjectUtils.getString(yyjlsLists.get(i).get("_widget_1630130540874")), set);
-//	    			}
+					p02.add(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146015")));//p02运营经理
+					yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146015")), ObjectUtils.getString(formData0.get(i).get("_widget_1641447146013")));
+					
+					p01.add(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146011")));//p01运营经理
+					yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146011")), ObjectUtils.getString(formData0.get(i).get("_widget_1641447146009")));
 				}
-//	    		p01.remove("");
-//	    		p02.remove("");
-//	    		p03.remove("");
 	    		
 	    		//经销商的门店数
 	    		Map<String, Integer> jxsmds=new HashMap<String, Integer>();
 	    		for(String jxsbm:set1) {
 	    			int number=0;
 	    			for (int i = 0; i < formData0.size(); i++) {
-	    				if(jxsbm.equals(formData0.get(i).get("_widget_1620615201243").toString())) {
+	    				if(jxsbm.equals(formData0.get(i).get("_widget_1641447145997").toString())) {
 	    					number++;
 	    				}
 	    			}
@@ -146,8 +127,8 @@ public class YyddtcServiceImpl implements IYyddtcService {
 	    			Set<String> set=new HashSet<String>();
 	    			int number=0;
 	    			for (int i = 0; i < formData0.size(); i++) {
-	    				if(yyjlbm.equals(formData0.get(i).get("_widget_1560906554863").toString())) {
-	    					set.add(formData0.get(i).get("_widget_1620615201243").toString());
+	    				if(yyjlbm.equals(formData0.get(i).get("_widget_1641447146011").toString())) {
+	    					set.add(formData0.get(i).get("_widget_1641447145997").toString());
 	    					number++;
 	    				}
 	    			}
@@ -158,8 +139,8 @@ public class YyddtcServiceImpl implements IYyddtcService {
 	    			Set<String> set=new HashSet<String>();
 	    			int number=0;
 	    			for (int i = 0; i < formData0.size(); i++) {
-	    				if(yyjlbm.equals(formData0.get(i).get("_widget_1628167934994").toString())) {
-	    					set.add(formData0.get(i).get("_widget_1620615201243").toString());
+	    				if(yyjlbm.equals(formData0.get(i).get("_widget_1641447146015").toString())) {
+	    					set.add(formData0.get(i).get("_widget_1641447145997").toString());
 	    					number++;
 	    				}
 	    			}
@@ -167,18 +148,6 @@ public class YyddtcServiceImpl implements IYyddtcService {
 	    			yyjlmds.put(yyjlbm, number);
 	    		}
 	    		
-	    		for(String yyjlbm:p03) {
-	    			int number=0;
-	    			Set<String> set=new HashSet<String>();
-	    			for (int i = 0; i < formData0.size(); i++) {
-	    				if(yyjlbm.equals(formData0.get(i).get("_widget_1628167935327").toString())) {
-	    					set.add(formData0.get(i).get("_widget_1620615201243").toString());
-	    					number++;
-	    				}
-	    			}
-	    			yyjljxs.put(yyjlbm, set);
-	    			yyjlmds.put(yyjlbm, number);
-	    		}
 	    		if(pp.equals("PD") || pp.equals("HMW")) {
 		    		//计算下单金额
 		    		for(Map.Entry<String, Set<String>> map:yyjljxs.entrySet()) {
@@ -244,22 +213,6 @@ public class YyddtcServiceImpl implements IYyddtcService {
 		    			Set<String> set=map.getValue();
 		    			//运营经理店均
 		    			Double yyjldj=getDj(set, map.getKey(), yskMap, xsskMap, yyjlmds,ny,yxjMap,jyyskMap);
-		    			
-//		    			Map<String,Double> ewtcbls=new HashMap<String,Double>();
-//		    			if(maps.get(map.getKey())!=null) {
-//		    				for (String yyjl:maps.get(map.getKey())) {
-//		    					Double ewtcbl=0.0;
-//		    					//运营经理店均--奖励
-//				    			Double jldj=getDj(yyjljxs.get(yyjl), yyjl, yyjlyskMap, yyjlxsskMap, yyjlmds,ny);
-//				    			if(jldj>=60000 && jldj<90000) {
-//				    				ewtcbl=0.005;
-//		        				}else if(jldj>=90000) {
-//		        					ewtcbl=0.01;
-//		        				}
-//				    			ewtcbls.put(yyjls.get(yyjl),ewtcbl);
-//							}
-//		    				
-//		    			}
 		    			
 		    			double tcbl=0.0;
 		    			if(map.getKey().equals("H0362")) {
@@ -423,19 +376,6 @@ public class YyddtcServiceImpl implements IYyddtcService {
     			map.put(yyjlbm, number);
     		}
     		
-    		Set<String> p03=new HashSet<String>();
-    		for (int i = 0; i < formData2.size(); i++) {
-    			p03.add(formData2.get(i).get("_widget_1628220749062").toString());
-			}
-    		for(String yyjlbm:p03) {
-    			Double number=0.0;
-    			for (int i = 0; i < formData2.size(); i++) {
-					if(yyjlbm.equals(formData2.get(i).get("_widget_1628220748710").toString())) {
-						number+=ObjectUtils.getObjectToDouble(formData2.get(i).get("_widget_1564390193051"));
-					}
-				}
-    			map.put(yyjlbm, number);
-    		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -445,25 +385,19 @@ public class YyddtcServiceImpl implements IYyddtcService {
 	
 	public List<Map<String, Object>> getDate(String pp,String ny){
 		//查询营业中的门店,且实际开业时间小于当前日期
-		JDYAPIUtils kdsq = new JDYAPIUtils(APPID, ENTRYID_KDSQ, APIKEY);
+		JDYAPIUtils kdsq = new JDYAPIUtils(APPID, ENTRYID_MDSJ, APIKEY);
 		final List<Map<String, Object>> condList0 = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map0 = new HashMap<String, Object>();
-		map0.put("field", "_widget_1560998925033");//运营状态：营业中
-		map0.put("type", "text");
-		map0.put("method", "eq");
-		map0.put("value", "营业中");
-		condList0.add(map0);
 		String[] str=new String[2];
 		str[0]="null";
 		str[1]=ny;
 		Map<String, Object> map1 = new HashMap<String, Object>();//实际开业时间：小于当前日期
-		map1.put("field", "_widget_1578996437131");
+		map1.put("field", "_widget_1641447146029");
 		map1.put("type", "text");
 		map1.put("method", "range");
 		map1.put("value",str);
 		condList0.add(map1);
 		Map<String, Object> map2 = new HashMap<String, Object>();//品牌
-		map2.put("field", "_widget_1543818220013");
+		map2.put("field", "_widget_1641447146003");
 		map2.put("type", "text");
 		map2.put("method", "eq");
 		map2.put("value",pp);
@@ -481,10 +415,10 @@ public class YyddtcServiceImpl implements IYyddtcService {
 	//获取经销商编码和名称
 	public Map<String, String> getDateJxs(){
 		Map<String,String> map=new HashMap<>();
-		JDYAPIUtils jxs = new JDYAPIUtils(APPID, ENTRYID_KDSQ, APIKEY);
+		JDYAPIUtils jxs = new JDYAPIUtils(APPID, ENTRYID_MDSJ, APIKEY);
 		List<Map<String, Object>> formData0 = jxs.getAllFormData(null,null);
 		for (int i = 0; i < formData0.size(); i++) {
-			map.put(formData0.get(i).get("_widget_1620615201243").toString(), formData0.get(i).get("_widget_1543818219429").toString());
+			map.put(formData0.get(i).get("_widget_1641447145997").toString(), formData0.get(i).get("_widget_1641447145999").toString());
 		}
 		return map;
 	}
@@ -585,20 +519,6 @@ public class YyddtcServiceImpl implements IYyddtcService {
     			map.put(yyjlbm, number);
     		}
     		
-    		Set<String> p03=new HashSet<String>();
-    		for (int i = 0; i < formData2.size(); i++) {
-    			p03.add(formData2.get(i).get("_widget_1630572802177").toString());
-			}
-    		for(String yyjlbm:p03) {
-    			Double number=0.0;
-    			for (int i = 0; i < formData2.size(); i++) {
-					if(yyjlbm.equals(formData2.get(i).get("_widget_1630572802177").toString())) {
-						number+=ObjectUtils.getObjectToDouble(formData2.get(i).get("_widget_1566810306999"));
-					}
-				}
-    			map.put(yyjlbm, number);
-    		}
-    		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -663,20 +583,6 @@ public class YyddtcServiceImpl implements IYyddtcService {
     			Double number=0.0;
     			for (int i = 0; i < formData2.size(); i++) {
 					if(yyjlbm.equals(formData2.get(i).get("_widget_1628170323350").toString())) {
-						number+=ObjectUtils.getObjectToDouble(formData2.get(i).get("_widget_1630564716832"));
-					}
-				}
-    			map.put(yyjlbm, number);
-    		}
-    		
-    		Set<String> p03=new HashSet<String>();
-    		for (int i = 0; i < formData2.size(); i++) {
-    			p03.add(formData2.get(i).get("_widget_1628170323599").toString());
-			}
-    		for(String yyjlbm:p03) {
-    			Double number=0.0;
-    			for (int i = 0; i < formData2.size(); i++) {
-					if(yyjlbm.equals(formData2.get(i).get("_widget_1628170323599").toString())) {
 						number+=ObjectUtils.getObjectToDouble(formData2.get(i).get("_widget_1630564716832"));
 					}
 				}

@@ -33,6 +33,7 @@ public class ZyzsspPushQuartz {
 	//C3专业知识视频
     private static final String C3_ENTRYID = "6109090976c77b0008982793";
     
+    
 	public void execute() {
 		try {
 			JDYAPIUtils c3_api = new JDYAPIUtils(APPID, C3_ENTRYID, APIKEY);
@@ -77,15 +78,12 @@ public class ZyzsspPushQuartz {
 				List<Map<String, Object>> formData0 = kdsq.getAllFormData(null,filter0);
 				Set<String> p01=new HashSet<String>();
 	    		Set<String> p02=new HashSet<String>();
-	    		Set<String> p03=new HashSet<String>();
 	    		Map<String, String> yyjls=new HashMap<String, String>();//运营经理对应的名称
 				for (int i = 0; i < formData0.size(); i++) {
 					p01.add(ObjectUtils.getString(formData0.get(i).get("_widget_1560906554863")));//p01运营经理
 					p02.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628167934994")));//p02运营经理
-					p03.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628167935327")));//p03运营经理
 					yyjls.put(formData0.get(i).get("_widget_1560906554863").toString(), formData0.get(i).get("_widget_1545358841001").toString());
 					yyjls.put(formData0.get(i).get("_widget_1628167934994").toString(), formData0.get(i).get("_widget_1628167934919").toString());
-					yyjls.put(formData0.get(i).get("_widget_1628167935327").toString(), formData0.get(i).get("_widget_1628167935237").toString());
 				}
 				//开店申请中运营经理对应的门店数
 	    		Map<String, Integer> yyjlmds=new HashMap<String, Integer>();
@@ -108,16 +106,6 @@ public class ZyzsspPushQuartz {
 	    			yyjlmds.put(yyjlbm, number);
 	    		}
 	    		
-	    		for(String yyjlbm:p03) {
-	    			int number=0;
-	    			for (int i = 0; i < formData0.size(); i++) {
-	    				if(yyjlbm.equals(formData0.get(i).get("_widget_1628167935327").toString())) {
-	    					number++;
-	    				}
-	    			}
-	    			yyjlmds.put(yyjlbm, number);
-	    		}
-
 				final List<Map<String, Object>> condList1 = new ArrayList<Map<String, Object>>();
 				map1 = new HashMap<String, Object>();
 				map1.put("field", "_widget_1627886457630");// 品牌
@@ -150,28 +138,16 @@ public class ZyzsspPushQuartz {
 	    			}
 	    			spyyjlmds.put(yyjlbm, set.size());
 	    		}
-	    		for(String yyjlbm:p02) {
-	    			Set<String> set=new HashSet<String>();
-	    			for (int i = 0; i < formData1.size(); i++) {
-	    				if(yyjlbm.equals(formData1.get(i).get("_widget_1628169748713").toString())) {
-	    					set.add(formData1.get(i).get("_widget_1627886455424").toString());
-	    				}
-	    			}
-	    			spyyjlmds.put(yyjlbm, set.size());
-	    		}
+//	    		for(String yyjlbm:p02) {
+//	    			Set<String> set=new HashSet<String>();
+//	    			for (int i = 0; i < formData1.size(); i++) {
+//	    				if(yyjlbm.equals(formData1.get(i).get("_widget_1628169748713").toString())) {
+//	    					set.add(formData1.get(i).get("_widget_1627886455424").toString());
+//	    				}
+//	    			}
+//	    			spyyjlmds.put(yyjlbm, set.size());
+//	    		}
 	    		
-	    		for(String yyjlbm:p03) {
-	    			Set<String> set=new HashSet<String>();
-	    			for (int i = 0; i < formData1.size(); i++) {
-	    				if(yyjlbm.equals(formData1.get(i).get("_widget_1628169749095").toString())) {
-	    					set.add(formData1.get(i).get("_widget_1627886455424").toString());
-	    				}
-	    			}
-	    			spyyjlmds.put(yyjlbm, set.size());
-	    		}
-				
-				
-
 				//date的key值由督导，value值为提报率
 				Map<String, Double> date = new HashMap<>();
 				for (Map.Entry<String, Integer> entry: yyjlmds.entrySet()) {

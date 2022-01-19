@@ -170,7 +170,7 @@ public class ZjxshkServiceImpl implements IZjxshkService {
 		        		if(!"".equals(ObjectUtils.getString(resmap.get("_widget_1548037673456")))){//判断是否同步到DF1
 		        			sapZjxshkTb.setJdybm(ObjectUtils.getString(resmap.get("_widget_1548037673456")));
 			        		sapZjxshkTb.setJxsmc(ObjectUtils.getString(dj1.get(0).get("_widget_1543814802008")));
-		        			addZHKDM1(resmap);
+		        			addZHKDM1(resmap,dj1);
 		        			pushZHKDDJQR(resmap);
 		        		}
 		        	}
@@ -186,7 +186,7 @@ public class ZjxshkServiceImpl implements IZjxshkService {
     						if(!"".equals(ObjectUtils.getString(resmap.get("_widget_1548037673456")))){//判断是否同步到DF1
     							sapZjxshkTb.setJdybm(ObjectUtils.getString(resmap.get("_widget_1548037673456")));
     			        		sapZjxshkTb.setJxsmc(ObjectUtils.getString(dj1.get(0).get("_widget_1543814802008")));
-    		        			addZHKDM1(resmap);
+    		        			addZHKDM1(resmap,dj1);
     		        			pushZHKDDJQR(resmap);
     						}
     					}
@@ -1205,6 +1205,31 @@ public class ZjxshkServiceImpl implements IZjxshkService {
 		Map<String, Object> m36 = new HashMap<String, Object>();
 		m36.put("value","正常");
 		rawData.put("_widget_1630029105685", m36);// 单据状态
+		
+		Map<String, Object> m37 = new HashMap<String, Object>();
+		m37.put("value",dj1.get(0).get("_widget_1642063718404"));
+		rawData.put("_widget_1548319045972", m37);// P01运营员工名称
+		Map<String, Object> m38 = new HashMap<String, Object>();
+		m38.put("value",dj1.get(0).get("_widget_1642063718628"));
+		rawData.put("_widget_1628220748244", m38);// P01运营员工编码
+		Map<String, Object> m39 = new HashMap<String, Object>();
+		m39.put("value",dj1.get(0).get("_widget_1628164974565"));
+		rawData.put("_widget_1628220748580", m39);// P02运营员工名称
+		Map<String, Object> m40 = new HashMap<String, Object>();
+		m40.put("value",dj1.get(0).get("_widget_1642063719899"));
+		rawData.put("_widget_1628220748710", m40);// P02运营员工编码
+		Map<String, Object> m41 = new HashMap<String, Object>();
+		m41.put("value",dj1.get(0).get("_widget_1642063719304"));
+		rawData.put("_widget_1628220749081", m41);//P03运营员工名称
+		Map<String, Object> m42 = new HashMap<String, Object>();
+		m42.put("value",dj1.get(0).get("_widget_1642063719064"));
+		rawData.put("_widget_1628220749062", m42);// P03运营员工编码
+		Map<String, Object> m43 = new HashMap<String, Object>();
+		m43.put("value",dj1.get(0).get("_widget_1642063719442"));
+		rawData.put("_widget_1628220749043", m43);// P04运营员工名称
+		Map<String, Object> m44 = new HashMap<String, Object>();
+		m44.put("value",dj1.get(0).get("_widget_1642063719189"));
+		rawData.put("_widget_1628220749024", m44);// P04运营员工编码
 		Map<String, Object> resmap=df1_api.createData(rawData);
 		return resmap;
 	}
@@ -1285,7 +1310,7 @@ public class ZjxshkServiceImpl implements IZjxshkService {
     }
     
     // 将转货款数据推送到DM1-销售提成_(自动)
-    private void addZHKDM1(Map<String, Object> resmap){
+    private void addZHKDM1(Map<String, Object> resmap,List<Map<String, Object>> dj1){
     	try {
 			final List<Map<String, Object>> condList1 = new ArrayList<Map<String, Object>>();
 			Map<String, Object> map1=new HashMap<String, Object>();
@@ -1378,7 +1403,7 @@ public class ZjxshkServiceImpl implements IZjxshkService {
 	 			rawData.put("_widget_1567042226458", m12);// 业务
 	 			Map<String, Object> m13 = new HashMap<String, Object>();
 	 			m13.put("value",resmap.get("_widget_1548319045972"));
-	 			rawData.put("_widget_1564996674896", m13);// 督导
+	 			rawData.put("_widget_1564996674896", m13);// P01运营员工名称
 	 			Map<String, Object> m14 = new HashMap<String, Object>();
 	 			m14.put("value",resmap.get("_widget_1564272870818"));
 	 			rawData.put("_widget_1565054281513", m14);// 跟单
@@ -1445,6 +1470,15 @@ public class ZjxshkServiceImpl implements IZjxshkService {
 	 			Map<String, Object> m38 = new HashMap<String, Object>();
 	 			m38.put("value",0);
 	 			rawData.put("_widget_1611902543438", m38);// 新零售目标完成率
+	 			Map<String, Object> m39 = new HashMap<String, Object>();
+	 			m39.put("value",dj1.get(0).get("_widget_1628164974484"));
+	 			rawData.put("_widget_1628171782093", m39);// P02运营员工名称
+	 			Map<String, Object> m40 = new HashMap<String, Object>();
+	 			m40.put("value",dj1.get(0).get("_widget_1628164974659"));
+	 			rawData.put("_widget_1628171782181", m40);// P03运营员工名称
+	 			Map<String, Object> m41 = new HashMap<String, Object>();
+	 			m41.put("value",dj1.get(0).get("_widget_1628164974968"));
+	 			rawData.put("_widget_1628171782253", m41);// P04运营员工名称
 	 			dmapi.createForData(rawData);// 向简道云添加DM1-销售提成_(自动);
 	        }else if(listM1.size()==1){
  		       DecimalFormat df = new DecimalFormat("#0.0000");  

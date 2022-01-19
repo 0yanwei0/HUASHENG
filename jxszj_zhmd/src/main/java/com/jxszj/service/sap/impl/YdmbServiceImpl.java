@@ -172,51 +172,29 @@ public class YdmbServiceImpl implements IYdmbService {
 		try {
 			in = file.getInputStream();
 			listob = new ExcelUtil().getBankListByExcel(in, file.getOriginalFilename());
+			List<YdmbTb > ydmbTbs =new ArrayList<YdmbTb>();
 			List<String> list=new ArrayList<>();
 			for (int i = 1; i < listob.size(); i++) {
-				list.add(listob.get(i).get(0).toString());
+				//将Excel中的数据提出来
+				YdmbTb ydmbTb=new YdmbTb();
+				ydmbTb.setJxsmc(listob.get(i).get(0).toString());
+				ydmbTb.setJxsbm(listob.get(i).get(1).toString());
+				ydmbTb.setPpbm(listob.get(i).get(2).toString());
+				ydmbTb.setDd(listob.get(i).get(3).toString());
+				ydmbTb.setYyzt(listob.get(i).get(4).toString());
+				ydmbTb.setBymbhk(ObjectUtils.getObjectToDouble(listob.get(i).get(5)));
+				ydmbTb.setDrsj(DateUtils.getNowDateToString());
+				ydmbTbs.add(ydmbTb);
+				list.add(listob.get(i).get(2).toString());
 			}
-	        Map<String,Integer> map = new HashMap<>();
-	        for(String str:list){
-	            Integer i = 1; //定义一个计数器，用来记录重复数据的个数
-	            if(map.get(str) != null){
-	                i=map.get(str)+1;
-	            }
-	            map.put(str,i);
-	        }
-//	        System.out.println("重复数据的个数："+map.toString());
-	 
-	 
-	        System.out.println("重复的数据为：");
-	        for(String s:map.keySet()){
-	            if(map.get(s) > 1){
-	                System.out.println(s+" ");
-	            }
-	        }
-	        
-//			List<YdmbTb > ydmbTbs =new ArrayList<YdmbTb>();
-//			List<String> list=new ArrayList<>();
-//			for (int i = 1; i < listob.size(); i++) {
-//				//将Excel中的数据提出来
-//				YdmbTb ydmbTb=new YdmbTb();
-//				ydmbTb.setJxsmc(listob.get(i).get(0).toString());
-//				ydmbTb.setJxsbm(listob.get(i).get(1).toString());
-//				ydmbTb.setPpbm(listob.get(i).get(2).toString());
-//				ydmbTb.setDd(listob.get(i).get(3).toString());
-//				ydmbTb.setYyzt(listob.get(i).get(4).toString());
-//				ydmbTb.setBymbhk(ObjectUtils.getObjectToDouble(listob.get(i).get(5)));
-//				ydmbTb.setDrsj(DateUtils.getNowDateToString());
-//				ydmbTbs.add(ydmbTb);
-//				list.add(listob.get(i).get(2).toString());
-//			}
-//			//先将历史数据删除
-//			YdmbTbExample example = new YdmbTbExample();
-//			Criteria criteria=example.createCriteria();
-//			list=list.stream().distinct().collect(Collectors.toList());
-//			criteria.andPpbmIn(list);
-//			ydmbTbMapper.deleteByExample(example);
-//			//批量添加
-//			num=ydmbTbMapper.insertByBatch(ydmbTbs);
+			//先将历史数据删除
+			YdmbTbExample example = new YdmbTbExample();
+			Criteria criteria=example.createCriteria();
+			list=list.stream().distinct().collect(Collectors.toList());
+			criteria.andPpbmIn(list);
+			ydmbTbMapper.deleteByExample(example);
+			//批量添加
+			num=ydmbTbMapper.insertByBatch(ydmbTbs);
 			
 		}catch (Exception e) {
 			e.printStackTrace();

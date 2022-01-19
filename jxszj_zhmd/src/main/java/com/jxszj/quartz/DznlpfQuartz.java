@@ -452,6 +452,15 @@ public class DznlpfQuartz {
 			map0.put("method", "eq");
 			map0.put("value", "营业中");
 			condList0.add(map0);
+			String[] str=new String[2];
+			str[0]="null";
+			str[1]=DateUtils.getLastDay(month, DateUtils.FORMAT_STRING1_MINUTE);
+			Map<String, Object> map = new HashMap<String, Object>();//实际开业时间：小于当前日期
+			map.put("field", "_widget_1578996437131");
+			map.put("type", "text");
+			map.put("method", "range");
+			map.put("value",str);
+			condList0.add(map);
 			Map<String, Object> filter0 = new HashMap<String, Object>() {
 				{
 					put("rel", "and");

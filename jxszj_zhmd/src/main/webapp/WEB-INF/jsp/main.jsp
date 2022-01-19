@@ -176,6 +176,18 @@
 								<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeBillExcel()">取消</a>
 						    </div>
 						</div>
+						
+						<div title="生产订单删除标记" style="padding:10px">
+ 							<div style="width:400px; padding:10px;" >
+								<form id="scddExcelForm"  method="post" enctype="multipart/form-data">
+									   选择文件：　<input id="scddExcelFile" name="scddExcelFile" class="easyui-filebox" buttonText="选择文件" style="width:260px" data-options="prompt:'请选择文件...'">
+								</form> 
+							</div>
+							<div>
+						    	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="uploadScddExcel()">导入数据</a>
+								<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeScddExcel()">取消</a>
+						    </div>
+						</div>
 					</div>
 			    </div>
 			    
@@ -269,7 +281,7 @@
     <!-- end of main --> 
     <!-- begin of footer -->
 	<div class="wu-footer" data-options="region:'south',border:true,split:true">
-<!--     	&copy; 2019 深圳华生 All Rights Reserved -->
+    	&copy; 2019 深圳华生 All Rights Reserved
     </div>
     <!-- end of footer -->  
 	<script type="text/javascript">
@@ -491,6 +503,58 @@
 		
 		function closeBillExcel(){
 			$('#billExcelFile').filebox('setValue',''); 
+		}
+		
+		
+		//生产订单删除标记
+		function uploadScddExcel(){   
+			 //得到上传文件的全路径
+			 var fileName= $('#scddExcelFile').filebox('getValue');
+			//进行基本校验
+			 if(fileName==""){   
+				$.messager.alert('提示','请选择上传文件！','info'); 
+			 }else{
+				 //对文件格式进行校验
+				 var d1=/\.[^\.]+$/.exec(fileName); 
+				 if(d1==".xlsx"){
+					 var formData=new FormData(document.getElementById("scddExcelForm"));
+					 $.ajax({  
+				      	url: "${pageContext.request.contextPath}/scdd/uploadscddExcel",  
+				      	type:"post",
+						data:formData,
+						//告诉jQuery不要去处理发送的数据
+						processData:false,
+						//告诉jQuery不要去设置Content-Type请求头,因为表单已经设置了multipart/form-data
+						contentType:false,
+						beforeSend: function () {
+							    $.messager.progress({ 
+							       title: '提示', 
+							       msg: '数据上传同步中，请稍候……', 
+							       text: '' 
+							    });
+							 },
+							 complete: function () {
+							       $.messager.progress('close');
+						},
+						success:function(data) {
+							if(data.status ==200){
+								$.messager.alert('提示',data.msg,'info');
+							}else{
+								$.messager.alert("警告", data.msg, 'warning');
+							}
+							$('#scddExcelFile').filebox('setValue',''); 
+						}
+					    });
+			    }else{
+			        $.messager.alert('提示','请选择xlsx格式文件！','info'); 
+			    	$('#scddExcelFile').filebox('setValue',''); 
+			    }
+			 } 
+
+		 }
+		
+		function closeScddExcel(){
+			$('#scddExcelFile').filebox('setValue',''); 
 		}
 		
 		

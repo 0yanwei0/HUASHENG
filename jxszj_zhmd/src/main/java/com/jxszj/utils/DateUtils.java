@@ -346,8 +346,6 @@ public class DateUtils {
 		}
 	    return str;
 	}
-	
-	
 	/**
 	 * 
 	 *<pre>

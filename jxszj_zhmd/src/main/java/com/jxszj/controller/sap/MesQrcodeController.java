@@ -199,9 +199,9 @@ public class MesQrcodeController {
 		JDYAPIUtils dydz_api = new JDYAPIUtils(appId, dydz_entryId, apiKey);
 		List<Map<String, Object>> ctg_list=ctg_api.getAllFormData(null, null);
 		Map<String,Long> wlzmap=new HashMap<String,Long>();
-		List<SapScpgTb> listSapScpgTb=new ArrayList<SapScpgTb>();
+//		List<SapScpgTb> listSapScpgTb=new ArrayList<SapScpgTb>();
 		JDYAPIUtils api = new JDYAPIUtils(appId, entryId, apiKey);
-        int ddTotal=0;
+//        int ddTotal=0;
 		int total=0;
 		//查询产品名称打印对照表中的数据
 		List<Map<String, Object>> dydz_list=dydz_api.getAllFormData(null, null);
@@ -245,10 +245,30 @@ public class MesQrcodeController {
 	        	jhzqs.put(SalesOrder, lists2.get(lists2.size()-1));
 			}
 	        
-			for (int i = 0; i < array.size(); i++) {
-				int num=Double.valueOf(array.getJSONObject(i).getString("MfgOrderItemPlannedTotalQty")).intValue();
-				ddTotal+=num;
+//			for (int i = 0; i < array.size(); i++) {
+//				int num=Double.valueOf(array.getJSONObject(i).getString("MfgOrderItemPlannedTotalQty")).intValue();
+//				ddTotal+=num;
+//			}
+	        
+			final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("field", "_widget_1597219257966");//实际下达日期
+			map.put("type", "text");
+			map.put("method", "eq");
+			map.put("value",sjxdrq);
+	        condList.add(map);
+	        Map<String, Object> filter = new HashMap<String, Object>(){
+	            {
+	                put("rel", "and");
+	                put("cond", condList);
+	            }
+	        };
+	        List<Map<String, Object>> list= api.getAllFormData(null, filter);
+	        Map<String,String> mapCode=new HashMap<>();
+	        for (int i = 0; i < list.size(); i++) {
+				mapCode.put(list.get(i).get("_widget_1597219749750").toString(), list.get(i).get("_widget_1597219749750").toString());
 			}
+			
 			for (int i = 0; i < array.size(); i++) {
 				int num=Double.valueOf(array.getJSONObject(i).getString("MfgOrderItemPlannedTotalQty")).intValue();
 				int[] nums=new int[num];
@@ -263,52 +283,36 @@ public class MesQrcodeController {
 					}
 					
 					String qrCode=array.getJSONObject(i).getString("SalesOrder")+array.getJSONObject(i).getString("SalesOrderItem")+array.getJSONObject(i).getString("ManufacturingOrder")+str;
-					final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
-					Map<String, Object> map=new HashMap<String, Object>();
-					map.put("field", "_widget_1597219749750");//以二维码数据作为唯一值
-					map.put("type", "text");
-					map.put("method", "eq");
-					map.put("value",qrCode);
-			        condList.add(map);
-			        Map<String, Object> filter = new HashMap<String, Object>(){
-			            {
-			                put("rel", "and");
-			                put("cond", condList);
-			            }
-			        };
-			        String barcode="";
-			        Integer dyzs=1;
-			        String tempname="";
-			        String status="0";
-			        List<SapScpgTb> sapScpgTbs=sapScpgService.getSapScpgTb(qrCode);
-			        if(sapScpgTbs!=null && sapScpgTbs.size()!=0){
-			        	barcode=sapScpgTbs.get(0).getBarcode();
-			        	dyzs=sapScpgTbs.get(0).getDyzs();
-			        	tempname=sapScpgTbs.get(0).getTempname();
-			        	status=sapScpgTbs.get(0).getStatus();
-			        }else{
-			        	barcode=getCode();
-			        }
-			        List<Map<String, Object>> list= api.getAllFormData(null, filter);
-			        listSapScpgTb.add(getSapScpgTb(array.getJSONObject(i),qrCode,str,dyzs,tempname,status,barcode));
-			        if(list.size()==0){
+					
+			        String barcode=getCode();
+//			        Integer dyzs=1;
+//			        String tempname="";
+//			        String status="0";
+//			        List<SapScpgTb> sapScpgTbs=sapScpgService.getSapScpgTb(qrCode);
+//			        if(sapScpgTbs!=null && sapScpgTbs.size()!=0){
+//			        	barcode=sapScpgTbs.get(0).getBarcode();
+//			        	dyzs=sapScpgTbs.get(0).getDyzs();
+//			        	tempname=sapScpgTbs.get(0).getTempname();
+//			        	status=sapScpgTbs.get(0).getStatus();
+//			        }else{
+//			        	barcode=getCode();
+//			        }
+//			        listSapScpgTb.add(getSapScpgTb(array.getJSONObject(i),qrCode,str,dyzs,tempname,status,barcode));
+			        
+			        if(mapCode.get(qrCode)==null){
 			        	Map<String, Object> rawData=getData(array.getJSONObject(i),qrCode,str,wlzmap,barcode,jhzqs,ctg_list,dydzmap);
 						api.createForData(rawData);
-						total++;
-			        }else if(list.size()==1){
-			        	Map<String, Object> rawData=getUpdateData(array.getJSONObject(i),qrCode,str,wlzmap,jhzqs,dydzmap);
-						api.updateForData(list.get(0).get("_id").toString(), rawData);
 						total++;
 			        }
 				}
 				
 			}
-			sapScpgService.saveOrUpdate(listSapScpgTb);
+//			sapScpgService.saveOrUpdate(listSapScpgTb);
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return MessageResult.build(200,"添加更新完成，应添加更新总数"+ddTotal+"，实际添加更新"+total+"！");
+		return MessageResult.build(200,"添加更新完成，共添加"+total+"！");
 	}
 	
 	

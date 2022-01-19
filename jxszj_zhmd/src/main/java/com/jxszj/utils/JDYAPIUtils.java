@@ -205,6 +205,7 @@ public class JDYAPIUtils {
          * 创建单条数据
          * @param rawData - 创建数据内容
          * @return 更新后的数据
+		 * @throws Exception 
          */
 		@SuppressWarnings("unchecked")
 		public Map<String, Object> createData (Map<String, Object> rawData) {

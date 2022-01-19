@@ -28,8 +28,8 @@ public class YyjlrzQuartz {
 	private static final String APPID = "5cc110c3b3c41744aaa12b2e";
 	private static final String APIKEY = "uWEAujuxvzv5fMVifOvMRzlIJcPLgYkv";
 
-	//3-开店申请
-    private static final String ENTRYID_KDSQ = "5d102d3f2144352834656205";
+	//门店数据
+    private static final String ENTRYID_MDSJ = "61d67ee8ffdf9d00080a0946";
     
     //运营经理工作日志
     private static final String ENTRYID_RZ="61528f58d8111b0008415b1f";
@@ -46,31 +46,31 @@ public class YyjlrzQuartz {
     //C1.1门店人员进群
     private static final String ENTRYIDC1_1 = "613965b6976a2c00084d636a";
     
-    //Y5运营能力月度评分表
-    private static final String Y5_ENTRYID = "6119fe197085790007ab77e5";
-    
     //周计划
     private static final String ZJH_ENTRYID = "61724ea4e11d57000706ea12";
     
+	//DF1-销售收款单
+    private static final String ENTRYID_DF1 = "5d3bc22704614439fd55e71d";
+    
+  //M3月度目标维护
+  	private static final String ENTRYID_YDMB="609a4176637de90009c21f63";
+  	
+    //固定人员固定月目标
+  	private static final String ENTRYID_GDMB="61d6d852eef9180007ec63ed";
+  	
+	//开店申请
+    private static final String KDSQ_ENTRYID = "5d102d3f2144352834656205";
+    
 
 	public void execute() {
-//		GregorianCalendar g = new GregorianCalendar();
-//    	g.setTime(new Date());
-//    	int week=g.get(Calendar.WEEK_OF_YEAR);//得到当前周
-//    	//如果当前是星期天或星期一，当前就少一周
-//    	Calendar   calendar   =   Calendar.getInstance(); 
-//    	if(calendar.get(Calendar.DAY_OF_WEEK)==1 || calendar.get(Calendar.DAY_OF_WEEK)==2){
-//    		week-=1;
-//    	}
 		JDYAPIUtils rz = new JDYAPIUtils(APPID, ENTRYID_RZ, APIKEY);
 		DecimalFormat df = new DecimalFormat("#0.00%");
 		List<String> pps=new ArrayList<>();
 		pps.add("MS");
 		pps.add("PD");
 		pps.add("HMW");
-		Map<String,String> maps=getMap();
-		Map<String,Double> tbmaps=getMap1();
-		Map<String, String> yyjfpm=getMap2(DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE));
+		Map<String,Double> tbmaps=getMap1();//经销商对应的提报数据
+		Map<String, String> yyjfpm=getMap2(DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE)); //返回的map为运营员工编码对应的总积分/排名
 		Map<String,String> kqdk=checkWork();//钉钉的打卡记录
 		JDYAPIUtils dd = new JDYAPIUtils(APPID, ENTRYID_DD, APIKEY);
 		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
@@ -87,7 +87,7 @@ public class YyjlrzQuartz {
 			}
 		};
 		List<Map<String, Object>> dddzb = dd.getAllFormData(null,filter);
-		Map<String,String> ddMap=new HashMap<>();
+		Map<String,String> ddMap=new HashMap<>();//员工编码所对应的钉钉编码
 		for (int i = 0; i < dddzb.size(); i++) {
 			ddMap.put(dddzb.get(i).get("_widget_1633760760830").toString(), dddzb.get(i).get("_widget_1633760760777").toString());
 		}
@@ -112,22 +112,22 @@ public class YyjlrzQuartz {
 		for (int i = 0; i < zjh.size(); i++) {
 			zjhMap.put(zjh.get(i).get("_widget_1632800603235").toString(), zjh.get(i).get("_widget_1639205132257").toString());
 		}
+		
 		for (String pp:pps) {
+			Map<String,String> maps=getMap(pp);//返回的map为运营员工对应的目标/回款/门店数/店均
 			Set<String> p01=new HashSet<String>();
 			Set<String> p02=new HashSet<String>();
-			Set<String> p03=new HashSet<String>();
 			Map<String, Integer> sjrs=getMap3(pp);
+			Map<String, Integer> sjds=getSjds(pp);
 			List<Map<String, Object>> formData0=getDate(pp,DateUtils.getNowDateToString());
 			Map<String, String> yyjls=new HashMap<String, String>();//运营经理对应的名称
     		for (int i = 0; i < formData0.size(); i++) {
-				if(pp.equals("PD") ||pp.equals("HMW") || ObjectUtils.getString(formData0.get(i).get("_widget_1628167935327")).equals("H0362")){
-					p03.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628167935327")));//p03运营经理编码
-	    			yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1628167935327")), ObjectUtils.getString(formData0.get(i).get("_widget_1628167935237")));
-	    			p02.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628167934994")));//p02运营经理编码
-					yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1628167934994")), ObjectUtils.getString(formData0.get(i).get("_widget_1628167934919")));
+				if(pp.equals("PD") ||pp.equals("HMW") || ObjectUtils.getString(formData0.get(i).get("_widget_1641447146019")).equals("H0362")){
+	    			p02.add(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146015")));//p02运营经理编码
+					yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146015")), ObjectUtils.getString(formData0.get(i).get("_widget_1641447146013")));
 				}
-				p01.add(ObjectUtils.getString(formData0.get(i).get("_widget_1560906554863")));//p01运营经理编码
-				yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1560906554863")), ObjectUtils.getString(formData0.get(i).get("_widget_1545358841001")));
+				p01.add(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146011")));//p01运营经理编码
+				yyjls.put(ObjectUtils.getString(formData0.get(i).get("_widget_1641447146011")), ObjectUtils.getString(formData0.get(i).get("_widget_1641447146009")));
 			}
 			
 			//运营经理对应的经销商
@@ -138,8 +138,8 @@ public class YyjlrzQuartz {
 				Set<String> set1=new HashSet<String>();
 				int num=0;
 				for (int i = 0; i < formData0.size(); i++) {
-					if(yyjlbm.equals(formData0.get(i).get("_widget_1560906554863").toString())) {
-						set1.add(formData0.get(i).get("_widget_1543981212621").toString());
+					if(yyjlbm.equals(formData0.get(i).get("_widget_1641447146011").toString())) {
+						set1.add(formData0.get(i).get("_widget_1641447146001").toString());
 						num++;
 					}
 				}
@@ -150,21 +150,8 @@ public class YyjlrzQuartz {
 				Set<String> set1=new HashSet<String>();
 				int num=0;
 				for (int i = 0; i < formData0.size(); i++) {
-					if(yyjlbm.equals(formData0.get(i).get("_widget_1628167934994").toString())) {
-						set1.add(formData0.get(i).get("_widget_1543981212621").toString());
-						num++;
-					}
-				}
-				yyjljxs.put(yyjlbm, set1);
-				yyjlmd.put(yyjlbm, num);
-			}
-			
-			for(String yyjlbm:p03) {
-				Set<String> set1=new HashSet<String>();
-				int num=0;
-				for (int i = 0; i < formData0.size(); i++) {
-					if(yyjlbm.equals(formData0.get(i).get("_widget_1628167935327").toString())) {
-						set1.add(formData0.get(i).get("_widget_1543981212621").toString());
+					if(yyjlbm.equals(formData0.get(i).get("_widget_1641447146015").toString())) {
+						set1.add(formData0.get(i).get("_widget_1641447146001").toString());
 						num++;
 					}
 				}
@@ -215,7 +202,7 @@ public class YyjlrzQuartz {
 				m8.put("value", DateUtils.getAfterDay()+"T02:00:00.000Z");
 				rawData.put("_widget_1633936286782", m8);// 领导审批截止时间
 				Map<String, Object> m9 = new HashMap<String, Object>();
-				m9.put("value", maps.get(map.getKey()).split("/")[0]);
+				m9.put("value", maps.get(map.getKey()).split("/")[0]); 
 				rawData.put("_widget_1633664141750", m9);// 月回款目标(合计)
 				Map<String, Object> m10 = new HashMap<String, Object>();
 				m10.put("value", maps.get(map.getKey()).split("/")[1]);
@@ -254,11 +241,14 @@ public class YyjlrzQuartz {
 				m26.put("value", kqdk.get(map.getKey())!=null?kqdk.get(map.getKey()).split("/")[1]:"");
 				rawData.put("_widget_1634105683262", m26);//打卡地址
 				Map<String, Object> m27 = new HashMap<String, Object>();
-				m27.put("value", Integer.valueOf(maps.get(map.getKey()).split("/")[2]));
-				rawData.put("_widget_1635598709818", m27);//管理店数
+				m27.put("value", sjds.get(map.getKey()));
+				rawData.put("_widget_1635598709818", m27);//实际店数
 				Map<String, Object> m28 = new HashMap<String, Object>();
 				m28.put("value", Integer.valueOf(maps.get(map.getKey()).split("/")[3]));
 				rawData.put("_widget_1635598709856", m28);//店均回款
+				Map<String, Object> m29 = new HashMap<String, Object>();
+				m29.put("value", Integer.valueOf(maps.get(map.getKey()).split("/")[2]));
+				rawData.put("_widget_1641803484754", m29);//核准店数
     			rz.createDataByworkflow(rawData);
 			}
 			
@@ -268,25 +258,19 @@ public class YyjlrzQuartz {
 	
 	public List<Map<String, Object>> getDate(String pp,String ny){
 		//查询营业中的门店,且实际开业时间小于当前日期
-		JDYAPIUtils kdsq = new JDYAPIUtils(APPID, ENTRYID_KDSQ, APIKEY);
+		JDYAPIUtils kdsq = new JDYAPIUtils(APPID, ENTRYID_MDSJ, APIKEY);
 		final List<Map<String, Object>> condList0 = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map0 = new HashMap<String, Object>();
-		map0.put("field", "_widget_1560998925033");//运营状态：营业中
-		map0.put("type", "text");
-		map0.put("method", "eq");
-		map0.put("value", "营业中");
-		condList0.add(map0);
 		String[] str=new String[2];
 		str[0]="null";
 		str[1]=ny;
 		Map<String, Object> map1 = new HashMap<String, Object>();//实际开业时间：小于当前日期
-		map1.put("field", "_widget_1578996437131");
+		map1.put("field", "_widget_1641447146029");
 		map1.put("type", "text");
 		map1.put("method", "range");
 		map1.put("value",str);
 		condList0.add(map1);
 		Map<String, Object> map2 = new HashMap<String, Object>();//品牌
-		map2.put("field", "_widget_1543818220013");
+		map2.put("field", "_widget_1641447146003");
 		map2.put("type", "text");
 		map2.put("method", "eq");
 		map2.put("value",pp);
@@ -302,35 +286,218 @@ public class YyjlrzQuartz {
 	}
 	
 	
-	//返回的map为经销商编码对应的目标/回款/门店数/店均
-	public Map<String, String> getMap(){
-		Map<String, String> maps=new HashMap<String, String>();
+	//返回的map为运营员工对应的目标/回款/门店数/店均
+	public Map<String, String> getMap(String pp){
+		Map<String,String> maps=new HashMap<>();//员工编码对应的员工名称
+		JDYAPIUtils mdsjAPI = new JDYAPIUtils(APPID, ENTRYID_MDSJ, APIKEY);
 		try {
-    		JDYAPIUtils api = new JDYAPIUtils(APPID, Y5_ENTRYID, APIKEY);
-    		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
-    		Map<String, Object> map = new HashMap<String, Object>();
-    		map.put("field", "_widget_1627905992820");
-    		map.put("type", "text");
-    		map.put("method", "eq");
-    		map.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_MINUTE1));
-    		condList.add(map);
-    		Map<String, Object> filter = new HashMap<String, Object>() {
+			final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+			String[] str=new String[2];
+			str[0]="null";
+			str[1]=DateUtils.getLastDay(DateUtils.getNowDateToString(),DateUtils.FORMAT_1_STRING);
+			Map<String, Object> map1 = new HashMap<String, Object>();//实际开业时间：小于当月最后一天
+			map1.put("field", "_widget_1641447146029");
+			map1.put("type", "text");
+			map1.put("method", "range");
+			map1.put("value",str);
+			condList.add(map1);
+			Map<String, Object> map2 = new HashMap<String, Object>();//品牌
+			map2.put("field", "_widget_1641447146003");
+			map2.put("type", "text");
+			map2.put("method", "eq");
+			map2.put("value",pp);
+			condList.add(map2);
+			Map<String, Object> filter = new HashMap<String, Object>() {
+				{
+					put("rel", "and");
+					put("cond", condList);
+				}
+			};
+			List<Map<String, Object>> formData0 = mdsjAPI.getAllFormData(null,filter);
+			Set<String> set=new HashSet<>();//对应品牌下所有运营员工名称(员工编码)
+			for (int i = 0; i < formData0.size(); i++) {
+				set.add(formData0.get(i).get("_widget_1641447146011").toString());
+				set.add(formData0.get(i).get("_widget_1641447146015").toString());
+			}
+			
+			Map<String,Set<String>> mdMaps=new HashMap<>();
+			Map<String,Set<String>> jxsMaps=new HashMap<>();
+			Set<String> p01=new HashSet<>();
+			Set<String> p02=new HashSet<>();
+			for (int i = 0; i < formData0.size(); i++) {
+				p01.add(formData0.get(i).get("_widget_1641447146011").toString());
+				p02.add(formData0.get(i).get("_widget_1641447146015").toString());
+			}
+			for(String yyyg:p01){
+				Set<String> md=new HashSet<>();
+				Set<String> jxs=new HashSet<>();
+				for(int i=0;i<formData0.size();i++){
+					if(yyyg.equals(formData0.get(i).get("_widget_1641447146011").toString())){
+						md.add(formData0.get(i).get("_widget_1641447146025").toString());
+						jxs.add(formData0.get(i).get("_widget_1641447146001").toString());
+					}
+				}
+				mdMaps.put(yyyg, md);
+				jxsMaps.put(yyyg, jxs);
+			}
+			
+			for(String yyyg:p02){
+				Set<String> md=new HashSet<>();
+				Set<String> jxs=new HashSet<>();
+				for(int i=0;i<formData0.size();i++){
+					if(yyyg.equals(formData0.get(i).get("_widget_1641447146015").toString())){
+						md.add(formData0.get(i).get("_widget_1641447146025").toString());
+						jxs.add(formData0.get(i).get("_widget_1641447146001").toString());
+					}
+				}
+				mdMaps.put(yyyg, md);
+				jxsMaps.put(yyyg, jxs);
+			}
+			
+			
+			//找出当月有收款单的门店
+			JDYAPIUtils api = new JDYAPIUtils(APPID, ENTRYID_DF1, APIKEY);
+			final List<Map<String, Object>> condList1 = new ArrayList<Map<String, Object>>();
+    		map1 = new HashMap<String, Object>();
+    		map1.put("field", "_widget_1548049038941");//收款年月
+    		map1.put("type", "text");
+    		map1.put("method", "eq");
+    		map1.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE));
+    		condList1.add(map1);
+    	    map2 = new HashMap<String, Object>();
+    		map2.put("field", "_widget_1593141119943");//SAP的凭证号
+    		map2.put("type", "text");
+    		map2.put("method", "not_empty");
+    		condList1.add(map2);
+    		Map<String, Object> map3 = new HashMap<String, Object>();
+    		map3.put("field", "_widget_1548057662316");
+    		map3.put("type", "text");
+    		map3.put("method", "eq");
+    		map3.put("value", pp);
+    		condList1.add(map3);
+    		Map<String, Object> filter1 = new HashMap<String, Object>() {
     			{
     				put("rel", "and");
-    				put("cond", condList);
+    				put("cond", condList1);
     			}
     		};
-    		List<Map<String, Object>> formData0 = api.getAllFormData(null,filter);
     		
-    		
-    		for (int i = 0; i < formData0.size(); i++) {
-    			maps.put(formData0.get(i).get("_widget_1627886456443").toString(), formData0.get(i).get("_widget_1635581163399").toString()+"/"+formData0.get(i).get("_widget_1635581163734").toString()+"/"+formData0.get(i).get("_widget_1635581163865").toString()+"/"+formData0.get(i).get("_widget_1628240778489").toString());
+            List<Map<String, Object>> formData1 = api.getAllFormData(null,filter1);
+            
+          //获取当月每个经销商的月目标值
+			final List<Map<String, Object>> condList2 = new ArrayList<Map<String, Object>>();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("field", "_widget_1620722144569");
+			map.put("type", "text");
+			map.put("method", "eq");
+			map.put("value", "启用");
+			condList2.add(map);
+			Map<String, Object> filter2 = new HashMap<String, Object>() {
+				{
+					put("rel", "and");
+					put("cond", condList2);
+				}
+			};
+			api = new JDYAPIUtils(APPID, ENTRYID_YDMB, APIKEY);
+			List<Map<String, Object>> list=api.getAllFormData(null, filter2);
+			Map<String,Integer> ydmb=new HashMap<>();
+			for (int i = 0; i < list.size(); i++) {
+				ydmb.put(list.get(i).get("_widget_1620722144565").toString(), ObjectUtils.getObjectToInteger(list.get(i).get("_widget_1620722145500"))+ObjectUtils.getObjectToInteger(list.get(i).get("_widget_1637561518698")));
 			}
-    		
+			
+			final List<Map<String, Object>> condList3 = new ArrayList<Map<String, Object>>();
+			map = new HashMap<String, Object>();
+			map.put("field", "_widget_1641470066319");
+			map.put("type", "text");
+			map.put("method", "eq");
+			map.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE));
+			condList3.add(map);
+			Map<String, Object> filter3 = new HashMap<String, Object>() {
+				{
+					put("rel", "and");
+					put("cond", condList3);
+				}
+			};
+			api = new JDYAPIUtils(APPID, ENTRYID_GDMB, APIKEY);
+			list=api.getAllFormData(null, filter3);
+			Map<String,Integer> gdmb=new HashMap<>();
+			for (int i = 0; i < list.size(); i++) {
+				gdmb.put(list.get(i).get("_widget_1620722144573").toString(), ObjectUtils.getObjectToInteger(list.get(i).get("_widget_1620722145500")));
+			}
+            
+            for(Map.Entry<String, Set<String>> entry:jxsMaps.entrySet()){
+            	Set<String> jxsbm=entry.getValue();
+            	int hk=0;
+            	int mb=0;
+            	for(String jxs:jxsbm){
+            		mb+=ydmb.get(jxs)==null?0:ydmb.get(jxs);
+            		for (int i = 0; i < formData1.size(); i++) {
+						if(jxs.equals(formData1.get(i).get("_widget_1548037673508").toString())){
+							hk+=ObjectUtils.getDouble(ObjectUtils.getString(formData1.get(i).get("_widget_1564390193051"))).intValue();
+						}
+					}
+            	}
+            	int dj=hk/mdMaps.get(entry.getKey()).size();
+            	int mds=mdMaps.get(entry.getKey()).size();
+            	mb=gdmb.get(entry.getKey())!=null?gdmb.get(entry.getKey()):mb;
+        		maps.put(entry.getKey(),mb+"/"+hk+"/"+mds+"/"+dj);
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return maps;
+	}
+	public Map<String, Integer> getSjds(String pp){
+		JDYAPIUtils kdsq_api = new JDYAPIUtils(APPID, KDSQ_ENTRYID, APIKEY);
+		Map<String,Integer> mdMaps=new HashMap<>();
+		try {
+			final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+			Map<String, Object> map0 = new HashMap<String, Object>();
+			map0.put("field", "_widget_1560998925033");//运营状态：营业中
+			map0.put("type", "text");
+			map0.put("method", "eq");
+			map0.put("value", "营业中");
+			condList.add(map0);
+			String[] str=new String[2];
+			str[0]="null";
+			str[1]=DateUtils.getLastDay(DateUtils.getNowDateToString(),DateUtils.FORMAT_1_STRING);
+			Map<String, Object> map1 = new HashMap<String, Object>();//实际开业时间：小于当月最后一天
+			map1.put("field", "_widget_1578996437131");
+			map1.put("type", "text");
+			map1.put("method", "range");
+			map1.put("value",str);
+			condList.add(map1);
+			Map<String, Object> map2 = new HashMap<String, Object>();//品牌
+			map2.put("field", "_widget_1543818220013");
+			map2.put("type", "text");
+			map2.put("method", "eq");
+			map2.put("value",pp);
+			condList.add(map2);
+			Map<String, Object> filter = new HashMap<String, Object>() {
+				{
+					put("rel", "and");
+					put("cond", condList);
+				}
+			};
+			List<Map<String, Object>> formData0 = kdsq_api.getAllFormData(null,filter);
+			
+			Set<String> p01=new HashSet<>();
+			for (int i = 0; i < formData0.size(); i++) {
+				p01.add(formData0.get(i).get("_widget_1560906554863").toString());
+			}
+			for(String yyyg:p01){
+				int num=0;
+				for(int i=0;i<formData0.size();i++){
+					if(yyyg.equals(formData0.get(i).get("_widget_1560906554863").toString())){
+						num++;
+					}
+				}
+				mdMaps.put(yyyg, num);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mdMaps;
 	}
 	
 	
@@ -376,7 +543,7 @@ public class YyjlrzQuartz {
 	}
 	
 	
-	//返回的map为运营员工编码对应的总积分/排名
+	
 	public Map<String, String> getMap2(String ny){
 		Map<String, String> maps=new HashMap<>();
 		try {
@@ -426,10 +593,8 @@ public class YyjlrzQuartz {
 			List<Map<String, Object>> formData0 = kdsq.getAllFormData(null,filter0);
 			Set<String> p01=new HashSet<String>();
 			Set<String> p02=new HashSet<String>();
-			Set<String> p03=new HashSet<String>();
     		for (int i = 0; i < formData0.size(); i++) {
 				if(pp.equals("PD") ||pp.equals("HMW") || ObjectUtils.getString(formData0.get(i).get("_widget_1628169392851")).equals("H0362")){
-					p03.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628169392851")));//p03运营经理编码
 	    			p02.add(ObjectUtils.getString(formData0.get(i).get("_widget_1628169392779")));//p02运营经理编码
 				}
 				p01.add(ObjectUtils.getString(formData0.get(i).get("_widget_1627886456443")));//p01运营经理编码
@@ -455,16 +620,6 @@ public class YyjlrzQuartz {
 				yyjlmdrs.put(yyjlbm, rs);
 			}
 			
-			for(String yyjlbm:p03) {
-				int rs=0;
-				for (int i = 0; i < formData0.size(); i++) {
-					if(yyjlbm.equals(formData0.get(i).get("_widget_1628169392851").toString())) {
-						rs+=ObjectUtils.getObjectToInteger(formData0.get(i).get("_widget_1631151630231"));
-					}
-				}
-				yyjlmdrs.put(yyjlbm, rs);
-			}
-    		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

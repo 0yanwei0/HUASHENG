@@ -46,7 +46,7 @@ public class YynlydpfbQuartz {
 	//C7店长能量月度评分表
     private static final String C7_ENTRYID = "610cf9a301856800079f7cfe";
 
-	//C7店长能量月度评分表
+	//开店申请
     private static final String KDSQ_ENTRYID = "5d102d3f2144352834656205";
     
     //Y5运营能力月度评分表
@@ -194,11 +194,11 @@ public class YynlydpfbQuartz {
 				Set<String> set=new HashSet<>();//对应品牌下所有运营员工名称(员工编码)
 				for (int i = 0; i < formData0.size(); i++) {
 					set.add(formData0.get(i).get("_widget_1560906554863").toString());
-					set.add(formData0.get(i).get("_widget_1628167934994").toString());
-					set.add(formData0.get(i).get("_widget_1628167935327").toString());
 					maps.put(formData0.get(i).get("_widget_1560906554863").toString(), formData0.get(i).get("_widget_1545358841001").toString());
-					maps.put(formData0.get(i).get("_widget_1628167934994").toString(), formData0.get(i).get("_widget_1628167934919").toString());
-					maps.put(formData0.get(i).get("_widget_1628167935327").toString(), formData0.get(i).get("_widget_1628167935237").toString());
+					if(pp.get(j).equals("HMW")){
+						set.add(formData0.get(i).get("_widget_1628167934994").toString());
+						maps.put(formData0.get(i).get("_widget_1628167934994").toString(), formData0.get(i).get("_widget_1628167934919").toString());
+					}
 				}
 				
 				
@@ -238,17 +238,12 @@ public class YynlydpfbQuartz {
 				List<Map<String, Object>> formDataC4 = c4_api.getAllFormData(null, filter1);
 				
 				
-				
 				//找出p01p02p03每个运营员工下的门店
 				Map<String,Set<String>> mdMaps=new HashMap<>();
 				Map<String,Set<String>> jxsMaps=new HashMap<>();
 				Set<String> p01=new HashSet<>();
-				Set<String> p02=new HashSet<>();
-				Set<String> p03=new HashSet<>();
 				for (int i = 0; i < formData0.size(); i++) {
 					p01.add(formData0.get(i).get("_widget_1560906554863").toString());
-					p02.add(formData0.get(i).get("_widget_1628167934994").toString());
-					p03.add(formData0.get(i).get("_widget_1628167935327").toString());
 				}
 				for(String yyyg:p01){
 					Set<String> md=new HashSet<>();
@@ -263,32 +258,24 @@ public class YynlydpfbQuartz {
 					jxsMaps.put(yyyg, jxs);
 				}
 				
-				for(String yyyg:p02){
-					Set<String> md=new HashSet<>();
-					Set<String> jxs=new HashSet<>();
-					for(int i=0;i<formData0.size();i++){
-						if(yyyg.equals(formData0.get(i).get("_widget_1628167934994").toString())){
-							md.add(formData0.get(i).get("_widget_1543818219389").toString());
-							jxs.add(formData0.get(i).get("_widget_1543981212621").toString());
-						}
+				if(pp.get(j).equals("HMW")){
+					Set<String> p02=new HashSet<>();
+					for (int i = 0; i < formData0.size(); i++) {
+						p02.add(formData0.get(i).get("_widget_1628167934994").toString());
 					}
-					mdMaps.put(yyyg, md);
-					jxsMaps.put(yyyg, jxs);
-				}
-				
-				for(String yyyg:p03){
-					Set<String> md=new HashSet<>();
-					Set<String> jxs=new HashSet<>();
-					for(int i=0;i<formData0.size();i++){
-						if(yyyg.equals(formData0.get(i).get("_widget_1628167935327").toString())){
-							md.add(formData0.get(i).get("_widget_1543818219389").toString());
-							jxs.add(formData0.get(i).get("_widget_1543981212621").toString());
+					for(String yyyg:p02){
+						Set<String> md=new HashSet<>();
+						Set<String> jxs=new HashSet<>();
+						for(int i=0;i<formData0.size();i++){
+							if(yyyg.equals(formData0.get(i).get("_widget_1628167934994").toString())){
+								md.add(formData0.get(i).get("_widget_1543818219389").toString());
+								jxs.add(formData0.get(i).get("_widget_1543981212621").toString());
+							}
 						}
+						mdMaps.put(yyyg, md);
+						jxsMaps.put(yyyg, jxs);
 					}
-					mdMaps.put(yyyg, md);
-					jxsMaps.put(yyyg, jxs);
 				}
-				
 				
 				Map<String,String> maps1=getMap1(pp.get(j), month,mdMaps,jxsMaps);
 				Map<String,Integer> maps2=getMap2(pp.get(j), formData,mdMaps);
@@ -645,7 +632,7 @@ public class YynlydpfbQuartz {
 			}
 			//按照排名进行排序
 			List<Map.Entry<String, Integer>> list=mapSort(map);
-			if(pp.equals("PD")){
+			if(pp.equals("PD") || pp.equals("HMW")){
 				//p02下的总积分排名
 				for (int i = 0; i < formData.size(); i++) {
 					String key=formData.get(i).get("_widget_1627886455424").toString()+formData.get(i).get("_widget_1628169595535").toString();
@@ -782,7 +769,7 @@ public class YynlydpfbQuartz {
 				}
 				map.put(str, df);
 			}
-			if(pp.equals("PD")){
+			if(pp.equals("PD") || pp.equals("HMW")){
 				//p02下的运营能力-促销活动积分
 				Set<String> p02=new HashSet<>();
 				for(int i = 0; i < formDataC4.size(); i++){

@@ -67,7 +67,7 @@ public class HbcpfxQuartz {
 		map0.put("value", month);
 		condList0.add(map0);
 		Map<String, Object> map1 = new HashMap<String, Object>();
-		map1.put("field", "flowState");//运营状态：营业中
+		map1.put("field", "flowState");//审批状态：审批通过
 		map1.put("type", "text");
 		map1.put("method", "eq");
 		map1.put("value", 1);
@@ -107,7 +107,11 @@ public class HbcpfxQuartz {
 		List<Map<String, Object>> formDatas1 = api.getAllFormData(null,filter1);
 		Map<String,Integer> maps=new HashMap<>();
 		for (int i = 0; i < formDatas1.size(); i++) {
-			maps.put(formDatas1.get(i).get("_widget_1637805769032").toString()+formDatas1.get(i).get("_widget_1637905453350").toString(), ObjectUtils.getObjectToInteger(formDatas1.get(i).get("_widget_1637905453422")));
+			int num=ObjectUtils.getObjectToInteger(formDatas1.get(i).get("_widget_1637905453422"));
+			if(maps.get(formDatas1.get(i).get("_widget_1637805769032").toString()+formDatas1.get(i).get("_widget_1637905453350").toString())!=null){
+				num=maps.get(formDatas1.get(i).get("_widget_1637805769032").toString()+formDatas1.get(i).get("_widget_1637905453350").toString())+num;
+			}
+			maps.put(formDatas1.get(i).get("_widget_1637805769032").toString()+formDatas1.get(i).get("_widget_1637905453350").toString(), num);
 		}
 
 		for(String str:set){
