@@ -71,7 +71,7 @@ public class GdtcServiceImpl implements IGdtcService {
 	@Override
 	public void updateGdtc(String ny) {
 		try {
-			double tcbl=0.003;//提成系数
+			double tcbl=0.0025;//提成系数
 			DecimalFormat df = new DecimalFormat("#0.00");
 			List<HsGdtcTb> hsGdtcTbs=new ArrayList<>();
 			Map<String, Double> jxsyskMap=getJxsMap("预收款",ny);

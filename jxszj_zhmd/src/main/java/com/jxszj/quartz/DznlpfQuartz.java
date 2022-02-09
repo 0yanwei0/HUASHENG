@@ -473,11 +473,14 @@ public class DznlpfQuartz {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, ENTRYID_DF1, APIKEY);
 			for (int i = 0; i < pp.size(); i++) {
             	final List<Map<String, Object>> condList1 = new ArrayList<Map<String, Object>>();
+            	List<String> list=new ArrayList<>();
+            	list.add("2022年1月");
+            	list.add("2022年2月");
         		Map<String, Object> map1 = new HashMap<String, Object>();
         		map1.put("field", "_widget_1548049038941");//收款年月
         		map1.put("type", "text");
-        		map1.put("method", "eq");
-        		map1.put("value", month);
+        		map1.put("method", "in");
+        		map1.put("value", list);
         		condList1.add(map1);
         		Map<String, Object> map2 = new HashMap<String, Object>();
         		map2.put("field", "_widget_1593141119943");//SAP的凭证号
@@ -555,11 +558,14 @@ public class DznlpfQuartz {
 		try {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, ENTRYID_DS2, APIKEY);
     		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+    		List<String> list=new ArrayList<>();
+        	list.add("2022年1月");
+        	list.add("2022年2月");
     		Map<String, Object> map0 = new HashMap<String, Object>();
     		map0.put("field", "_widget_1563246850783");//开单年月
     		map0.put("type", "text");
-    		map0.put("method", "eq");
-    		map0.put("value", month);
+    		map0.put("method", "in");
+    		map0.put("value", list);
     		condList.add(map0);
     		Map<String, Object> map2 = new HashMap<String, Object>();
     		map2.put("field", "_widget_1563356837948");
@@ -602,11 +608,14 @@ public class DznlpfQuartz {
 		try {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, C2_ENTRYID, APIKEY);
     		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+    		List<String> list=new ArrayList<>();
+        	list.add("2022年1月");
+        	list.add("2022年2月");
     		Map<String, Object> map0 = new HashMap<String, Object>();
     		map0.put("field", "_widget_1627905992838");//年月
     		map0.put("type", "text");
-    		map0.put("method", "eq");
-    		map0.put("value", month);
+    		map0.put("method", "in");
+    		map0.put("value", list);
     		condList.add(map0);
     		Map<String, Object> filter = new HashMap<String, Object>() {
     			{
@@ -666,11 +675,14 @@ public class DznlpfQuartz {
 		try {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, C3_ENTRYID, APIKEY);
     		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+    		List<String> list1=new ArrayList<>();
+        	list1.add("2022年1月");
+        	list1.add("2022年2月");
     		Map<String, Object> map0 = new HashMap<String, Object>();
     		map0.put("field", "_widget_1627905992838");//年月
     		map0.put("type", "text");
-    		map0.put("method", "eq");
-    		map0.put("value", month);
+    		map0.put("method", "in");
+    		map0.put("value", list1);
     		condList.add(map0);
     		Map<String, Object> filter = new HashMap<String, Object>() {
     			{
@@ -712,11 +724,14 @@ public class DznlpfQuartz {
 		try {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, C4_ENTRYID, APIKEY);
     		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+    		List<String> list=new ArrayList<>();
+        	list.add("2022年1月");
+        	list.add("2022年2月");
     		Map<String, Object> map0 = new HashMap<String, Object>();
     		map0.put("field", "_widget_1627905992820");//年月
     		map0.put("type", "text");
-    		map0.put("method", "eq");
-    		map0.put("value", month);
+    		map0.put("method", "in");
+    		map0.put("value", list);
     		condList.add(map0);
     		Map<String, Object> filter = new HashMap<String, Object>() {
     			{
@@ -755,11 +770,14 @@ public class DznlpfQuartz {
 		try {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, C5_ENTRYID, APIKEY);
     		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+    		List<String> list=new ArrayList<>();
+        	list.add("2022年1月");
+        	list.add("2022年2月");
     		Map<String, Object> map0 = new HashMap<String, Object>();
     		map0.put("field", "_widget_1627905992838");//年月
     		map0.put("type", "text");
-    		map0.put("method", "eq");
-    		map0.put("value", month);
+    		map0.put("method", "in");
+    		map0.put("value", list);
     		condList.add(map0);
     		Map<String, Object> filter = new HashMap<String, Object>() {
     			{

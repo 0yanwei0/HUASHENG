@@ -234,16 +234,16 @@ public class YDMBController {
 				m8.put("value", "启用");
 				rawData.put("_widget_1620722144569", m8);//使用标识
 				Map<String, Object> m9 = new HashMap<String, Object>();
-				m9.put("value", formData0.get(i).get("_widget_1548225231293"));
+				m9.put("value", formData0.get(i).get("_widget_1642063718404"));
 				rawData.put("_widget_1620722144571", m9);//P01运营员工名称
 				Map<String, Object> m10 = new HashMap<String, Object>();
-				m10.put("value", formData0.get(i).get("_widget_1548225231565"));
+				m10.put("value", formData0.get(i).get("_widget_1642063718628"));
 				rawData.put("_widget_1620722144573", m10);//P01运营员工编码
 				Map<String, Object> m11 = new HashMap<String, Object>();
-				m11.put("value", formData0.get(i).get("_widget_1628164974484"));
+				m11.put("value", formData0.get(i).get("_widget_1628164974565"));
 				rawData.put("_widget_1628171453005", m11);//P02运营员工名称
 				Map<String, Object> m12 = new HashMap<String, Object>();
-				m12.put("value", formData0.get(i).get("_widget_1628164974565"));
+				m12.put("value", formData0.get(i).get("_widget_1642063719899"));
 				rawData.put("_widget_1628171453041", m12);//P02运营员工编码
 				Map<String, Integer> m17 = new HashMap<String, Integer>();
 				if(formData0.get(i).get("_widget_1560762110588").equals("A")){

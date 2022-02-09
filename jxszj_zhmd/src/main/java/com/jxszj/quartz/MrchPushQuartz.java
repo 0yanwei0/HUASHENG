@@ -196,7 +196,7 @@ public class MrchPushQuartz {
 				request.setMsgtype("actionCard");
 				Actioncard actioncard = new Actioncard();
 				actioncard.setTitle(DateUtils.getNowDateToString() + "晨会数据提报排行榜");
-				String json="🏆**"+pp.get(j)+DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_MINUTE2)+"晨会数据提报排行榜**🏆 \n "+sb.toString();
+				String json="**"+pp.get(j)+DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_MINUTE2)+"晨会数据提报排行榜** \n "+sb.toString();
 				actioncard.setText(json);
 				request.setActionCard(actioncard);
 				client.execute(request);

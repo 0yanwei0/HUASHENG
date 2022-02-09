@@ -8,6 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dingtalk.api.DefaultDingTalkClient;
@@ -21,6 +32,7 @@ import com.dingtalk.api.response.OapiGettokenResponse;
 import com.dingtalk.api.response.OapiReportListResponse;
 import com.dingtalk.api.response.OapiV2UserListResponse;
 import com.jxszj.utils.DateUtils;
+import com.jxszj.utils.ExcelToImage;
 import com.jxszj.utils.JDYAPIUtils;
 import com.jxszj.utils.ObjectUtils;
 
@@ -39,7 +51,6 @@ public class YwpmQuartz {
    //开店申请
     private static final String YXJSKD_ENTRYID = "5f7c0ba30b8cc700067eca8a";
     
-
 	public void execute() {
 		try {
 			List<Long> dept_ids=new ArrayList<>();
@@ -121,39 +132,162 @@ public class YwpmQuartz {
 				}
 			}
 			List<Entry<String, String>> lists=mapSort(maps);
-			StringBuilder sb = new StringBuilder();
-			sb.append("  \n ------------------");
-			sb.append("  \n	"+"              签约       邀约       开店      面积");
-			for (int i = 0; i < lists.size(); i++) {
-				sb.append("  \n ------------------");
-				sb.append("  \n	" + getStr(3,lists.get(i).getKey()));
-				sb.append(getStr(3,lists.get(i).getValue().split("/")[0]));
-				sb.append(getStr(3,lists.get(i).getValue().split("/")[1]));
-				sb.append(getStr(2,lists.get(i).getValue().split("/")[2]));
-				sb.append((int)Double.parseDouble(lists.get(i).getValue().split("/")[3]));
-			}
-			sb.append("  \n ------------------");
-			sb.append("  \n	" + getStr(3,"⭐北区"));
-			sb.append(getStr(3,bq.split("/")[0]));
-			sb.append(getStr(3,bq.split("/")[1]));
-			sb.append(getStr(2,bq.split("/")[2]));
-			sb.append((int)Double.parseDouble(bq.split("/")[3]));
-			sb.append("  \n ------------------");
-			sb.append("  \n	" + getStr(3,"⭐南区"));
-			sb.append(getStr(3,nq.split("/")[0]));
-			sb.append(getStr(3,nq.split("/")[1]));
-			sb.append(getStr(2,nq.split("/")[2]));
-			sb.append((int)Double.parseDouble(nq.split("/")[3]));
+			Map<String,String> map=new HashMap<>();
+			map.put("北区", bq);
+			map.put("南区", nq);
+			List<Entry<String, String>> lists1=mapSort(map);
+			lists.add(lists1.get(0));
+			lists.add(lists1.get(1));
 			
-			DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?access_token=8a7613157b05ee243146cbc857deaa530d10867602fe5c7719ca321edef6dbd8");
-			OapiRobotSendRequest request = new OapiRobotSendRequest();
-			request.setMsgtype("actionCard");
-			Actioncard actioncard = new Actioncard();
-			actioncard.setTitle(DateUtils.getNowDateToString() + "拓展战报");
-			String json="🏆**"+DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_MINUTE2)+"拓展战报**🏆 \n "+sb.toString();
-			actioncard.setText(json);
-			request.setActionCard(actioncard);
-			client.execute(request);
+			XSSFWorkbook wb = new XSSFWorkbook();  
+			XSSFSheet sheet = wb.createSheet();
+			sheet.setColumnWidth(0, 5000);
+            sheet.setColumnWidth(1, 2500);
+            sheet.setColumnWidth(2, 2500);
+            sheet.setColumnWidth(3, 2500);//设置列宽
+            sheet.setColumnWidth(4, 2500);//设置列宽
+			int rowIndex = 0;
+			CellRangeAddress region = new CellRangeAddress(rowIndex, rowIndex, 0, 4);
+            sheet.addMergedRegion(region);
+            XSSFFont font1 = wb.createFont();
+            font1.setFontName("微软雅黑");
+            font1.setFontHeightInPoints((short)20);
+            font1.setColor(IndexedColors.RED.getIndex());
+            font1.setBold(true);//粗体
+            
+            XSSFCellStyle  style1= wb.createCellStyle();
+            style1.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());//背景
+            style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            style1.setFont(font1);
+            style1.setAlignment(HorizontalAlignment.CENTER); // 居中
+            
+            XSSFFont font2 = wb.createFont();
+            font2.setFontName("宋体");
+            font2.setFontHeightInPoints((short)20);
+
+            XSSFCellStyle  style2= wb.createCellStyle();
+            style2.setFont(font2);
+            style2.setAlignment(HorizontalAlignment.CENTER); // 居中
+            
+            XSSFCellStyle  style3= wb.createCellStyle();
+            style3.setFillForegroundColor(IndexedColors.CORAL.getIndex());//背景
+            style3.setFont(font1);
+
+            XSSFRow row = sheet.getRow(rowIndex);
+			if (null == row) {
+				row = sheet.createRow(rowIndex);
+			}
+			row.setHeight((short)1000);
+			XSSFCell cell = row.getCell(0);
+			if (null == cell) {
+				cell = row.createCell(0);
+			}
+			cell.setCellValue(DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_MINUTE2)+"拓展战报");
+			cell.setCellStyle(style1);
+			
+			XSSFRow row0 = sheet.getRow(rowIndex+1);
+			if (null == row0) {
+				row0 = sheet.createRow(rowIndex+1);
+			}
+			row0.setHeight((short)800);
+			XSSFCell cell0 = row0.getCell(0);
+			if (null == cell0) {
+				cell0 = row0.createCell(0);
+			}
+			cell0.setCellValue("业务");
+			cell0.setCellStyle(style1);
+			XSSFCell cell1 = row0.getCell(1);
+			if (null == cell1) {
+				cell1 = row0.createCell(1);
+			}
+			cell1.setCellValue("签约");
+			cell1.setCellStyle(style1);
+			XSSFCell cell2 = row0.getCell(2);
+			if (null == cell2) {
+				cell2 = row0.createCell(2);
+			}
+			cell2.setCellValue("邀约");
+			cell2.setCellStyle(style1);
+			XSSFCell cell3 = row0.getCell(3);
+			if (null == cell3) {
+				cell3 = row0.createCell(3);
+			}
+			cell3.setCellValue("开店");
+			cell3.setCellStyle(style1);
+			XSSFCell cell4 = row0.getCell(4);
+			if (null == cell4) {
+				cell4 = row0.createCell(4);
+			}
+			cell4.setCellValue("面积");
+			cell4.setCellStyle(style1);
+			rowIndex=rowIndex+2;
+            for (int i=0; i<lists.size(); i++) {
+            	XSSFRow row00 = sheet.getRow(rowIndex);
+				if (null == row00) {
+					row00 = sheet.createRow(rowIndex);
+				}
+				row00.setHeight((short)600);
+				XSSFCell cell00 = row00.getCell(0);
+				if (null == cell00) {
+					cell00 = row00.createCell(0);
+				}
+				cell00.setCellValue(lists.get(i).getKey());
+				cell00.setCellStyle(style2);
+				if(lists.get(i).getKey().equals("北区") || lists.get(i).getKey().equals("南区")){
+					cell00.setCellStyle(style3);
+				}
+				XSSFCell cell11 = row00.getCell(1);
+				if (null == cell11) {
+					cell11 = row00.createCell(1);
+				}
+				cell11.setCellValue(lists.get(i).getValue().split("/")[0]);
+				cell11.setCellStyle(style2);
+				if(lists.get(i).getKey().equals("北区") || lists.get(i).getKey().equals("南区")){
+					cell11.setCellStyle(style3);
+				}
+				XSSFCell cell22 = row00.getCell(2);
+				if (null == cell22) {
+					cell22 = row00.createCell(2);
+				}
+				cell22.setCellValue(lists.get(i).getValue().split("/")[1]);
+				cell22.setCellStyle(style2);
+				if(lists.get(i).getKey().equals("北区") || lists.get(i).getKey().equals("南区")){
+					cell22.setCellStyle(style3);
+				}
+				XSSFCell cell23 = row00.getCell(3);
+				if (null == cell23) {
+					cell23 = row00.createCell(3);
+				}
+				cell23.setCellValue(lists.get(i).getValue().split("/")[2]);
+				cell23.setCellStyle(style2);
+				if(lists.get(i).getKey().equals("北区") || lists.get(i).getKey().equals("南区")){
+					cell23.setCellStyle(style3);
+				}
+				XSSFCell cell24 = row00.getCell(4);
+				if (null == cell24) {
+					cell24 = row00.createCell(4);
+				}
+				cell24.setCellValue(lists.get(i).getValue().split("/")[3]);
+				cell24.setCellStyle(style2);
+				if(lists.get(i).getKey().equals("北区") || lists.get(i).getKey().equals("南区")){
+					cell24.setCellStyle(style3);
+				}
+				rowIndex++;
+            }
+			
+			String imagesName=DateUtils.getNowDateToString(DateUtils.FORMAT_INTEGER)+"tzzb.jpg";
+			ExcelToImage.generatePic(wb,imagesName);
+	        
+	        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?access_token=8a7613157b05ee243146cbc857deaa530d10867602fe5c7719ca321edef6dbd8");
+    		OapiRobotSendRequest request = new OapiRobotSendRequest();
+    		request.setMsgtype("actionCard");
+    		Actioncard actioncard=new Actioncard();
+    		actioncard.setTitle(DateUtils.getNowDateToString() + "拓展战报");
+    		
+    		actioncard.setText("![screenshot](http://www.huasheng999.com/downloadImages?imageName="+imagesName+")");
+    		request.setActionCard(actioncard);
+    		client.execute(request);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -215,7 +349,6 @@ public class YwpmQuartz {
 				for (int i = 0; i < array.size(); i++) {
 					if(array.getJSONObject(i).getString("key").equals("本月成功邀约客户数累计")){
 						number=array.getJSONObject(i).getInteger("value");
-						System.out.println(array.getJSONObject(i).getString("value"));
 					}
 				}
 			}

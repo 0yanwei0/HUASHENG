@@ -70,4 +70,11 @@ public class SapScrkwlTb {
     public void setDyrj(Integer dyrj) {
         this.dyrj = dyrj;
     }
+
+	@Override
+	public String toString() {
+		return "SapScrkwlTb [id=" + id + ", gzrq=" + gzrq + ", wlzbm=" + wlzbm + ", wlzmc=" + wlzmc + ", drrk=" + drrk
+				+ ", dylj=" + dylj + ", dyrj=" + dyrj + "]";
+	}
+    
 }

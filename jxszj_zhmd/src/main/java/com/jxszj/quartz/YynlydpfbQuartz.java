@@ -632,25 +632,31 @@ public class YynlydpfbQuartz {
 			}
 			//按照排名进行排序
 			List<Map.Entry<String, Integer>> list=mapSort(map);
-			if(pp.equals("PD") || pp.equals("HMW")){
-				//p02下的总积分排名
-				for (int i = 0; i < formData.size(); i++) {
-					String key=formData.get(i).get("_widget_1627886455424").toString()+formData.get(i).get("_widget_1628169595535").toString();
-					Integer value=ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1628477304402"));
-					map.put(key, value);//key值为门店编码员工编码，value值为积分总排名
-					set.add(formData.get(i).get("_widget_1628169595535").toString());
-				}
-			}else if(pp.equals("MS")){
-				//p02下H0362员工的总积分排名
-				for (int i = 0; i < formData.size(); i++) {
-					if("H0362".equals(formData.get(i).get("_widget_1628169595535").toString())){
-						String key=formData.get(i).get("_widget_1627886455424").toString()+"H0362";
-						Integer value=ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1628477304402"));
-						map.put(key, value);
-					}
-				}
-				set.add("H0362");
+			for (int i = 0; i < formData.size(); i++) {
+				String key=formData.get(i).get("_widget_1627886455424").toString()+formData.get(i).get("_widget_1628169595535").toString();
+				Integer value=ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1628477304402"));
+				map.put(key, value);//key值为门店编码员工编码，value值为积分总排名
+				set.add(formData.get(i).get("_widget_1628169595535").toString());
 			}
+//			if(pp.equals("PD") || pp.equals("HMW")){
+//				//p02下的总积分排名
+//				for (int i = 0; i < formData.size(); i++) {
+//					String key=formData.get(i).get("_widget_1627886455424").toString()+formData.get(i).get("_widget_1628169595535").toString();
+//					Integer value=ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1628477304402"));
+//					map.put(key, value);//key值为门店编码员工编码，value值为积分总排名
+//					set.add(formData.get(i).get("_widget_1628169595535").toString());
+//				}
+//			}else if(pp.equals("MS")){
+//				//p02下H0362员工的总积分排名
+//				for (int i = 0; i < formData.size(); i++) {
+//					if("H0362".equals(formData.get(i).get("_widget_1628169595535").toString())){
+//						String key=formData.get(i).get("_widget_1627886455424").toString()+"H0362";
+//						Integer value=ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1628477304402"));
+//						map.put(key, value);
+//					}
+//				}
+//				set.add("H0362");
+//			}
 			
 			if(pp.equals("PD") || pp.equals("MS")){
 				//取出最后一个元素的value值
@@ -769,30 +775,46 @@ public class YynlydpfbQuartz {
 				}
 				map.put(str, df);
 			}
-			if(pp.equals("PD") || pp.equals("HMW")){
-				//p02下的运营能力-促销活动积分
-				Set<String> p02=new HashSet<>();
-				for(int i = 0; i < formDataC4.size(); i++){
-					p02.add(formDataC4.get(i).get("_widget_1628170323350").toString());
-				}
-				for(String str : p02){
-					int df=0;
-					for (int i = 0; i < formDataC4.size(); i++) {
-						if(str.equals(formDataC4.get(i).get("_widget_1628170323350").toString())){
-							df+=ObjectUtils.getObjectToInteger(formDataC4.get(i).get("_widget_1629093616109"));
-						}
-					}
-					map.put(str, df);
-				}
-			}else if(pp.equals("MS")){
-				int cxdf=0;
-				for (int i = 0; i < formDataC4.size(); i++) {
-					if("H0362".equals(formDataC4.get(i).get("_widget_1628170323350").toString())){
-						cxdf+=ObjectUtils.getObjectToInteger(formDataC4.get(i).get("_widget_1629093616109"));
-					}
-				}
-				map.put("H0362", cxdf);
+			
+			//p02下的运营能力-促销活动积分
+			Set<String> p02=new HashSet<>();
+			for(int i = 0; i < formDataC4.size(); i++){
+				p02.add(formDataC4.get(i).get("_widget_1628170323350").toString());
 			}
+			for(String str : p02){
+				int df=0;
+				for (int i = 0; i < formDataC4.size(); i++) {
+					if(str.equals(formDataC4.get(i).get("_widget_1628170323350").toString())){
+						df+=ObjectUtils.getObjectToInteger(formDataC4.get(i).get("_widget_1629093616109"));
+					}
+				}
+				map.put(str, df);
+			}
+			
+//			if(pp.equals("PD") || pp.equals("HMW")){
+//				//p02下的运营能力-促销活动积分
+//				Set<String> p02=new HashSet<>();
+//				for(int i = 0; i < formDataC4.size(); i++){
+//					p02.add(formDataC4.get(i).get("_widget_1628170323350").toString());
+//				}
+//				for(String str : p02){
+//					int df=0;
+//					for (int i = 0; i < formDataC4.size(); i++) {
+//						if(str.equals(formDataC4.get(i).get("_widget_1628170323350").toString())){
+//							df+=ObjectUtils.getObjectToInteger(formDataC4.get(i).get("_widget_1629093616109"));
+//						}
+//					}
+//					map.put(str, df);
+//				}
+//			}else if(pp.equals("MS")){
+//				int cxdf=0;
+//				for (int i = 0; i < formDataC4.size(); i++) {
+//					if("H0362".equals(formDataC4.get(i).get("_widget_1628170323350").toString())){
+//						cxdf+=ObjectUtils.getObjectToInteger(formDataC4.get(i).get("_widget_1629093616109"));
+//					}
+//				}
+//				map.put("H0362", cxdf);
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

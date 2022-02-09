@@ -53,6 +53,7 @@
                 	<li iconCls="icon-application-form-edit"><a href="javascript:void(0)" data-icon="icon-application-form-edit" data-link="sap-zjxshk-list" iframe="0">转经销商货款</a></li>
                 	<li iconCls="icon-application-form-edit"><a href="javascript:void(0)" data-icon="icon-application-form-edit" data-link="sap-fwf-list" iframe="0">经销商补服务费</a></li>
                 	<li iconCls="icon-application-form-edit"><a href="javascript:void(0)" data-icon="icon-application-form-edit" data-link="sap-hdf-list" iframe="0">活动费扣款</a></li>
+                	<li iconCls="icon-application-view-columns"><a href="javascript:void(0)" data-icon="icon-application-view-columns" data-link="sap-zkbzj-list" iframe="0">账扣保证金</a></li>
 					<li iconCls="icon-application-form-edit"><a href="javascript:void(0)" data-icon="icon-application-form-edit" data-link="sap-ydmb-list" iframe="0">本月回款管理</a></li>
 					<li iconCls="icon-application-view-columns"><a href="javascript:void(0)" data-icon="icon-application-view-columns" data-link="sap-pdsc-view" iframe="0">排单生产查看</a></li>
 					<li iconCls="icon-application-view-columns"><a href="javascript:void(0)" data-icon="icon-application-view-columns" data-link="sap-price-list" iframe="0">价格主数据管理</a></li>

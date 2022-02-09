@@ -592,7 +592,6 @@ public class ExcelToImagesQuartz {
 //			FileOutputStream fos = new FileOutputStream("C:/Users/Administrator/Desktop/aaa.xls");  
 //			wb.write(fos);//写文件
 //			fos.close(); 
-			
 			String imagesName=DateUtils.getNowDateToString(DateUtils.FORMAT_INTEGER)+"-yyjljf.jpg";
 			ExcelToImage.generatePic(wb,imagesName);
 	        
