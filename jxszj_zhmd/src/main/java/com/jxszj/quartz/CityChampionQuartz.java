@@ -178,13 +178,10 @@ public class CityChampionQuartz {
         	        	strC.append("NO."+mapValue+"     "+mapKey+"  \n	");
         	        }
         	    }
-        		String str="🏆**"+pp.get(j)+DateUtils.getMonth()+"月门店业绩冠军榜**🏆"
+        		String str="**"+pp.get(j)+DateUtils.getMonth()+"月门店业绩冠军榜**"
         				+ "  \n⭐⭐⭐**A级城市门店**⭐⭐⭐"+strA
         				+ "  \n⭐⭐⭐**B级城市门店**⭐⭐⭐"+strB
-        				+ "  \n⭐⭐⭐**C级城市门店**⭐⭐⭐"+strC
-        				+ "\n\n"
-        				+ "  \n	[鼓掌][鼓掌][鼓掌]为第一名喝彩[鼓掌][鼓掌][鼓掌]"
-        				+ "  \n	业绩冲冲，上榜、上榜  \n	业绩冲冲，上榜、上榜  \n	业绩冲冲，上榜、上榜";
+        				+ "  \n⭐⭐⭐**C级城市门店**⭐⭐⭐"+strC;
         		DingTalkClient client = new DefaultDingTalkClient(jqrUrl);
         		OapiRobotSendRequest request = new OapiRobotSendRequest();
         		request.setMsgtype("actionCard");
@@ -328,13 +325,10 @@ public class CityChampionQuartz {
 					}
 				}
         		
-        		String str="🏆**"+DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_YEAR)+pp.get(j)+"下单业绩排行榜**🏆"
+        		String str="**"+DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_YEAR)+pp.get(j)+"下单业绩排行榜**"
         				+ "  \n	             ⭐⭐⭐**A级城市**⭐⭐⭐          "+strA.toString()
         				+ "            ⭐⭐⭐**B级城市**⭐⭐⭐          "+strB.toString()
-        				+ "            ⭐⭐⭐**C级城市**⭐⭐⭐          "+strC.toString()
-        				+ "  \n	TOP前10（截至"+DateUtils.getNowDateToString(DateUtils.FORMAT_2_STRING)+")"
-        				+ "  \n	[鼓掌][鼓掌][鼓掌]为第一名喝彩[鼓掌][鼓掌][鼓掌]"
-        				+ "  \n	业绩冲冲，上榜、上榜  \n	业绩冲冲，上榜、上榜  \n	业绩冲冲，上榜、上榜";
+        				+ "            ⭐⭐⭐**C级城市**⭐⭐⭐          "+strC.toString();
         		DingTalkClient client = new DefaultDingTalkClient(jqrUrl);
         		OapiRobotSendRequest request = new OapiRobotSendRequest();
         		request.setMsgtype("actionCard");
@@ -493,13 +487,10 @@ public class CityChampionQuartz {
         			}
         	    }
         		
-        		String str="🏆**"+DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE)+pp.get(i)+"回款业绩排行榜**🏆"
+        		String str="**"+DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE)+pp.get(i)+"回款业绩排行榜**"
         				+ "  \n	                ⭐⭐⭐**A级城市门店**⭐⭐⭐          "+str_a.toString()
         				+ "            ⭐⭐⭐**B级城市门店**⭐⭐⭐          "+str_b.toString()
-        				+ "            ⭐⭐⭐**C级城市门店**⭐⭐⭐          "+str_c.toString()
-        				+ "  \n	"
-        				+ "  \n	[鼓掌][鼓掌][鼓掌]为第一名喝彩[鼓掌][鼓掌][鼓掌]"
-        				+ "  \n	业绩冲冲，上榜、上榜  \n	业绩冲冲，上榜、上榜  \n	业绩冲冲，上榜、上榜";
+        				+ "            ⭐⭐⭐**C级城市门店**⭐⭐⭐          "+str_c.toString();
         		DingTalkClient client = new DefaultDingTalkClient(jqrUrl);
         		OapiRobotSendRequest request = new OapiRobotSendRequest();
         		request.setMsgtype("actionCard");

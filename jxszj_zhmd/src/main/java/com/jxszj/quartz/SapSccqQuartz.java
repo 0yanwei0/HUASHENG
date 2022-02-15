@@ -314,31 +314,31 @@ public class SapSccqQuartz {
 			}
 			String str=getXSSFWorkbook(map);
 			//通过钉钉机器人发送到群
-//			List<String> urls=new ArrayList<>();
-//    		urls.add("https://oapi.dingtalk.com/robot/send?access_token=1fc6e3796fadda50d78c9264d9a92ae87292298ba364fced0c44d8dd91af014a");
-//    		urls.add("https://oapi.dingtalk.com/robot/send?access_token=5c15bdd890ab387f6663f6d4d62d40cff8a7a37a32a168c905b28b078c744090");
-//    		urls.add("https://oapi.dingtalk.com/robot/send?access_token=9ca7726af64f24d491871c444151f39b0cc16846e0aa7f13263824b2327f217e");
-//			urls.add("https://oapi.dingtalk.com/robot/send?access_token=f499b56400a19b942137d1cfca9cfd916a37fc38365e394ef5546228820ee4e7");
-//    		for (int i = 0; i < urls.size(); i++) {
-//    			DingTalkClient client = new DefaultDingTalkClient(urls.get(i));
-//        		OapiRobotSendRequest request = new OapiRobotSendRequest();
-//        		request.setMsgtype("actionCard");
-//        		Actioncard actioncard=new Actioncard();
-//        		actioncard.setTitle("当日逾期信息");
-//        		String json="截至"+DateUtils.getNowDateToString(DateUtils.FORMAT_3_STRING)+"  \n **逾期日报** \n "+str;
-//        		
-//        		actioncard.setText(json);
-//        		List<Btns> btns=new ArrayList<Btns>();
-//        		Btns btn1=new Btns();
-//        		btn1.setTitle("点击下载详情");
-//        		btn1.setActionURL("http://www.huasheng999.com/downloadExcel?strDate="+DateUtils.getNowDateToString(DateUtils.FORMAT_2_STRING));
-//        		btns.add(btn1);
-//        		
-//        		actioncard.setBtns(btns);
-//        		actioncard.setBtnOrientation("0");
-//        		request.setActionCard(actioncard);
-//        		client.execute(request);
-//    		}
+			List<String> urls=new ArrayList<>();
+    		urls.add("https://oapi.dingtalk.com/robot/send?access_token=1fc6e3796fadda50d78c9264d9a92ae87292298ba364fced0c44d8dd91af014a");
+    		urls.add("https://oapi.dingtalk.com/robot/send?access_token=5c15bdd890ab387f6663f6d4d62d40cff8a7a37a32a168c905b28b078c744090");
+    		urls.add("https://oapi.dingtalk.com/robot/send?access_token=9ca7726af64f24d491871c444151f39b0cc16846e0aa7f13263824b2327f217e");
+			urls.add("https://oapi.dingtalk.com/robot/send?access_token=f499b56400a19b942137d1cfca9cfd916a37fc38365e394ef5546228820ee4e7");
+    		for (int i = 0; i < urls.size(); i++) {
+    			DingTalkClient client = new DefaultDingTalkClient(urls.get(i));
+        		OapiRobotSendRequest request = new OapiRobotSendRequest();
+        		request.setMsgtype("actionCard");
+        		Actioncard actioncard=new Actioncard();
+        		actioncard.setTitle("当日逾期信息");
+        		String json="截至"+DateUtils.getNowDateToString(DateUtils.FORMAT_3_STRING)+"  \n **逾期日报** \n "+str;
+        		
+        		actioncard.setText(json);
+        		List<Btns> btns=new ArrayList<Btns>();
+        		Btns btn1=new Btns();
+        		btn1.setTitle("点击下载详情");
+        		btn1.setActionURL("http://www.huasheng999.com/downloadExcel?strDate="+DateUtils.getNowDateToString(DateUtils.FORMAT_2_STRING));
+        		btns.add(btn1);
+        		
+        		actioncard.setBtns(btns);
+        		actioncard.setBtnOrientation("0");
+        		request.setActionCard(actioncard);
+        		client.execute(request);
+    		}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

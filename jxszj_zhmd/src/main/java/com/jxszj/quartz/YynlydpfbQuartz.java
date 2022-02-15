@@ -93,11 +93,14 @@ public class YynlydpfbQuartz {
 			JDYAPIUtils y5_api = new JDYAPIUtils(APPID, Y5_ENTRYID, APIKEY);
 			
 			List<Map<String, Object>> condList0 = new ArrayList<Map<String, Object>>();
+			List<String> list1=new ArrayList<>();
+        	list1.add("2022年1月");
+        	list1.add("2022年2月");
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("field", "_widget_1629096500841");// 年-月
 			m.put("type", "text");
-			m.put("method", "eq");
-			m.put("value", month);
+			m.put("method", "in");
+			m.put("value", list1);
 			condList0.add(m);
 			Map<String, Object> filter0 = new HashMap<String, Object>();
 			filter0.put("rel", "and");
@@ -108,8 +111,8 @@ public class YynlydpfbQuartz {
 			m = new HashMap<String, Object>();
 			m.put("field", "_widget_1629442513994");// 年月
 			m.put("type", "text");
-			m.put("method", "eq");
-			m.put("value", month);
+			m.put("method", "in");
+			m.put("value", list1);
 			condList0.add(m);
 			filter0 = new HashMap<String, Object>();
 			filter0.put("rel", "and");
@@ -121,8 +124,8 @@ public class YynlydpfbQuartz {
 			m = new HashMap<String, Object>();
 			m.put("field", "_widget_1627905992838");// 年月
 			m.put("type", "text");
-			m.put("method", "eq");
-			m.put("value", month);
+			m.put("method", "in");
+			m.put("value", list1);
 			condList0.add(m);
 			m1 = new HashMap<String, Object>();
 			m1.put("field", "flowState");
@@ -141,8 +144,8 @@ public class YynlydpfbQuartz {
 			m = new HashMap<String, Object>();
 			m.put("field", "_widget_1627905992838");// 年月
 			m.put("type", "text");
-			m.put("method", "eq");
-			m.put("value", month);
+			m.put("method", "in");
+			m.put("value", list1);
 			condList0.add(m);
 			m1 = new HashMap<String, Object>();
 			m1.put("field", "flowState");
@@ -159,6 +162,11 @@ public class YynlydpfbQuartz {
 			pp.add("MS");
 			pp.add("PD");
 			pp.add("HMW");
+			List<String> dqyy=new ArrayList<>();
+			dqyy.add("H0429");
+			dqyy.add("H0711");
+			dqyy.add("H0362");
+			dqyy.add("H0743");
 			// 按品牌获取门店信息
 			for (int j = 0; j < pp.size(); j++) {
 				final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
@@ -192,13 +200,15 @@ public class YynlydpfbQuartz {
 				List<Map<String, Object>> formData0 = kdsq_api.getAllFormData(null,filter);
 				Map<String,String> maps=new HashMap<>();//员工编码对应的员工名称
 				Set<String> set=new HashSet<>();//对应品牌下所有运营员工名称(员工编码)
+				Set<String> p01=new HashSet<>();
 				for (int i = 0; i < formData0.size(); i++) {
+					if(dqyy.contains(formData0.get(i).get("_widget_1560906554863").toString())){
+						//大区运营不参与排名
+						continue;
+					}
 					set.add(formData0.get(i).get("_widget_1560906554863").toString());
 					maps.put(formData0.get(i).get("_widget_1560906554863").toString(), formData0.get(i).get("_widget_1545358841001").toString());
-					if(pp.get(j).equals("HMW")){
-						set.add(formData0.get(i).get("_widget_1628167934994").toString());
-						maps.put(formData0.get(i).get("_widget_1628167934994").toString(), formData0.get(i).get("_widget_1628167934919").toString());
-					}
+					p01.add(formData0.get(i).get("_widget_1560906554863").toString());
 				}
 				
 				
@@ -238,13 +248,8 @@ public class YynlydpfbQuartz {
 				List<Map<String, Object>> formDataC4 = c4_api.getAllFormData(null, filter1);
 				
 				
-				//找出p01p02p03每个运营员工下的门店
 				Map<String,Set<String>> mdMaps=new HashMap<>();
 				Map<String,Set<String>> jxsMaps=new HashMap<>();
-				Set<String> p01=new HashSet<>();
-				for (int i = 0; i < formData0.size(); i++) {
-					p01.add(formData0.get(i).get("_widget_1560906554863").toString());
-				}
 				for(String yyyg:p01){
 					Set<String> md=new HashSet<>();
 					Set<String> jxs=new HashSet<>();
@@ -258,27 +263,8 @@ public class YynlydpfbQuartz {
 					jxsMaps.put(yyyg, jxs);
 				}
 				
-				if(pp.get(j).equals("HMW")){
-					Set<String> p02=new HashSet<>();
-					for (int i = 0; i < formData0.size(); i++) {
-						p02.add(formData0.get(i).get("_widget_1628167934994").toString());
-					}
-					for(String yyyg:p02){
-						Set<String> md=new HashSet<>();
-						Set<String> jxs=new HashSet<>();
-						for(int i=0;i<formData0.size();i++){
-							if(yyyg.equals(formData0.get(i).get("_widget_1628167934994").toString())){
-								md.add(formData0.get(i).get("_widget_1543818219389").toString());
-								jxs.add(formData0.get(i).get("_widget_1543981212621").toString());
-							}
-						}
-						mdMaps.put(yyyg, md);
-						jxsMaps.put(yyyg, jxs);
-					}
-				}
-				
 				Map<String,String> maps1=getMap1(pp.get(j), month,mdMaps,jxsMaps);
-				Map<String,Integer> maps2=getMap2(pp.get(j), formData,mdMaps);
+				Map<String,Integer> maps2=getMap2(formData,mdMaps);
 				Map<String,Integer> maps3=getMap3(pp.get(j), formData);
 				Map<String,Integer> maps4=getMap4(pp.get(j), formDataC4, set);
 				Map<String,Double> maps5=getMap5(pp.get(j), formDataY1, set);
@@ -471,7 +457,7 @@ public class YynlydpfbQuartz {
 		Map<String, Object> m14 = new HashMap<String, Object>();
 		m14.put("value",cfjf);
 		rawData.put("_widget_1629109414587", m14);// 【行动力积分】-处罚
-		double zjf=Integer.valueOf(hkjf)+Integer.valueOf(dsjf)+rspzjf+yjbjf+hdjf+khrzjf+rzjf+gxjf+cfjf;
+		double zjf=rspzjf+yjbjf+hdjf+khrzjf+rzjf+gxjf+cfjf;
 		Map<String, Object> m15 = new HashMap<String, Object>();
 		m15.put("value",zjf);
 		rawData.put("_widget_1628477304461", m15);// 总积分
@@ -501,11 +487,14 @@ public class YynlydpfbQuartz {
 			//找出当月有收款单的门店
 			JDYAPIUtils api = new JDYAPIUtils(APPID, ENTRYID_DF1, APIKEY);
 			final List<Map<String, Object>> condList1 = new ArrayList<Map<String, Object>>();
+			List<String> list1=new ArrayList<>();
+        	list1.add("2022年1月");
+        	list1.add("2022年2月");
     		Map<String, Object> map1 = new HashMap<String, Object>();
     		map1.put("field", "_widget_1548049038941");//收款年月
     		map1.put("type", "text");
-    		map1.put("method", "eq");
-    		map1.put("value", month);
+    		map1.put("method", "in");
+    		map1.put("value", list1);
     		condList1.add(map1);
     		Map<String, Object> map2 = new HashMap<String, Object>();
     		map2.put("field", "_widget_1593141119943");//SAP的凭证号
@@ -590,7 +579,8 @@ public class YynlydpfbQuartz {
 	}
 	
 	//【能量积分】-单店人数配置,返回map，key值为员工编码，value值为对应得分
-	public Map<String,Integer> getMap2(String pp,List<Map<String, Object>> formData,Map<String,Set<String>> mdMaps){
+	public Map<String,Integer> getMap2(List<Map<String, Object>> formData,Map<String,Set<String>> mdMaps){
+		DecimalFormat df = new DecimalFormat("#0.00");
 		Map<String,Integer> maps=new HashMap<>(); 
 		try {
 			Map<String,Integer> map=new HashMap<>();
@@ -598,24 +588,18 @@ public class YynlydpfbQuartz {
 				map.put(formData.get(i).get("_widget_1627886455424").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1628479756474")));
 			}
 			for(Map.Entry<String, Set<String>> entry:mdMaps.entrySet()){
-				int dfs=0;
 				Set<String> mds=entry.getValue();
+				int zrs=0;
 				for(String md:mds){
-					int df=map.get(md)==null?0:map.get(md);
-					if(df<4){
-						dfs+=((df-4)*2+df);
-					}else{
-						dfs+=df;
-					}
+					zrs+=map.get(md)!=null?map.get(md):0;
 				}
-				maps.put(entry.getKey(), dfs);
+				maps.put(entry.getKey(), new Double((Double.valueOf(df.format((double)zrs/mds.size()))-4)*100).intValue());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return maps;
 	}
-	
 	
 	//【能量积分】-店长英杰榜
 	public Map<String , Integer > getMap3(String pp,List<Map<String, Object>> formData){

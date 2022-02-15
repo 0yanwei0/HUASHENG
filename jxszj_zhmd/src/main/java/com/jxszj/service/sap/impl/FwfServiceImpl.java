@@ -872,13 +872,13 @@ public class FwfServiceImpl implements IFwfService {
 	 			m38.put("value",0);
 	 			rawData.put("_widget_1611902543438", m38);// 新零售目标完成率
 	 			Map<String, Object> m39 = new HashMap<String, Object>();
-	 			m39.put("value",dj1.get(0).get("_widget_1628164974484"));
+	 			m39.put("value",resmap.get("_widget_1628220748580"));
 	 			rawData.put("_widget_1628171782093", m39);// P02运营员工名称
 	 			Map<String, Object> m40 = new HashMap<String, Object>();
-	 			m40.put("value",dj1.get(0).get("_widget_1628164974659"));
+	 			m40.put("value",resmap.get("_widget_1628220749081"));
 	 			rawData.put("_widget_1628171782181", m40);// P03运营员工名称
 	 			Map<String, Object> m41 = new HashMap<String, Object>();
-	 			m41.put("value",dj1.get(0).get("_widget_1628164974968"));
+	 			m41.put("value",resmap.get("_widget_1628220749043"));
 	 			rawData.put("_widget_1628171782253", m41);// P04运营员工名称
 	 			dmapi.createForData(rawData);// 向简道云添加DM1-销售提成_(自动);
 	        }else if(listM1.size()==1){

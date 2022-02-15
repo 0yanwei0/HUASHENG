@@ -159,10 +159,6 @@ public class SapWlSendJdyWlController {
 		
 		JDYAPIUtils jxszj_api = new JDYAPIUtils(jxszj_appId, jxszj_entryId, jxszj_apiKey);
 		
-//		JDYAPIUtils cszhmd_api = new JDYAPIUtils(cszhmd_appId, cszhmd_entryId, cszhmd_apiKey);
-		
-//		JDYAPIUtils zhmd_api = new JDYAPIUtils(zhmd_appId, zhmd_entryId, zhmd_apiKey);
-		
 		// POS经销商之家 -- R1物料组返利参数
 		String entryId = "5ed9b22de59be600062abc84";
 		JDYAPIUtils api = new JDYAPIUtils(jxszj_appId, entryId, jxszj_apiKey);
@@ -196,14 +192,6 @@ public class SapWlSendJdyWlController {
 				JSONObject jsonObject=JSON.parseObject(EntityUtils.toString(responseEntity));
 				jsonObject = jsonObject.getJSONObject("d");
 				JSONArray  array = jsonObject.getJSONArray("results");
-//				JSONArray  array = new JSONArray();
-//				for (int i = 0; i < products.size(); i++) {
-//					for (int j = 0; j < array1.size(); j++) {
-//						if(products.get(i).equals(array1.getJSONObject(j).getString("Product"))){
-//							array.add(array1.getJSONObject(j));
-//						}
-//					}
-//				}
 				for (int i = 0; i < products.size(); i++) {
 					for (int j = 0; j < array.size(); j++) {
 						if(products.get(i).equals(array.getJSONObject(j).getString("Product")) && request.getParameter("wl_ProductSalesOrg").equals(array.getJSONObject(j).getString("ProductSalesOrg")) && request.getParameter("wl_ProductDistributionChnl").equals(array.getJSONObject(j).getString("ProductDistributionChnl"))){
@@ -234,22 +222,6 @@ public class SapWlSendJdyWlController {
 								rawData1.put("_widget_1591705259670", m19);// 返利标识
 								jxszj_api.updateForData(jxszjList.get(0).get("_id").toString(), rawData1);
 					        }
-					        
-					      //智慧门店系统
-//					        List<Map<String, Object>> zhmdList= zhmd_api.getAllFormData(null, filter);
-//					        
-//					        Map<String, Object> rawData4=getData(array.getJSONObject(j));
-//					        if(zhmdList.size()==0 && rawData4!=null){
-//					        	Map<String, Object> m19 = new HashMap<String, Object>();
-//								m19.put("value", map.get(array.getJSONObject(j).get("ProductGroup")));
-//								rawData4.put("_widget_1591705259670", m19);// 返利标识
-//								zhmd_api.createForData(rawData4);
-//					        }else if(zhmdList.size()==1 && rawData4!=null){
-//					        	Map<String, Object> m19 = new HashMap<String, Object>();
-//								m19.put("value", zhmdList.get(0).get("_widget_1591705259670"));
-//								rawData4.put("_widget_1591705259670", m19);// 返利标识
-//								zhmd_api.updateForData(zhmdList.get(0).get("_id").toString(), rawData4);
-//					        }
 					        
 						}
 						

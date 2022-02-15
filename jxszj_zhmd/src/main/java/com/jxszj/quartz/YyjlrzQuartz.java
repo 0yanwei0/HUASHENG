@@ -216,10 +216,10 @@ public class YyjlrzQuartz {
 				m12.put("value", yyjltb.get(map.getKey()));
 				rawData.put("_widget_1633664141923", m12);// 月累计报单(合计)
 				Map<String, Object> m13 = new HashMap<String, Object>();
-				m13.put("value", yyjfpm.get(map.getKey()).split("/")[0]);
+				m13.put("value", yyjfpm.get(map.getKey())==null?"":yyjfpm.get(map.getKey()).split("/")[0]);
 				rawData.put("_widget_1634714352040", m13);// 运营积分
 				Map<String, Object> m14 = new HashMap<String, Object>();
-				m14.put("value", yyjfpm.get(map.getKey()).split("/")[1]);
+				m14.put("value", yyjfpm.get(map.getKey())==null?"":yyjfpm.get(map.getKey()).split("/")[1]);
 				rawData.put("_widget_1634714352077", m14);// 运营排名
 //				Map<String, Object> m15 = new HashMap<String, Object>();
 //				m15.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_YEAR)+week+"周");
@@ -358,11 +358,15 @@ public class YyjlrzQuartz {
 			//找出当月有收款单的门店
 			JDYAPIUtils api = new JDYAPIUtils(APPID, ENTRYID_DF1, APIKEY);
 			final List<Map<String, Object>> condList1 = new ArrayList<Map<String, Object>>();
+			List<String> list1=new ArrayList<>();
+        	list1.add("2022年1月");
+        	list1.add("2022年2月");
     		map1 = new HashMap<String, Object>();
     		map1.put("field", "_widget_1548049038941");//收款年月
     		map1.put("type", "text");
-    		map1.put("method", "eq");
-    		map1.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE));
+    		map1.put("method", "in");
+//    		map1.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING1_MINUTE));
+    		map1.put("value", list1);
     		condList1.add(map1);
     	    map2 = new HashMap<String, Object>();
     		map2.put("field", "_widget_1593141119943");//SAP的凭证号
@@ -426,21 +430,54 @@ public class YyjlrzQuartz {
 			}
             
             for(Map.Entry<String, Set<String>> entry:jxsMaps.entrySet()){
-            	Set<String> jxsbm=entry.getValue();
-            	int hk=0;
-            	int mb=0;
-            	for(String jxs:jxsbm){
-            		mb+=ydmb.get(jxs)==null?0:ydmb.get(jxs);
-            		for (int i = 0; i < formData1.size(); i++) {
-						if(jxs.equals(formData1.get(i).get("_widget_1548037673508").toString())){
-							hk+=ObjectUtils.getDouble(ObjectUtils.getString(formData1.get(i).get("_widget_1564390193051"))).intValue();
-						}
-					}
+            	if(entry.getKey().equals("H0429") || entry.getKey().equals("H0711") || entry.getKey().equals("H0362") || entry.getKey().equals("H0743")){
+            		Set<String> jxsbm=entry.getValue();
+                	int hk=0;
+                	int mb=0;
+                	for(String jxs:jxsbm){
+                		mb+=ydmb.get(jxs)==null?0:ydmb.get(jxs);
+                		for (int i = 0; i < formData1.size(); i++) {
+    						if(jxs.equals(formData1.get(i).get("_widget_1548037673508").toString()) && "2022年2月".equals(formData1.get(i).get("_widget_1548049038941").toString())){
+    							hk+=ObjectUtils.getDouble(ObjectUtils.getString(formData1.get(i).get("_widget_1564390193051"))).intValue();
+    						}
+    					}
+                	}
+                	int dj=hk/mdMaps.get(entry.getKey()).size();
+                	int mds=mdMaps.get(entry.getKey()).size();
+                	mb=gdmb.get(entry.getKey())!=null?gdmb.get(entry.getKey()):mb;
+            		maps.put(entry.getKey(),mb+"/"+hk+"/"+mds+"/"+dj);
+            	}else{
+            		Set<String> jxsbm=entry.getValue();
+                	int hk=0;
+                	int mb=0;
+                	for(String jxs:jxsbm){
+                		mb+=ydmb.get(jxs)==null?0:ydmb.get(jxs);
+                		for (int i = 0; i < formData1.size(); i++) {
+    						if(jxs.equals(formData1.get(i).get("_widget_1548037673508").toString())){
+    							hk+=ObjectUtils.getDouble(ObjectUtils.getString(formData1.get(i).get("_widget_1564390193051"))).intValue();
+    						}
+    					}
+                	}
+                	int dj=hk/mdMaps.get(entry.getKey()).size();
+                	int mds=mdMaps.get(entry.getKey()).size();
+                	mb=gdmb.get(entry.getKey())!=null?gdmb.get(entry.getKey()):mb;
+            		maps.put(entry.getKey(),mb+"/"+hk+"/"+mds+"/"+dj);
             	}
-            	int dj=hk/mdMaps.get(entry.getKey()).size();
-            	int mds=mdMaps.get(entry.getKey()).size();
-            	mb=gdmb.get(entry.getKey())!=null?gdmb.get(entry.getKey()):mb;
-        		maps.put(entry.getKey(),mb+"/"+hk+"/"+mds+"/"+dj);
+//            	Set<String> jxsbm=entry.getValue();
+//            	int hk=0;
+//            	int mb=0;
+//            	for(String jxs:jxsbm){
+//            		mb+=ydmb.get(jxs)==null?0:ydmb.get(jxs);
+//            		for (int i = 0; i < formData1.size(); i++) {
+//						if(jxs.equals(formData1.get(i).get("_widget_1548037673508").toString())){
+//							hk+=ObjectUtils.getDouble(ObjectUtils.getString(formData1.get(i).get("_widget_1564390193051"))).intValue();
+//						}
+//					}
+//            	}
+//            	int dj=hk/mdMaps.get(entry.getKey()).size();
+//            	int mds=mdMaps.get(entry.getKey()).size();
+//            	mb=gdmb.get(entry.getKey())!=null?gdmb.get(entry.getKey()):mb;
+//        		maps.put(entry.getKey(),mb+"/"+hk+"/"+mds+"/"+dj);
             }
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -507,11 +544,15 @@ public class YyjlrzQuartz {
 		try {
     		JDYAPIUtils api = new JDYAPIUtils(APPID, ENTRYID_C6, APIKEY);
     		final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+    		List<String> list1=new ArrayList<>();
+        	list1.add("2022年1月");
+        	list1.add("2022年2月");
     		Map<String, Object> map = new HashMap<String, Object>();//流程已完成
     		map.put("field", "_widget_1563246850783");
     		map.put("type", "text");
-    		map.put("method", "eq");
-    		map.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_MINUTE1));
+    		map.put("method", "in");
+//    		map.put("value", DateUtils.getNowDateToString(DateUtils.FORMAT_STRING_MINUTE1));
+    		map.put("value", list1);
     		condList.add(map);
     		Map<String, Object> filter = new HashMap<String, Object>() {
     			{

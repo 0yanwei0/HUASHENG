@@ -187,15 +187,26 @@ public class YyjlzjhrzQuartz {
 		 Map<String,String> maps=new HashMap<>();
 		try {
 			JDYAPIUtils api = new JDYAPIUtils(APPID, C1_1_ENTRYID, APIKEY);
-           List<Map<String, Object>> formData = api.getAllFormData(null,null);
+			final List<Map<String, Object>> condList = new ArrayList<Map<String, Object>>();
+			Map<String, Object> map0 = new HashMap<String, Object>();
+			map0.put("field", "_widget_1631788528636");
+			map0.put("type", "text");
+			map0.put("method", "eq");
+			map0.put("value", "启用");
+			condList.add(map0);
+			Map<String, Object> filter = new HashMap<String, Object>() {
+				{
+					put("rel", "and");
+					put("cond", condList);
+				}
+			};
+           List<Map<String, Object>> formData = api.getAllFormData(null,filter);
            
            Set<String> set1=new HashSet<>();
            Set<String> set2=new HashSet<>();
-           Set<String> set3=new HashSet<>();
            for (int i = 0; i < formData.size(); i++) {
            	set1.add(formData.get(i).get("_widget_1627886456443").toString());
            	set2.add(formData.get(i).get("_widget_1628169392779").toString());
-           	set3.add(formData.get(i).get("_widget_1628169392851").toString());
 			}
            //判断当前的运营员工是否是p01
            for(String yy:set1){
@@ -221,23 +232,6 @@ public class YyjlzjhrzQuartz {
 					if(yy.equals(formData.get(i).get("_widget_1628169392779").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
 						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
 //						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
-					}
-				}
-           	List<Entry<String, Integer>> list=mapSort(map);
-           	for (int i = 0; i < list.size(); i++) {
-           		sb.append(list.get(i).getKey()+"("+list.get(i).getValue()+")\n");
-				}
-           	maps.put(yy, sb.toString());
-           }
-           
-         //判断当前的运营员工是否是p03
-           for(String yy:set3){
-           	StringBuilder sb=new StringBuilder();
-           	Map<String,Integer> map=new HashMap<String,Integer>();
-           	for (int i = 0; i < formData.size(); i++) {
-					if(yy.equals(formData.get(i).get("_widget_1628169392851").toString()) && ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))<4){
-//						sb.append(formData.get(i).get("_widget_1627887110072").toString()+"("+ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231"))+")\n");
-						map.put(formData.get(i).get("_widget_1627887110072").toString(), ObjectUtils.getObjectToInteger(formData.get(i).get("_widget_1631151630231")));
 					}
 				}
            	List<Entry<String, Integer>> list=mapSort(map);

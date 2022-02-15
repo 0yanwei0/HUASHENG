@@ -214,7 +214,7 @@ public class XstcController {
  			m12.put("value",dj1.get(i).get("_widget_1566469277094"));
  			rawData.put("_widget_1567042226458", m12);// 业务
  			Map<String, Object> m13 = new HashMap<String, Object>();
- 			m13.put("value",dj1.get(i).get("_widget_1548225231293"));
+ 			m13.put("value",dj1.get(i).get("_widget_1642063718404"));
  			rawData.put("_widget_1564996674896", m13);// P01运营员工名称
  			Map<String, Object> m15 = new HashMap<String, Object>();
  			m15.put("value",DateUtils.getNowDateToString(DateUtils.FORMAT_1_STRING));
@@ -283,13 +283,13 @@ public class XstcController {
  			m36.put("value",xlsMap.get(ObjectUtils.getString(dj1.get(i).get("_widget_1545377155914")))!=null?xlsMap.get(ObjectUtils.getString(dj1.get(i).get("_widget_1545377155914")))*mds:0);
  			rawData.put("_widget_1611902543094", m36);// 新零售目标
  			Map<String, Object> m37 = new HashMap<String, Object>();
- 			m37.put("value",dj1.get(i).get("_widget_1628164974484"));
+ 			m37.put("value",dj1.get(i).get("_widget_1628164974565"));
  			rawData.put("_widget_1628171782093", m37);// P02运营员工名称
  			Map<String, Object> m38 = new HashMap<String, Object>();
- 			m38.put("value",dj1.get(i).get("_widget_1628164974659"));
+ 			m38.put("value",dj1.get(i).get("_widget_1642063719304"));
  			rawData.put("_widget_1628171782181", m38);// P03运营员工名称
  			Map<String, Object> m39 = new HashMap<String, Object>();
- 			m39.put("value",dj1.get(i).get("_widget_1628164974968"));
+ 			m39.put("value",dj1.get(i).get("_widget_1642063719442"));
  			rawData.put("_widget_1628171782253", m39);// P04运营员工名称
  			try {
  				dm1_api.createForData(rawData);// 向简道云添加DM1-销售提成_(自动)
@@ -645,7 +645,7 @@ public class XstcController {
  			m12.put("value",dj1.get(0).get("_widget_1566469277094"));
  			rawData.put("_widget_1567042226458", m12);// 业务
  			Map<String, Object> m13 = new HashMap<String, Object>();
- 			m13.put("value",dj1.get(0).get("_widget_1548225231293"));
+ 			m13.put("value",dj1.get(0).get("_widget_1642063718404"));
  			rawData.put("_widget_1564996674896", m13);// 督导
  			Map<String, Object> m15 = new HashMap<String, Object>();
  			m15.put("value",DateUtils.getNowDateToString(DateUtils.FORMAT_1_STRING));
